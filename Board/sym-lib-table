@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name priv)(type Legacy)(uri C:/scratch/STM32/HardWare/KiLibrary/priv.lib)(options "")(descr ""))
+)
