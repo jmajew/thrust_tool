@@ -1,33 +1,15 @@
-# README #
+# ThrustTool #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+The ThrustTool is a DIY tool for measurements of an electric motor with propeller.
+It allows to measure thrust, torque, rotation speed, battery voltage and current.
 
-### What is this repository for? ###
+The project includes:
+* the 3d-printed tool 
+* custom board using STM32 F401 mcu with HX711 for measurements of load cells
+* firmware for the custom board 
+* QT application for measurement managing and reporting.
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
-
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
-
+![alt text](Doc/figs/thtool-1.png)
 
 ### Board
 
@@ -48,4 +30,11 @@ Using ChibiOS
 ### ThrustApp 
 
 QT application for conducting measurement (tested in Win10 environment)
+
+
+
+## Warning ##
+
+The project is delivered as is. All resposibilities lies on the side on the user. Remember to take adequate security measures when testing any motor (espacially powerful one).
+
 
