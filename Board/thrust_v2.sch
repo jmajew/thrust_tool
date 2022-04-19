@@ -5250,4 +5250,10 @@ Wire Wire Line
 	11400 1900 12450 1900
 Wire Wire Line
 	11400 2000 12200 2000
+Text Notes 10050 3100 2    39   ~ 0
+ADC_CH10
+Text Notes 10050 3200 2    39   ~ 0
+ADC_CH11
+Text Notes 10050 3300 2    39   ~ 0
+ADC_CH12
 $EndSCHEMATC
