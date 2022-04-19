@@ -1,0 +1,275 @@
+\documentclass[10pt]{article}
+
+\usepackage{pgfplots}
+\usepackage{multirow}
+\usepackage{filecontents}
+
+\pgfplotsset{compat=1.14}
+
+\usepackage[margin=20mm]{geometry}
+
+\setlength{\textheight}{240 mm}
+
+<<<LOOP_BEG>>>
+\begin{filecontents*}{table<<<LOOP_ID>>>.dat}
+<<<DATA_COMMA>>>
+\end{filecontents*}
+
+<<<LOOP_END>>>
+
+
+
+\begin{document}
+
+\noindent
+{\large \bf Tool info}
+\vspace{3mm}
+
+\noindent
+\begin{tabular}{ll}
+	<<<TOOL_INFO>>>
+\end{tabular}
+\vspace{3mm}
+
+\noindent
+{\large \bf Measurement info}
+\vspace{3mm}
+
+\noindent
+\begin{tabular}{ll}
+	<<<SETUP_INFO>>>
+\end{tabular}
+
+\vspace{3mm}
+
+<<<LOOP_BEG>>>
+\noindent
+{\large \bf Measurement Results <<<LOOP_ID>>>:}
+\vspace{3mm}
+
+\noindent
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|r|rr|rr|rr|rr|rr|r|r|}
+\hline 
+ \multirow[c]{2}{11mm}{Output [\%]} & \multicolumn{2}{l|}{Thrust [G]} & \multicolumn{2}{l|}{Torque [G cm]} & \multicolumn{2}{l|}{RPM [1/min]} 
+   & \multicolumn{2}{l|}{Voltage [V]} & \multicolumn{2}{l|}{Current [A]} &\multirow{2}{14mm}{Pin [W]}  &\multirow{2}{14mm}{ThrustEff [G/W]}  \\
+\cline{2-11} 
+    &    mean& std dev&   mean& std dev&   mean& std dev&    mean& std dev&  mean& std dev&         &                \\
+\hline
+	<<<DATA_TABLE>>>
+\hline
+\end{tabular}
+}
+
+\vspace{3mm}
+
+<<<LOOP_END>>>
+
+
+
+
+\pagebreak
+\noindent
+{\large \bf Plots for Measurement Results:}
+\vspace{5mm}
+
+\noindent
+\begin{tikzpicture}
+	\begin{axis}[
+		height=8cm,
+		width=8cm,  %\textwidth,
+		ticklabel style = {font=\tiny},
+		minor tick num=4,
+		ymin=0,
+		grid=both,
+		major grid style={gray!80},
+		minor grid style={gray!25},
+		xlabel={\footnotesize Motor Output [\%]},
+		ylabel={\footnotesize Thrust [G]},
+		legend pos=north west,
+		legend style={draw=none}]
+<<<LOOP_BEG>>>
+	\addplot[
+		blue, mark options={black, scale=0.175},
+		smooth, 
+		error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit,
+	] 
+	table [x=out, y=th, y error=th_err, col sep=comma] {table<<<LOOP_ID>>>.dat};
+<<<LOOP_END>>>	
+	\end{axis}
+\end{tikzpicture}
+\hspace{3mm}
+\begin{tikzpicture}
+	\begin{axis}[
+		height=8cm,
+		width=8cm,  %\textwidth,
+		ticklabel style = {font=\tiny},
+		minor tick num=4,
+		ymin=0,
+		grid=both,
+		major grid style={gray!80},
+		minor grid style={gray!25},
+		xlabel={\footnotesize Motor Output [\%]},
+		ylabel={\footnotesize Torque [G cm]},
+		legend pos=north west,
+		legend style={draw=none}]
+<<<LOOP_BEG>>>
+	\addplot[
+		blue, mark options={black, scale=0.175},
+		smooth, 
+		error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit,
+	] 
+	table [x=out, y=tq, y error=tq_err, col sep=comma] {table<<<LOOP_ID>>>.dat};
+<<<LOOP_END>>>
+	\end{axis}
+\end{tikzpicture}
+  
+\noindent 
+\vspace{3mm}
+\begin{tikzpicture}
+	\begin{axis}[
+		height=8cm,
+		width=8cm,  %\textwidth,
+		ticklabel style = {font=\tiny},
+		tick scale binop=\times, %base 10:-3,
+		minor tick num=4,
+		grid=both,
+		major grid style={gray!80},
+		minor grid style={gray!25},
+		xlabel={\footnotesize Motor Output [\%]},
+		ylabel={\footnotesize RPM [1/min]},
+		legend pos=north west,
+		legend style={draw=none}]
+<<<LOOP_BEG>>>
+	\addplot[
+		blue, mark options={black, scale=0.175},
+		smooth, 
+		error bars/.cd, 
+			y fixed,
+			y dir=both, 
+			y explicit,
+	] 
+	table [x=out, y=rpm, y error=rpm_err, col sep=comma] {table<<<LOOP_ID>>>.dat};
+<<<LOOP_END>>>
+	\end{axis}
+\end{tikzpicture}
+\hspace{4.65mm}
+\begin{tikzpicture}
+	\begin{axis}[
+		height=8cm,
+		width=8cm,
+		ticklabel style = {font=\tiny},
+		ymin=0,
+		grid=both,
+		xlabel={\footnotesize Motor Output [\%]},
+		ylabel={\footnotesize Current [A]},
+		legend pos=north west,
+		legend style={draw=none}]
+<<<LOOP_BEG>>>
+	\addplot[
+	  blue, mark options={black, scale=0.175},
+	  smooth, 
+	  error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit
+	] 
+	table [x=out, y=a, y error=a_err, col sep=comma] {table<<<LOOP_ID>>>.dat};
+<<<LOOP_END>>>
+	\end{axis}
+	\begin{axis}[
+		height=8cm,
+		width=8cm,  %\textwidth,
+		axis y line*=right,
+		axis x line=none,
+		scaled y ticks=false,
+		ticklabel style = {font=\tiny},
+		grid style=dashed,
+		grid=major,
+		ylabel={\footnotesize Voltage [V]},
+		legend style={
+			nodes={scale=0.5, transform shape},
+			cells={anchor=east},
+			% legend pos=south east,
+			at={(0.5,0.97)},anchor=north,
+		}
+	]
+%	\addlegendimage{/pgfplots/refstyle=plot_1}\addlegendentry{Current [A]}
+<<<LOOP_BEG>>>
+	\addplot[
+		red, mark options={red, scale=0.15},
+		smooth,
+		error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit  
+	] 
+	table [x=out, y=v, y error=v_err, col sep=comma] {table<<<LOOP_ID>>>.dat};
+<<<LOOP_END>>>
+%	\addlegendentry{Voltage [V]}
+	\end{axis}
+\end{tikzpicture}
+\vspace{3mm}
+
+\noindent 
+\begin{tikzpicture}
+	\begin{axis}[
+		height=8cm,
+		width=8cm,  %\textwidth,
+		ticklabel style = {font=\tiny},
+		minor tick num=4,
+		ymin=0,
+		grid=both,
+		major grid style={gray!80},
+		minor grid style={gray!25},
+		xlabel={\footnotesize Motor Output [\%]},
+		ylabel={\footnotesize Power In [W]},
+		legend pos=north west,
+		legend style={
+			nodes={scale=0.75, transform shape},
+			cells={anchor=west},
+			legend pos=north west,
+		}	
+	]			
+<<<LOOP_BEG>>>
+	\addplot[
+		blue, mark=*, mark options={blue, scale=0.5},
+		smooth, 
+	] 
+	table [x=out, y=pin, col sep=comma] {table<<<LOOP_ID>>>.dat};
+<<<LOOP_END>>>
+	\end{axis}
+	\end{tikzpicture}
+\hspace{3mm}
+	\begin{tikzpicture}
+	\begin{axis}[
+		height=8cm,
+		width=8cm,  %\textwidth,
+		ticklabel style = {font=\tiny},
+		minor tick num=4,
+		grid=both,
+		major grid style={gray!80},
+		minor grid style={gray!25},
+		xlabel={\footnotesize Motor Output [\%]},
+		ylabel={\footnotesize Thrust Efficiency [G/W]},
+		legend pos=north west,
+		legend style={draw=none}]
+<<<LOOP_BEG>>>
+	\addplot[
+		blue, mark=*, mark options={blue, scale=0.5},
+		smooth, 
+	] 
+	table [x=out, y=theff, col sep=comma] {table<<<LOOP_ID>>>.dat};
+<<<LOOP_END>>>
+	\end{axis}
+\end{tikzpicture}
+
+	
+\end{document}
+
