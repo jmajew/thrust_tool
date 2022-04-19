@@ -7,6 +7,10 @@
 
 
 #include "data.hpp"
+#include "master.hpp"
+
+extern Master master;
+
 
 #define  BUFF_SIZE 	48
 char  sbuff[BUFF_SIZE];
@@ -62,27 +66,29 @@ void Data::PrintOnScreen( Display* plcd)
 
 	this->grpMotor.mux.lock();
 	chsnprintf( sbuff, BUFF_SIZE, "o:%5d", this->grpMotor.output );
+	this->grpMotor.mux.unlock();
 //		plcd->SetCursor(0, offset+37 );
 	plcd->SetCursor(0, 7 );
 	plcd->WriteString( sbuff, font5x7, White);
-	this->grpMotor.mux.unlock();
+
 
 
 	// StG
-	this->grpStGauge.mux.lock();
 	for ( int i=0; i<STGAUGE_CH_COUNT; ++i)
 	{
-		chsnprintf( sbuff, BUFF_SIZE, "%9d", this->grpStGauge.tab[i] );
+		this->grpStGauge.mux.lock();
+		chsnprintf( sbuff, BUFF_SIZE, "%9d", this->grpStGauge.tab[i] );	// TODO :: id from config
+		this->grpStGauge.mux.unlock();
+
 		plcd->SetCursor(64, offset+i*8);
 		plcd->WriteString( sbuff, font5x7, White);
 	}
-	this->grpStGauge.mux.unlock();
 
 	// ADC
 	this->grpAdc.mux.lock();
 	for ( int i=0; i<ADC_CH_COUNT; ++i)
 	{
-		chsnprintf( sbuff, BUFF_SIZE, "%d %d", this->grpAdc.tab[i].Mean(), this->grpAdc.tab[i].Deviation() );
+		chsnprintf( sbuff, BUFF_SIZE, "%d: %4d %d", i, this->grpAdc.tab[i].Mean(), this->grpAdc.tab[i].Deviation() );
 		plcd->SetCursor(0, offset+i*8 );
 		plcd->WriteString( sbuff, font5x7, White);
 	}
@@ -93,7 +99,9 @@ void Data::PrintOnScreen( Display* plcd)
 
 //	float temp = (float)( this->grpAdc.tab[ADC_ID_MPUTEMP].Mean() - 948.0) / 3.175 + 30.0; //in deg C
 //	uint16_t itemp = (uint16_t)temp*100.0;
-	uint16_t itemp = adc_to_temp( this->grpAdc.tab[ADC_ID_MPUTEMP].Mean() );
+
+//	int id_adc_temp = master.pConfig()->groupADC.tabCh[4];
+	uint16_t itemp = adc_to_temp( this->grpAdc.tab[ ID_CH_MPUTEMP ].Mean() );
 
 	chsnprintf( sbuff, BUFF_SIZE, "%d.%0dc", itemp/100, itemp%100 );
 //		plcd->SetCursor(40, offset+3*9 );
@@ -112,9 +120,9 @@ void Data::PrintOnScreen( Display* plcd)
 	this->grpEscTelem.mux.lock();
 //		if ( this->grpEscTelem.temp != 0xff )
 	{
-		chsnprintf( sbuff, BUFF_SIZE, "t:%3dC", this->grpEscTelem.temp );
-		plcd->SetCursor(0, offset+32 );
-		plcd->WriteString( sbuff, font5x7, White);
+//		chsnprintf( sbuff, BUFF_SIZE, "t:%3dC", this->grpEscTelem.temp );
+//		plcd->SetCursor(0, offset+32 );
+//		plcd->WriteString( sbuff, font5x7, White);
 
 		chsnprintf( sbuff, BUFF_SIZE, "v:%3d.%02dV", this->grpEscTelem.volt/100, this->grpEscTelem.volt%100 );
 		plcd->SetCursor(64, offset+24 );

@@ -32,14 +32,30 @@
 
 #define LINE_ADC_INPUT1		PAL_LINE(GPIOA,0)	// RefV
 #define LINE_ADC_INPUT2		PAL_LINE(GPIOA,1)	// BattV
-#define LINE_ADC_INPUT3		PAL_LINE(GPIOA,4)	// BattCurrV
-#define LINE_ADC_INPUT4		PAL_LINE(GPIOA,5)	// BattCurrZeroV
+#define LINE_ADC_INPUT3		PAL_LINE(GPIOA,4)	// BattCurrZeroV
+#define LINE_ADC_INPUT4		PAL_LINE(GPIOA,5)	// BattCurrV
+#define LINE_ADC_INPUT5		PAL_LINE(GPIOC,0)	// AccX
+#define LINE_ADC_INPUT6		PAL_LINE(GPIOC,1)	// AccY
+#define LINE_ADC_INPUT7		PAL_LINE(GPIOC,2)	// AccZ
 
-#define ADC_CHANNEL_1		ADC_CHANNEL_IN0
-#define ADC_CHANNEL_2		ADC_CHANNEL_IN1
-#define ADC_CHANNEL_3		ADC_CHANNEL_IN4
-#define ADC_CHANNEL_4		ADC_CHANNEL_IN5
 
+////////////////////////////////////////////////////////////
+// id of the channels as they are exported
+
+enum EStGChannels
+{
+	ID_CH_THRUST 	= 0,
+	ID_CH_TORQUE,
+};
+
+enum EAdcChannels
+{
+	ID_CH_VREF 	= 0,
+	ID_CH_VBATT,
+	ID_CH_IBATT,
+	ID_CH_IBATTZERO,
+	ID_CH_MPUTEMP
+};
 
 ////////////////////////////////////////////////////////////
 // motor

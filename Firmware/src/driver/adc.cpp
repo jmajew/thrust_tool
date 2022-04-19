@@ -54,7 +54,7 @@ static const ADCConversionGroup adcgrpcfg =
 	NULL,				           	    	// NO ADC ERROR CALLBACK
 	0,                           	     	// CR1
 	ADC_CR2_SWSTART,       	   				// CR2
-	ADC_SMPR1_SMP_VREF(ADC_SAMPLE_144) |
+	ADC_SMPR1_SMP_VREF(ADC_SAMPLE_144) |	// internal VRef
 	ADC_SMPR1_SMP_SENSOR(ADC_SAMPLE_480),   // SMPR1
 	ADC_SMPR2_SMP_AN0(ADC_SAMPLE_144) |
 	ADC_SMPR2_SMP_AN1(ADC_SAMPLE_144) |
@@ -147,7 +147,7 @@ void ADConvertDev::ReadData()
 
 void ADConvertDev::AverageCur()
 {
-	const uint8_t nsamp = ADC_BUF_LENGTH;
+	const uint8_t nsamp = ADC_BUF_LENGTH; // TODO :: should be mpConfig->nADCSamples;
 	const uint8_t nch = ADC_SENS_ARRAY_SIZE;
 
 	for ( int ich=0; ich<nch; ++ich)

@@ -184,6 +184,14 @@ void	SerialThread::run()
 
                 if ( mSerial.open(QIODevice::ReadWrite) ) 
                 {
+                    //emty serial buffer
+                    QByteArray responseData = mSerial.readAll();
+                    while ( mSerial.waitForReadyRead(6) )
+                    {
+                        QByteArray str = mSerial.readAll();
+                        responseData += str;
+                    }
+
                     // send signal serial_ready
                     emit connected( true);
                 }
@@ -202,6 +210,8 @@ void	SerialThread::run()
 // CLOSE
             if ( req.mReqType == ESerialRequest::CLOSE )
             {
+                mHandler.Reset();
+                QByteArray responseData = mSerial.readAll();
                 mSerial.close();
                 
                 // send signal serial_stoped
@@ -392,9 +402,8 @@ void	SerialThread::run()
                     // HACK ::
                     if ( req.mMsg.command == 0 )
                         mSerialMode = ESerialMode::TRANSMIT;
-
-                    
-                    emit timeout( true, (int)req.mMsg.command );
+                    else                                          
+                        emit timeout( true, (int)req.mMsg.command );
                 }
             }
 //--------------------------------------------------------------------------------------------------

@@ -597,7 +597,7 @@ void MainWindow::stopHBeat()
 
 void MainWindow::requestHBeat()
 {
-    mthSerial.request( ESerialRequest::TRANSMIT, ThspMessage( THSP_PACKET_COMMAND, THSP_SEND_HARTBEAT) );        
+    mthSerial.request( ESerialRequest::TRANSMIT, ThspMessage( THSP_PACKET_COMMAND, THSP_SEND_HEARTBEAT) );        
 
     qDebug() << "MainWindow::requestHBeat";
     //QTimer::singleShot(200, this, &MainWindow::check_connection);
@@ -887,7 +887,7 @@ void MainWindow::receive(bool b)
             mbackArm = true;
             break;
 
-        case THSP_SEND_HARTBEAT:
+        case THSP_SEND_HEARTBEAT:
             {
                 //mbHBeat = true;
 
@@ -949,7 +949,7 @@ void MainWindow::receive(bool b)
 // btype; true -> read, false -> send
 void MainWindow::timeoutHandler( bool btype, int ccode )
 {
-    if ( ccode == THSP_SEND_HARTBEAT )
+    if ( ccode == THSP_SEND_HEARTBEAT )
     {
         //mbHBeat = false;
 

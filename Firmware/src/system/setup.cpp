@@ -84,6 +84,9 @@ void gpioInit(void)
 	palSetLineMode( LINE_ADC_INPUT2, PAL_MODE_INPUT_ANALOG );
 	palSetLineMode( LINE_ADC_INPUT3, PAL_MODE_INPUT_ANALOG );
 	palSetLineMode( LINE_ADC_INPUT4, PAL_MODE_INPUT_ANALOG );
+	palSetLineMode( LINE_ADC_INPUT5, PAL_MODE_INPUT_ANALOG );
+	palSetLineMode( LINE_ADC_INPUT6, PAL_MODE_INPUT_ANALOG );
+	palSetLineMode( LINE_ADC_INPUT7, PAL_MODE_INPUT_ANALOG );
 
 	//	palSetLineMode( LINE_ADC_END_PULSE, PAL_MODE_OUTPUT_PUSHPULL ); 	// pulse at the end of conv.
 

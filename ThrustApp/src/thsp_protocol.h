@@ -80,7 +80,7 @@
 #define THSP_DATASTREAM_STOP				91
 #define THSP_SEND_DATA						92	// Motor, StG, ADC, RPM, EscTelem
 
-#define THSP_SEND_HARTBEAT					95
+#define THSP_SEND_HEARTBEAT					95
 
 // set/get commands
 
