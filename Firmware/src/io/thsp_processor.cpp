@@ -366,7 +366,7 @@ ETHSerialResult	ThspProcessor::ProcessCommand( uint8_t command, SBuf& sbin, SBuf
 		break;
 	}
 
-	case THSP_SEND_HARTBEAT:
+	case THSP_SEND_HEARTBEAT:
 	{
 		pdata->mux.lock();
 		pdata->bConnAlive = true;

@@ -53,6 +53,7 @@ public:
 
 	void	MeasFetchData();
 
+	void	SetSerialMode(ESerialMode mode)		{ mthSerial.SetMode(mode); }
 	void	ShellStart();
 
 	void	ApplyStGaugeConfig();

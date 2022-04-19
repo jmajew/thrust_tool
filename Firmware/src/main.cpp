@@ -81,17 +81,17 @@ protected:
 
 
 //===========================================================================
-// Hart-beat thread, times are in milliseconds.
+// Heart-beat thread, times are in milliseconds.
 //===========================================================================
 class HBeatThread: public chibi::BaseStaticThread<128>
 {
 public:
 	HBeatThread( void)
-			: chibi::BaseStaticThread<128>(), mpData(nullptr)
+			: chibi::BaseStaticThread<128>(), mpMaster(nullptr)
 	{
 	}
 
-	void	SetData( Data* pdat)	{ mpData = pdat; }
+	void	SetMaster( Master* pmst)	{ mpMaster = pmst; }
 
 protected:
 	void main( void) override
@@ -100,11 +100,11 @@ protected:
 
 		while ( true)
 		{
-			if ( mpData)
+			if ( mpMaster)
 			{			
-				mpData->mux.lock();
-				bool bHBeat = mpData->bConnAlive;
-				mpData->mux.unlock();
+				mpMaster->pData()->mux.lock();
+				bool bHBeat = mpMaster->pData()->bConnAlive;
+				mpMaster->pData()->mux.unlock();
 
 				
 				if ( bHBeat )
@@ -113,12 +113,15 @@ protected:
 				}
 				else
 				{
+					mpMaster->SetSerialMode( ESerialMode::Command );
+					mpMaster->MotorStop();
+					mpMaster->MotorDisarm();
 					palClearLine( LINE_LED_GREEN);
 				}
 				
-				mpData->mux.lock();
-				mpData->bConnAlive = false
-				mpData->mux.unlock();
+				mpMaster->pData()->mux.lock();
+				mpMaster->pData()->bConnAlive = false;
+				mpMaster->pData()->mux.unlock();
 			}
 			
 			chibi::BaseThread::sleep( TIME_MS2I( 1300));
@@ -126,7 +129,7 @@ protected:
 	}
 	
 private:
-	Data*			mpData;
+	Master*			mpMaster;
 };
 
 
@@ -207,7 +210,7 @@ int main( void)
 	blinker_th.start( NORMALPRIO + 5);
 	
 	hbeat_th.start( NORMALPRIO );
-	hbeat_th.SetData( master.pData() );
+	hbeat_th.SetMaster( &master );
 
 //	dev_rpm.Init( &RPM_ICUD, RPM_ICU_CH);
 //	dev_rpm.Start();
