@@ -10,6 +10,7 @@
 
 // should fit 24b
 //static icucnt_t last_width;
+static chibi::Mutex	icu_mux;
 static icucnt_t last_period;
 
 //static void icuwidthcb(ICUDriver *icup)
@@ -21,14 +22,18 @@ static icucnt_t last_period;
 static void icuperiodcb(ICUDriver *icup)
 {
 
-//	palClearPad(GPIOD, GPIOD_LED4);
+	palToggleLine( LINE_LED_YELLOW );
+
+	//	palClearPad(GPIOD, GPIOD_LED4);
+//	icu_mux.lock();
 	last_period = icuGetPeriodX(icup);
+//	icu_mux.unlock();
 }
 
 static ICUConfig icucfg =
 {
 	ICU_INPUT_ACTIVE_HIGH,
-	1000000, /* 1MHz ICU clock frequency.   */
+	100000, // 100kHz /* 1MHz ICU clock frequency.   */
 	NULL,
 	icuperiodcb,
 	NULL,
@@ -46,11 +51,11 @@ void RpmDev::Init( ICUDriver* pdrv, icuchannel_t ch)
 
 void RpmDev::Start()
 {
-	icufreq_t freq = mpConfig->smplFreq;
+//	icufreq_t freq = mpConfig->smplFreq;
 
 	mpICUConfig = &icucfg;
-	mpICUConfig->frequency = freq;
-	mpICUConfig->channel = mChannel;
+//	mpICUConfig->frequency = freq;
+//	mpICUConfig->channel = mChannel;
 
 	icuStart( mpICUDriver, mpICUConfig );
 
@@ -67,7 +72,10 @@ void RpmDev::Stop()
 
 uint32_t RpmDev::GetOutput()
 {
+//	icu_mux.lock();
 	icucnt_t count = last_period;
+//	icu_mux.unlock();
+
 	return count;// / mpConfig->bladeCount;
 }
 

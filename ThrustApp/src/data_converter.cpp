@@ -29,7 +29,7 @@ void DataConverter::init( const MeasurementSetup& mesetup, const ToolSetup& setu
 	mVbatDivider = (double)setup.cConfig().groupConvert.VbatDivider / 1000.0;
 	mVbatCorr = 10000.0 / (double)setup.cConfig().groupConvert.VbatCorr;
 	mLengthTq = (double)setup.cConfig().groupConvert.LeverArmLength / 100.0;	// <-- mm
-	mCoeffCurr = (double)setup.cConfig().groupConvert.VIcoeff / 1000.0;
+	mCoeffCurr = (double)setup.cConfig().groupConvert.VIcoeff / 100.0;
 
 	//(*ts_cal2 - *ts_cal1) / ( 110 - 30 );
 	mTempSlope = (setup.cConfig().groupConvert.ts_cal2 - setup.cConfig().groupConvert.ts_cal1) / (110.-30.);

@@ -100,5 +100,11 @@ void gpioInit(void)
 	palSetLineMode( LINE_HX_DATA2, 	PAL_MODE_INPUT_PULLDOWN | PAL_STM32_OSPEED_HIGHEST);
 	palSetLineMode( LINE_HX_DATA3, 	PAL_MODE_INPUT_PULLDOWN | PAL_STM32_OSPEED_HIGHEST);
 
+////////////////////////////////////////////////////////
+// RPM init
+
+	palSetLineMode( LINE_RPM, PAL_MODE_ALTERNATE(2) | PAL_STM32_OSPEED_HIGHEST );
+//	palSetLineMode( LINE_RPM, PAL_MODE_ALTERNATE(2) | PAL_STM32_OSPEED_HIGHEST );
+
 }
 

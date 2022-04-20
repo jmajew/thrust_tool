@@ -219,7 +219,7 @@ public:
 	uint16_t	Vref;			// mV
 	uint16_t	VbatDivider;	// *1000
 	uint16_t	VbatCorr;		// * 10000
-	uint16_t	VIcoeff;		// mV/A * 1000
+	uint16_t	VIcoeff;		// mV/A * 100
 
 	uint16_t	ts_cal1;
 	uint16_t	ts_cal2;

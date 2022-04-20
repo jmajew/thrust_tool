@@ -24,8 +24,8 @@
 #define SIG_MEAS_STOP			0x0002
 #define SIG_CALIB_ZERO_START	0x0003
 #define SIG_CALIB_ZERO_STOP		0x0004
-#define SIG_RPM_START			0x0001
-#define SIG_RPM_STOP			0x0002
+#define SIG_RPM_START			0x0005
+#define SIG_RPM_STOP			0x0006
 
 #define SIG_DATARDY				0x8000
 

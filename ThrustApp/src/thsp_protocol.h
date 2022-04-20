@@ -59,7 +59,7 @@
 
 #define THSP_SHELL_START					65
 
-#define THSP_MEASURE_START					66
+#define THSP_MEASURE_START					66 
 #define THSP_MEASURE_STOP					67
 
 #define THSP_CALIBRATE_ZERO_START			68 // TODO :: should be droped

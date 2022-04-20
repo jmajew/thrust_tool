@@ -81,7 +81,7 @@ const VarDef	tabCliVar[] =
 	{ "motor_cmd_min", 			VARTP_UINT16, 				{.valuedef = {1000, 2000, 1060} }, 						offsetof( Config, groupMotor) 	+ offsetof(CfgMotor, minOutput) },
 	{ "motor_cmd_max", 			VARTP_UINT16, 				{.valuedef = {1000, 2000, 2000} }, 						offsetof( Config, groupMotor) 	+ offsetof(CfgMotor, maxOutput) },
 
-	{ "rpm_smpl_freq", 			VARTP_UINT32, 				{.valuedef = {1000, 10000000, 1000000L} }, 				offsetof( Config, groupRpm) 	+ offsetof(CfgRpm, smplFreq) },
+	{ "rpm_smpl_freq", 			VARTP_UINT32, 				{.valuedef = {1000, 1000000, 100000L} }, 				offsetof( Config, groupRpm) 	+ offsetof(CfgRpm, smplFreq) },
 	//{ "rpm_blade_count", 		VARTP_UINT8, 				{.valuedef = {1, 6, 2} }, 								offsetof( Config, groupRpm) 	+ offsetof(CfgRpm, bladeCount) },
 
 //	{ "esctelem_active", 		VARTP_UINT8 | MODE_LOOKUP,	{.lookup = {TABLE_OFF_ON, false}}, 						offsetof( Config, groupEscTelem) + offsetof(CfgEscTelem, bActive) },
@@ -90,7 +90,7 @@ const VarDef	tabCliVar[] =
 	{ "adc_vref", 				VARTP_UINT16, 				{.valuedef = {0, 5000, 2048} }, 						offsetof( Config, groupConvert)	+ offsetof(CfgConvert, Vref) },
 	{ "adc_vbatt_divider", 		VARTP_UINT16, 				{.valuedef = {0, 65535, 11000} }, 						offsetof( Config, groupConvert)	+ offsetof(CfgConvert, VbatDivider) },
 	{ "adc_vbatt_corr", 		VARTP_UINT16, 				{.valuedef = {0, 65535, 9918} }, 						offsetof( Config, groupConvert)	+ offsetof(CfgConvert, VbatCorr) },
-	{ "adc_icoeff", 			VARTP_UINT16, 				{.valuedef = {0, 65535, 36700} }, 						offsetof( Config, groupConvert)	+ offsetof(CfgConvert, VIcoeff) },
+	{ "adc_icoeff", 			VARTP_UINT16, 				{.valuedef = {0, 65535, 3670} }, 						offsetof( Config, groupConvert)	+ offsetof(CfgConvert, VIcoeff) },
 	{ "stgauge_l", 				VARTP_UINT16, 				{.valuedef = {0, 65535, 3500} }, 						offsetof( Config, groupConvert)	+ offsetof(CfgConvert, LeverArmLength) },
 
 	{ "stgauge_scale_thrust", 	VARTP_INT32, 				{.valuedef = {-0x1ffffff, 0x1ffffff, 1054501L} }, 		offsetof( Config, groupConvert) + offsetof(CfgConvert, tabStGScale[0]) },

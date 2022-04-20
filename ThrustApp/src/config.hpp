@@ -27,34 +27,34 @@
 #define MOTOR_CH_COUNT			1
 
 // strain gauge channels
-#define STGAUGE_SENS_COUNT		3
+#define STGAUGE_SENS_COUNT		3	// count of active strain gauge sensors
 #define STGAUGE_CH_COUNT		2	// thrust, torque
 
-#define STG_ID_THRUST			0
-#define STG_ID_TORQUE			1
-
 // ADC channels
-#define ADC_SENS_COUNT			6
-#define ADC_CH_COUNT			5	// Vref, Vbat, Ibat, Ibat0, MPUtemp
-
-#define ADC_ID_VREF				0
-#define ADC_ID_VBATT			1
-#define ADC_ID_IBATT			2
-#define ADC_ID_IBATTZERO		3
-#define ADC_ID_MPUTEMP			4
-
+#define ADC_SENS_COUNT			6	// count of active ADC sensors
+#define ADC_CH_COUNT			5	// count of stored in data;
+									// Vref, Vbat, Ibat, Ibat0, MPUtemp
 // RPM channels
 #define RPM_CH_COUNT			1
 
 // ESC telemetry channels
 #define ESCTELEM_CH_COUNT		4	// Vbat, Ibat, Rpm, ESCtemp
 
-#define ESCT_ID_VBATT			0
-#define ESCT_ID_IBATT			1
-#define ESCT_ID_RPM				2
-#define ESCT_ID_TEMP			3
 
-
+//// unused channels ids
+//#define STG_ID_THRUST			0
+//#define STG_ID_TORQUE			1
+//
+//#define ADC_ID_VREF				0
+//#define ADC_ID_VBATT			1
+//#define ADC_ID_IBATT			2
+//#define ADC_ID_IBATTZERO		3
+//#define ADC_ID_MPUTEMP			4
+//
+//#define ESCT_ID_VBATT			0
+//#define ESCT_ID_IBATT			1
+//#define ESCT_ID_RPM				2
+//#define ESCT_ID_TEMP			3
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -219,7 +219,7 @@ public:
 	uint16_t	Vref;			// mV
 	uint16_t	VbatDivider;	// *1000
 	uint16_t	VbatCorr;		// * 10000
-	uint16_t	VIcoeff;		// mV/A * 1000
+	uint16_t	VIcoeff;		// mV/A * 100
 
 	uint16_t	ts_cal1;
 	uint16_t	ts_cal2;

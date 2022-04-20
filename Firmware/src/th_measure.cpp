@@ -104,20 +104,20 @@ void MeasureThread::main( void)
 			mpADCDev->ReadData();
 			mpADCDev->FetchData( mpData->grpAdc);
 
-			if ( bRpmOn)
-			{
-				mpData->grpRpm.mux.lock();
-				mpData->grpRpm.freq = mpRPMDev->GetOutput();
-				mpData->grpRpm.mux.unlock();
-			}
+//			if ( bRpmOn)
+//			{
+////				palToggleLine( LINE_LED_YELLOW );
+//
+//				mpData->grpRpm.mux.lock();
+//				mpData->grpRpm.freq = mpRPMDev->GetOutput();
+//				mpData->grpRpm.mux.unlock();
+//			}
 
+//			if ( bCalibZero )
+//			{
+//				mpData->UpdateZero();
+//			}
 
-			if ( bCalibZero )
-			{
-				mpData->UpdateZero();
-			}
-
-			// cook data
 
 			//------------------------------------------------------------------
 			// broadcast event send_data

@@ -93,6 +93,12 @@ void Data::PrintOnScreen( Display* plcd)
 		plcd->WriteString( sbuff, font5x7, White);
 	}
 
+	this->grpRpm.mux.lock();
+	chsnprintf( sbuff, BUFF_SIZE, "%r: %4d", this->grpRpm.freq );
+	plcd->SetCursor(0, offset+5*8 );
+	plcd->WriteString( sbuff, font5x7, White);
+	this->grpRpm.mux.unlock();
+
 //		chsnprintf( sbuff, BUFF_SIZE, "%d %d", this->grpAdc.tab[6].Mean(), this->grpAdc.tab[6].Deviation() );
 //		plcd->SetCursor(0, offset+3*8 );
 //		plcd->WriteString( sbuff, font5x7, White);
