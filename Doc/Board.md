@@ -28,6 +28,7 @@ The schematic of the thrustBoard v2 is [here](../Board/thrust_v2.pdf).
 ### Additional notes:
 - JP1 when closed allows to use USB_VBUS
 - JP2 when closed enables pull-up resistor when UART/I2C is used as I2C 
+- RTC crystal is not really currently needed. It was added for some possible future ideas.
 
 
 
