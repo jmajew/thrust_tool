@@ -248,6 +248,16 @@ void MainWindow::stop_terminal()
     this->startHBeat();
 }
 
+
+
+void MainWindow::reset_tool()
+{
+    stopHBeat();
+    this->send_cmnd( THSP_RESET);
+//    this->after_disconnect();
+}
+
+
 void MainWindow::onDeviceReset()
 {
 	qDebug() << "MainWindow ::  'reset' captered !!!";
@@ -351,23 +361,27 @@ void MainWindow::settings()
         // TODO :: send new config and reset tool
         ThspMessage msg;
 
-        //this->mSetup.packCfgMotor(msg);
-        //mthSerial.request( ESerialRequest::TRANSMIT, msg );        
+        this->mSetup.packCfgMotor(msg);
+        mthSerial.request( ESerialRequest::TRANSMIT, msg );        
 
         this->mSetup.packCfgStg(msg);
         mthSerial.request( ESerialRequest::TRANSMIT, msg );        
 
-        //this->mSetup.packCfgAdc(msg);
-        //mthSerial.request( ESerialRequest::TRANSMIT, msg );        
+        this->mSetup.packCfgAdc(msg);
+        mthSerial.request( ESerialRequest::TRANSMIT, msg );        
 
-        //this->mSetup.packCfgRpm(msg);
-        //mthSerial.request( ESerialRequest::TRANSMIT, msg );        
+        this->mSetup.packCfgRpm(msg);
+        mthSerial.request( ESerialRequest::TRANSMIT, msg );        
 
-        //this->mSetup.packCfgConvert(msg);
-        //mthSerial.request( ESerialRequest::TRANSMIT, msg );
+        this->mSetup.packCfgConvert(msg);
+        mthSerial.request( ESerialRequest::TRANSMIT, msg );
 
         ////QTimer::singleShot(200, this, &MainWindow::ack_settings);
         //// THSP_WRITE_CONFIG_TO_FLASH
+        this->send_cmnd( THSP_WRITE_CONFIG_TO_FLASH);
+        this->reset_tool();
+        QMessageBox::information( this,	tr("Info"), "Settings has been written to internal flash and the tool has been rebooted" );
+
     }
 }
 
@@ -460,6 +474,7 @@ void MainWindow::applySetup()
     //    mthSerial.request( ESerialRequest::TRANSMIT, ThspMessage( THSP_PACKET_COMMAND, THSP_RPM_STOP) );        
     //}
 
+    
     mDoc.initConverter( mSetup);
 }
 
@@ -960,7 +975,13 @@ void MainWindow::timeoutHandler( bool btype, int ccode )
         QMessageBox::warning( this,	tr("Timeout"), "Connection lost" );
         return;
     }
+    else if ( ccode == THSP_RESET )
+    {
+        mthSerial.closeConnection();
+        this->after_disconnect();
 
+        return;
+    }
 
     QString s;
     if ( btype )

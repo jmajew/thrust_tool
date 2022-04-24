@@ -82,7 +82,7 @@ void FormCfgConvert::initValues( const Config& cfg)
 	this->dspin_VbatDiv->setValue( (double)cfg.groupConvert.VbatDivider / 1000.0 );
 	this->dspin_VbatCorr->setValue( 10000.0 / (double)cfg.groupConvert.VbatCorr );
 	this->dspin_TroqueL->setValue( (double)cfg.groupConvert.LeverArmLength / 100.0 ); 	// <-- mm
-	this->dspin_CurrCoef->setValue( (double)cfg.groupConvert.VIcoeff / 1000.0 );
+	this->dspin_CurrCoef->setValue( (double)cfg.groupConvert.VIcoeff / 100.0 );
 
 	this->dspin_ThrustCoef->setValue( (double)cfg.groupConvert.tabStGScale[0] / 1000. );
 	this->dspin_TorqueCoef->setValue( (double)cfg.groupConvert.tabStGScale[1] / 1000. );
@@ -99,7 +99,7 @@ void FormCfgConvert::fetchValues( Config& cfg)
 	cfg.groupConvert.VbatDivider = (int) (this->dspin_VbatDiv->value() * 1000.0 );
 	cfg.groupConvert.VbatCorr = (int) ( 10000.0 / this->dspin_VbatCorr->value() );
 	cfg.groupConvert.LeverArmLength = (int) (this->dspin_TroqueL->value() * 100.0 ); 	// <-- mm
-	cfg.groupConvert.VIcoeff = (int) (this->dspin_CurrCoef->value() * 1000.0 );
+	cfg.groupConvert.VIcoeff = (int) (this->dspin_CurrCoef->value() * 100.0 );
 
 	cfg.groupConvert.tabStGScale[0] = (int) (this->dspin_ThrustCoef->value() * 1000. );
 	cfg.groupConvert.tabStGScale[1] = (int) (this->dspin_TorqueCoef->value() * 1000. );

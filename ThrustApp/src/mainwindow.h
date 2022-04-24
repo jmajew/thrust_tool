@@ -79,6 +79,8 @@ private:
     void start_terminal();
     void stop_terminal();
 
+    void reset_tool();
+
     void requestHBeat();
     void startHBeat();
     void stopHBeat();

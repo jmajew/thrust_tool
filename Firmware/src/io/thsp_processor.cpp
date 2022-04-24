@@ -201,17 +201,17 @@ ETHSerialResult	ThspProcessor::ProcessCommand( uint8_t command, SBuf& sbin, SBuf
 
 	case THSP_WRITE_CONFIG_TO_FLASH:
 	{
-//		EFlashError error = Flash::WriteData( pconfig, sizeof( Config ) );
-//
-//		if ( error )
-//		{
-//			sbout.WriteU8(ETH_OUT_ERROR);
-//		}
-//		else
-//		{
-//			sbout.WriteU8(ETH_OUT_OK);
-//		}
-//
+		EFlashError error = Flash::WriteData( pconfig, sizeof( Config ) );
+
+		if ( error )
+		{
+			sbout.WriteU8(ETH_OUT_ERROR);
+		}
+		else
+		{
+			sbout.WriteU8(ETH_OUT_OK);
+		}
+
 //		chThdSleepMilliseconds(1000);
 //		// after flash tool should be rebooted
 		break;
@@ -398,6 +398,7 @@ ETHSerialResult	ThspProcessor::ProcessCommand( uint8_t command, SBuf& sbin, SBuf
 
 	case THSP_RESET:
 	{
+		NVIC_SystemReset();
 		break;
 	}
 
