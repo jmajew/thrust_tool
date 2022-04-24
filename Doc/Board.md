@@ -5,6 +5,7 @@ Custom measurement board (thrustBoard v2) is based on STM32 F401RETx LQFP64 MCU.
 The schematic of the thrustBoard v2 is [here](../Board/thrust_v2.pdf).
 
 ![front](figs/thrust_v2-p3.png)
+![photo](figs/ph_board.png)
  
 
 

@@ -6,7 +6,7 @@ The propeller should be mounted as a pusher such that flow stream behind propell
 
 ### Half section of the tool:
 ![half section of the tool](figs/thtool-2.png)
-
+![photo](figs/ph_tool.png)
 
 ### 3D-printed parts:
 printed using PLA and without any support:
