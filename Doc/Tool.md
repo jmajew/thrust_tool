@@ -6,7 +6,6 @@ The propeller should be mounted as a pusher such that flow stream behind propell
 
 ### Half section of the tool:
 ![half section of the tool](figs/thtool-2.png)
-![photo](figs/ph_tool.png)
 
 ### 3D-printed parts:
 printed using PLA and without any support:
@@ -29,3 +28,6 @@ printed using PLA and without any support:
 they are not necessary but can be helpful during calibration process:
 * thrust calib tray
 * torque calib arm
+
+### Picture of the working tool:
+![photo](figs/ph_tool.jpg)
