@@ -374,7 +374,7 @@ ETHSerialResult	ThspProcessor::ProcessCommand( uint8_t command, SBuf& sbin, SBuf
 
 		pdata->grpAdc.mux.lock();
 
-		uint16_t ivbat = pdata->grpAdc.tab[ ID_CH_IBATT ].Mean();
+		uint16_t ivbat = pdata->grpAdc.tab[ ID_CH_VBATT ].Mean();
 		uint16_t ivref = pdata->grpAdc.tab[ ID_CH_VREF ].Mean();
 //		uint16_t ivbat = pdata->grpAdc.tab[ADC_ID_VBATT].Mean();
 //		uint16_t ivref = pdata->grpAdc.tab[ADC_ID_VREF].Mean();

@@ -577,6 +577,7 @@ void MainWindow::after_disconnect()
 	mControl->mFormConnect->btnDisconnect->setDisabled( true);
     discAct->setDisabled(true);       
     labConnStatus->setText( tr("Disconnected") );
+    labVBatCell->setText( tr("-.--V") );
 
     armAct->setText(tr("Arm"));
     armAct->setStatusTip(tr("Arm motor"));
