@@ -112,6 +112,8 @@ void Document::Load( const QString& fname)
 	if ( !file.open(QIODevice::ReadOnly) )
 		return;
 
+	mFileName = fname;
+
 	uint32_t key;
 	QDataStream fin(&file);
 	
@@ -156,6 +158,8 @@ void Document::Save( const QString& fname)
 	QFile file(fname);
 	if ( !file.open(QIODevice::WriteOnly) )
 		return;
+
+	mFileName = fname;
 
 	QDataStream fout(&file);
 	fout << mMagickKey;

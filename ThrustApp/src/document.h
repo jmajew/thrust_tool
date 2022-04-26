@@ -96,6 +96,9 @@ public:
 
 	void	GenerateReport( const QString& fname);
 
+	const QString&			cFileName() const	{ return mFileName; }			
+	QString&				rFileName()			{ return mFileName; }
+
 	const QString&			cTmplName() const	{ return mTmplName; }			
 	QString&				rTmplName()			{ return mTmplName; }
 
@@ -142,6 +145,7 @@ private:
 	static const uint32_t	mVer;
 	static const uint32_t	mMagickKey;
 
+	QString				mFileName;
 	QString				mTmplName;
 
 	// to save/load

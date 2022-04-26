@@ -307,9 +307,13 @@ void MainWindow::open()
 
 void MainWindow::save()
 {
-    //infoLabel->setText(tr("Invoked <b>File|Save</b>"));
+    QFileDialog dialog(this);
+
+    QFileInfo fi( mDoc.cFileName() );
+    QString dir = dialog.directory().absolutePath() + "/" + fi.baseName();
+
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save Document as"), 
-        "", tr("Bla bla bla (*.th)"));
+        dir, tr("thrust measerement (*.th)"));
     qDebug() << "save file as" << fileName;
 
     if (fileName.length() == 0)
@@ -320,11 +324,6 @@ void MainWindow::save()
 
 void MainWindow::select_export_tmpl()
 {
-    //QFileDialog dialog(this);
-    //dialog.selectFile( mDoc.cTmplName() );
-    //dialog.setNameFilter( tr("Latex template (*.ttex)") );
-    //dialog.setViewMode(QFileDialog::Detail);
-
     QString fileName = QFileDialog::getOpenFileName(this, tr("Select report template"), mDoc.cTmplName(), tr("Latex template (*.ttex)"));
     qDebug() << "Select report template" << fileName;
 
@@ -336,9 +335,13 @@ void MainWindow::select_export_tmpl()
 
 void MainWindow::export_rep()
 {
-    //infoLabel->setText(tr("Invoked <b>File|Save</b>"));
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Export report"), 
-        "", tr("Text Report (*.txt);;Latex Report (*.tex)"));
+    QFileDialog dialog(this);
+
+    QFileInfo fi( mDoc.cFileName() );
+    QString dir = dialog.directory().absolutePath() + "/" + fi.baseName();
+
+    QString fileName = dialog.getSaveFileName(this, tr("Export report"), 
+        dir, tr("Text Report (*.txt);;Latex Report (*.tex)"));
     qDebug() << "export report file as" << fileName;
 
     if (fileName.length() == 0)
