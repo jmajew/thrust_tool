@@ -92,12 +92,42 @@ void Data::PrintOnScreen( Display* plcd)
 		plcd->SetCursor(0, offset+i*8 );
 		plcd->WriteString( sbuff, font5x7, White);
 	}
+	this->grpAdc.mux.unlock();
 
 	this->grpRpm.mux.lock();
 	chsnprintf( sbuff, BUFF_SIZE, "%r: %4d", this->grpRpm.freq );
 	plcd->SetCursor(0, offset+5*8 );
 	plcd->WriteString( sbuff, font5x7, White);
 	this->grpRpm.mux.unlock();
+
+
+//	{
+//		chsnprintf( sbuff, BUFF_SIZE, "%d", master.pConfig()->groupConvert.VbatDivider );
+//		plcd->SetCursor(0, offset+0*8 );
+//		plcd->WriteString( sbuff, font5x7, White);
+//
+//		chsnprintf( sbuff, BUFF_SIZE, "%d", master.pConfig()->groupConvert.VbatCorr );
+//		plcd->SetCursor(0, offset+1*8 );
+//		plcd->WriteString( sbuff, font5x7, White);
+//
+//		chsnprintf( sbuff, BUFF_SIZE, "%d", master.pConfig()->groupConvert.tabStGScale[1] );
+//		plcd->SetCursor(0, offset+2*8 );
+//		plcd->WriteString( sbuff, font5x7, White);
+//
+//		chsnprintf( sbuff, BUFF_SIZE, "%d", master.pConfig()->groupConvert.tabStGScale[1] );
+//		plcd->SetCursor(0, offset+3*8 );
+//		plcd->WriteString( sbuff, font5x7, White);
+//
+//		chsnprintf( sbuff, BUFF_SIZE, "%d", master.pConfig()->groupConvert.tabStGZero[0] );
+//		plcd->SetCursor(0, offset+4*8 );
+//		plcd->WriteString( sbuff, font5x7, White);
+//
+//		chsnprintf( sbuff, BUFF_SIZE, "%d", master.pConfig()->groupConvert.tabStGZero[1] );
+//		plcd->SetCursor(0, offset+5*8 );
+//		plcd->WriteString( sbuff, font5x7, White);
+//	}
+
+
 
 //		chsnprintf( sbuff, BUFF_SIZE, "%d %d", this->grpAdc.tab[6].Mean(), this->grpAdc.tab[6].Deviation() );
 //		plcd->SetCursor(0, offset+3*8 );

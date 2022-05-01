@@ -27,7 +27,8 @@ void DataConverter::init( const MeasurementSetup& mesetup, const ToolSetup& setu
 
 	mVref = (double)setup.cConfig().groupConvert.Vref / 1000.0;
 	mVbatDivider = (double)setup.cConfig().groupConvert.VbatDivider / 1000.0;
-	mVbatCorr = 10000.0 / (double)setup.cConfig().groupConvert.VbatCorr;
+//	mVbatCorr = 10000.0 / (double)setup.cConfig().groupConvert.VbatCorr;
+	mVbatCorr = (double)setup.cConfig().groupConvert.VbatCorr / 10000.0;
 	mLengthTq = (double)setup.cConfig().groupConvert.LeverArmLength / 100.0;	// <-- mm
 	mCoeffCurr = (double)setup.cConfig().groupConvert.VIcoeff / 100.0;
 

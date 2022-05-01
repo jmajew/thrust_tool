@@ -359,32 +359,37 @@ void MainWindow::settings()
     int res = dialog.exec();
     if ( res == QDialog::Accepted )
     {
+        bool bwrite = ! dialog.compareValues( this->mSetup.cConfig() );
         dialog.fetchValues( this->mSetup.rConfig() );
 
-        // TODO :: send new config and reset tool
-        ThspMessage msg;
 
-        this->mSetup.packCfgMotor(msg);
-        mthSerial.request( ESerialRequest::TRANSMIT, msg );        
+        if ( bwrite )
+        {
+            // TODO :: send new config and reset tool
+            ThspMessage msg;
 
-        this->mSetup.packCfgStg(msg);
-        mthSerial.request( ESerialRequest::TRANSMIT, msg );        
+            this->mSetup.packCfgMotor(msg);
+            mthSerial.request( ESerialRequest::TRANSMIT, msg );        
 
-        this->mSetup.packCfgAdc(msg);
-        mthSerial.request( ESerialRequest::TRANSMIT, msg );        
+            this->mSetup.packCfgStg(msg);
+            mthSerial.request( ESerialRequest::TRANSMIT, msg );        
 
-        this->mSetup.packCfgRpm(msg);
-        mthSerial.request( ESerialRequest::TRANSMIT, msg );        
+            this->mSetup.packCfgAdc(msg);
+            mthSerial.request( ESerialRequest::TRANSMIT, msg );        
 
-        this->mSetup.packCfgConvert(msg);
-        mthSerial.request( ESerialRequest::TRANSMIT, msg );
+            this->mSetup.packCfgRpm(msg);
+            mthSerial.request( ESerialRequest::TRANSMIT, msg );        
 
-        ////QTimer::singleShot(200, this, &MainWindow::ack_settings);
-        //// THSP_WRITE_CONFIG_TO_FLASH
-        this->send_cmnd( THSP_WRITE_CONFIG_TO_FLASH);
-        this->reset_tool();
-        QMessageBox::information( this,	tr("Info"), "Settings has been written to internal flash and the tool has been rebooted" );
+            this->mSetup.packCfgConvert(msg);
+            mthSerial.request( ESerialRequest::TRANSMIT, msg );
 
+            ////QTimer::singleShot(200, this, &MainWindow::ack_settings);
+            //// THSP_WRITE_CONFIG_TO_FLASH
+
+            this->send_cmnd( THSP_WRITE_CONFIG_TO_FLASH);
+            this->reset_tool();
+            QMessageBox::information( this,	tr("Info"), "Settings has been written to internal flash and the tool has been rebooted" );
+        }
     }
 }
 

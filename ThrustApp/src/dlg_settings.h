@@ -23,6 +23,7 @@ public:
 
     void    initValues( const Config& cfg);
     void    fetchValues( Config& cfg);
+    bool    compareValues( const Config& cfg);
 
 private:
 };
@@ -39,6 +40,7 @@ public:
 
     void    initValues( const Config& cfg);
     void    fetchValues( Config& cfg);
+    bool    compareValues( const Config& cfg);
 
 private:
 };
@@ -58,6 +60,9 @@ public:
 
     void    initValues( const Config& cfg);
     void    fetchValues( Config& cfg);
+
+    // returns true if all is the same
+    bool    compareValues( const Config& cfg);
 
 protected:
 
