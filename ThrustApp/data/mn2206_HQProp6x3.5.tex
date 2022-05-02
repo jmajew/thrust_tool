@@ -1,0 +1,736 @@
+\documentclass[10pt]{article}
+
+\usepackage{pgfplots}
+\usepackage{multirow}
+\usepackage{filecontents}
+
+\pgfplotsset{compat=1.14}
+
+\usepackage[margin=20mm]{geometry}
+
+\setlength{\textheight}{240 mm}
+
+\begin{filecontents*}{table1.dat}
+out,      th,    th_err, tq,     tq_err,  rpm,   rpm_err,  v,    v_err,   a,     a_err,   pin,        theff
+    2e+01,       29.51,       3.561,       49.23,       2.658,        4479,        11.4,      12.554,      0.0035,       0.267,      0.0060,       3.358,       8.788
+       25,       47.36,       3.561,       70.72,       2.657,        5448,        17.3,      12.548,      0.0053,       0.424,      0.0106,       5.320,       8.902
+       30,       69.00,       3.562,       95.18,       2.661,        6395,        24.9,      12.540,      0.0050,       0.618,      0.0101,       7.755,       8.897
+       35,       92.24,       3.561,      125.52,       2.658,        7354,        30.2,      12.529,      0.0033,       0.907,      0.0156,      11.361,       8.119
+       40,      119.64,       3.574,      154.06,       2.674,        8221,        52.4,      12.518,      0.0037,       1.222,      0.0165,      15.298,       7.821
+       45,      150.73,       3.566,      187.89,       2.664,        9124,        43.9,      12.501,      0.0046,       1.646,      0.0182,      20.580,       7.324
+       50,      181.03,       3.565,      225.65,       2.672,       10023,        39.0,      12.483,      0.0067,       2.071,      0.0230,      25.849,       7.003
+       55,      214.21,       3.569,      267.26,       2.669,       10879,        60.1,      12.460,      0.0055,       2.458,      0.0217,      30.626,       6.994
+       60,      254.20,       3.566,      314.84,       2.669,       11814,        87.9,      12.429,      0.0054,       2.841,      0.0232,      35.308,       7.200
+       65,      289.89,       3.569,      362.26,       2.678,       12531,       102.4,      12.399,      0.0057,       3.357,      0.0261,      41.618,       6.965
+       70,      329.40,       3.568,      415.45,       2.678,       13366,        58.0,      12.363,      0.0044,       3.978,      0.0482,      49.182,       6.698
+       75,      371.95,       3.594,      472.64,       2.702,       14152,       129.3,      12.325,      0.0047,       4.946,      0.0310,      60.959,       6.102
+       80,      411.32,       3.570,      529.93,       2.684,       15074,       182.7,      12.276,      0.0073,       6.096,      0.0484,      74.831,       5.497
+       90,      469.33,       3.569,      619.79,       2.903,       16617,        79.5,      12.192,      0.0047,       8.776,      0.0587,     106.991,       4.387
+      100,      526.89,       3.575,      736.29,       2.824,       18024,        82.8,      12.086,      0.0051,      11.537,      0.0221,     139.438,       3.779
+\end{filecontents*}
+
+\begin{filecontents*}{table2.dat}
+out,      th,    th_err, tq,     tq_err,  rpm,   rpm_err,  v,    v_err,   a,     a_err,   pin,        theff
+       20,       29.07,       3.636,       48.01,       2.998,        4445,        10.5,      12.461,      0.0047,       0.256,      0.0078,       3.185,       9.126
+       25,       46.52,       3.636,       68.17,       2.996,        5407,        14.3,      12.455,      0.0038,       0.403,      0.0106,       5.013,       9.279
+       30,       65.55,       3.636,       91.35,       2.997,        6303,        29.7,      12.446,      0.0035,       0.602,      0.0147,       7.498,       8.742
+       35,       91.08,       3.636,      122.12,       2.994,        7290,        32.4,      12.436,      0.0042,       0.879,      0.0209,      10.928,       8.335
+       40,      120.06,       3.680,      150.15,       3.054,        8173,        36.1,      12.424,      0.0047,       1.207,      0.0191,      14.990,       8.009
+       45,      149.67,       3.653,      186.16,       3.003,        9048,        46.8,      12.407,      0.0041,       1.594,      0.0183,      19.780,       7.567
+       50,      179.31,       3.649,      221.47,       3.007,        9956,        61.2,      12.390,      0.0049,       2.012,      0.0192,      24.930,       7.193
+       55,      211.63,       3.648,      263.14,       3.013,       10791,        93.5,      12.368,      0.0023,       2.398,      0.0182,      29.654,       7.137
+       60,      250.83,       3.666,      311.83,       3.024,       11639,        62.0,      12.339,      0.0058,       2.784,      0.0230,      34.356,       7.301
+       65,      285.57,       3.641,      358.33,       3.013,       12441,        94.9,      12.307,      0.0046,       3.297,      0.0285,      40.579,       7.037
+       70,      323.79,       3.640,      410.62,       3.004,       13308,        98.7,      12.273,      0.0059,       3.961,      0.0300,      48.610,       6.661
+       75,      364.16,       3.643,      465.44,       3.006,       14077,       133.1,      12.233,      0.0069,       4.873,      0.0473,      59.612,       6.109
+       80,      402.19,       3.652,      522.37,       3.004,       14999,       136.3,      12.189,      0.0066,       6.034,      0.0571,      73.546,       5.469
+       90,      452.95,       3.649,      611.35,       3.166,       16486,        85.2,      12.108,      0.0052,       8.657,      0.0422,     104.817,       4.321
+      100,      511.73,       3.651,      722.45,       4.742,       17855,        79.8,      12.003,      0.0057,      11.371,      0.0341,     136.481,       3.749
+\end{filecontents*}
+
+\begin{filecontents*}{table3.dat}
+out,      th,    th_err, tq,     tq_err,  rpm,   rpm_err,  v,    v_err,   a,     a_err,   pin,        theff
+       20,       31.28,       2.655,       47.88,       2.530,        4413,        10.1,      12.371,      0.0051,       0.258,      0.0062,       3.197,       9.784
+       25,       47.80,       2.652,       69.08,       2.531,        5388,        19.3,      12.366,      0.0025,       0.401,      0.0101,       4.956,       9.645
+       30,       67.27,       2.655,       91.88,       2.537,        6268,        19.9,      12.361,      0.0045,       0.594,      0.0154,       7.346,       9.158
+       35,       91.81,       2.654,      122.48,       2.533,        7248,        48.3,      12.348,      0.0038,       0.869,      0.0157,      10.730,       8.557
+       40,      119.55,       2.654,      150.48,       2.542,        8165,        48.3,      12.334,      0.0053,       1.197,      0.0198,      14.760,       8.100
+       45,      147.10,       2.658,      182.17,       2.533,        8988,        56.2,      12.320,      0.0040,       1.586,      0.0198,      19.535,       7.530
+       50,      175.98,       2.655,      221.72,       2.535,        9884,        86.4,      12.301,      0.0038,       2.016,      0.0263,      24.803,       7.095
+       55,      209.42,       2.681,      260.55,       2.547,       10670,        86.3,      12.280,      0.0048,       2.381,      0.0210,      29.243,       7.161
+       60,      250.19,       2.715,      304.71,       2.546,       11604,        80.7,      12.252,      0.0058,       2.785,      0.0203,      34.117,       7.333
+       65,      283.93,       2.670,      350.99,       2.550,       12362,       126.7,      12.225,      0.0056,       3.277,      0.0294,      40.061,       7.088
+       70,      321.96,       2.668,      403.13,       2.533,       13220,        94.9,      12.186,      0.0032,       3.944,      0.0290,      48.062,       6.699
+       75,      362.82,       2.658,      458.71,       2.552,       14048,       127.3,      12.147,      0.0057,       4.851,      0.0509,      58.929,       6.157
+       80,      399.80,       2.672,      516.02,       2.592,       14857,       104.2,      12.101,      0.0044,       5.982,      0.0636,      72.386,       5.523
+       90,      449.74,       2.687,      606.08,       2.819,       16393,        96.1,      12.020,      0.0058,       8.573,      0.0378,     103.043,       4.365
+      100,      504.52,       2.721,      714.87,       2.727,       17869,        80.1,      11.920,      0.0082,      11.243,      0.0393,     134.023,       3.764
+\end{filecontents*}
+
+\begin{filecontents*}{table4.dat}
+out,      th,    th_err, tq,     tq_err,  rpm,   rpm_err,  v,    v_err,   a,     a_err,   pin,        theff
+       20,       27.00,       3.359,       46.44,       1.120,        4394,         9.1,      12.288,      0.0052,       0.255,      0.0072,       3.136,       8.610
+       25,       45.13,       3.359,       67.43,       1.124,        5341,        16.0,      12.282,      0.0049,       0.404,      0.0073,       4.961,       9.098
+       30,       64.68,       3.359,       90.28,       1.124,        6242,        26.3,      12.278,      0.0040,       0.593,      0.0086,       7.282,       8.883
+       35,       88.66,       3.363,      120.45,       1.454,        7194,        25.0,      12.265,      0.0053,       0.859,      0.0201,      10.536,       8.415
+       40,      114.60,       3.360,      149.53,       1.183,        8058,        43.4,      12.250,      0.0059,       1.180,      0.0156,      14.457,       7.927
+       45,      146.31,       3.362,      183.03,       1.147,        8906,        49.7,      12.236,      0.0046,       1.571,      0.0198,      19.224,       7.611
+       50,      173.86,       3.376,      218.84,       1.174,        9808,        53.0,      12.220,      0.0042,       1.989,      0.0191,      24.300,       7.155
+       55,      205.98,       3.362,      258.87,       1.175,       10621,        60.8,      12.197,      0.0053,       2.374,      0.0253,      28.956,       7.113
+       60,      244.31,       3.363,      303.82,       1.135,       11559,        61.8,      12.170,      0.0057,       2.768,      0.0186,      33.691,       7.252
+       65,      278.99,       3.376,      351.42,       1.161,       12365,       153.7,      12.137,      0.0050,       3.270,      0.0253,      39.684,       7.030
+       70,      316.23,       3.382,      402.22,       1.186,       13123,        95.0,      12.110,      0.0044,       3.930,      0.0407,      47.591,       6.645
+       75,      356.31,       3.369,      455.14,       1.174,       13949,        77.8,      12.067,      0.0039,       4.796,      0.0308,      57.871,       6.157
+       80,      396.00,       3.381,      513.77,       1.252,       14788,       127.6,      12.020,      0.0059,       5.971,      0.0352,      71.774,       5.517
+       90,      444.69,       3.366,      595.36,       1.196,       16285,        90.0,      11.936,      0.0064,       8.481,      0.0243,     101.223,       4.393
+      100,      496.42,       3.387,      710.24,       1.724,       17718,        99.8,      11.842,      0.0070,      11.166,      0.0283,     132.228,       3.754
+\end{filecontents*}
+
+\begin{filecontents*}{table5.dat}
+out,      th,    th_err, tq,     tq_err,  rpm,   rpm_err,  v,    v_err,   a,     a_err,   pin,        theff
+       20,       23.52,       1.718,       46.27,       2.013,        4365,         7.1,      12.212,      0.0038,       0.249,      0.0063,       3.045,       7.725
+       25,       41.37,       1.718,       67.37,       2.011,        5321,        15.2,      12.204,      0.0018,       0.392,      0.0070,       4.787,       8.643
+       30,       61.72,       1.719,       89.76,       2.018,        6214,        25.8,      12.199,      0.0040,       0.578,      0.0100,       7.046,       8.759
+       35,       84.71,       1.718,      118.79,       2.012,        7156,        16.5,      12.190,      0.0037,       0.849,      0.0174,      10.355,       8.180
+       40,      109.78,       1.719,      147.48,       2.022,        8026,        47.5,      12.173,      0.0040,       1.163,      0.0215,      14.163,       7.751
+       45,      141.10,       1.722,      179.39,       2.024,        8884,        49.0,      12.162,      0.0049,       1.562,      0.0208,      18.993,       7.429
+       50,      168.41,       1.739,      217.82,       2.019,        9769,        60.9,      12.143,      0.0053,       1.978,      0.0235,      24.017,       7.012
+       55,      199.60,       1.729,      255.46,       2.042,       10613,        52.7,      12.119,      0.0043,       2.356,      0.0175,      28.554,       6.990
+       60,      239.98,       1.741,      301.96,       2.047,       11506,        87.7,      12.093,      0.0051,       2.787,      0.0177,      33.699,       7.121
+       65,      274.26,       1.774,      348.44,       2.022,       12251,       113.8,      12.066,      0.0052,       3.283,      0.0195,      39.607,       6.925
+       70,      311.08,       1.745,      396.76,       2.044,       13076,        64.6,      12.030,      0.0057,       3.926,      0.0382,      47.226,       6.587
+       75,      351.50,       1.745,      451.02,       2.033,       13902,        88.2,      11.991,      0.0043,       4.796,      0.0339,      57.509,       6.112
+       80,      390.10,       1.743,      507.20,       2.102,       14704,       175.2,      11.948,      0.0050,       5.920,      0.0360,      70.734,       5.515
+       90,      440.96,       1.727,      590.51,       2.034,       16235,        48.1,      11.870,      0.0056,       8.419,      0.0363,      99.937,       4.412
+      100,      492.83,       1.818,      700.86,       2.612,       17601,       112.4,      11.770,      0.0094,      11.042,      0.0296,     129.964,       3.792
+\end{filecontents*}
+
+
+
+
+
+\begin{document}
+
+\noindent
+{\large \bf Tool info}
+\vspace{3mm}
+
+\noindent
+\begin{tabular}{ll}
+Serial API:  & 1:1.0\\ 
+Board:       & Custom STM32F401RE thrustBoard v2\\ 
+Firmware:    & thrust++ : ChibiOS RT 7.1.0 : HAL 8.1.0\\ 
+Commit:      & [7ea798b] : Apr 25 2022 - 18:19:20
+\end{tabular}
+\vspace{3mm}
+
+\noindent
+{\large \bf Measurement info}
+\vspace{3mm}
+
+\noindent
+\begin{tabular}{ll}
+Motor:        & T-Motor MN2206-13\\ 
+KV:           & 2000\\ 
+Magnet poles: & 14\\ 
+Propeler:     & HQProp 6x3.5\\ 
+Blade count:  & 2\\ 
+Note:         & 
+\end{tabular}
+
+\vspace{3mm}
+
+\noindent
+{\large \bf Measurement Results 1:}
+\vspace{3mm}
+
+\noindent
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|r|rr|rr|rr|rr|rr|r|r|}
+\hline 
+ \multirow[c]{2}{11mm}{Output [\%]} & \multicolumn{2}{l|}{Thrust [G]} & \multicolumn{2}{l|}{Torque [G cm]} & \multicolumn{2}{l|}{RPM [1/min]} 
+   & \multicolumn{2}{l|}{Voltage [V]} & \multicolumn{2}{l|}{Current [A]} &\multirow{2}{14mm}{Pin [W]}  &\multirow{2}{14mm}{ThrustEff [G/W]}  \\
+\cline{2-11} 
+    &    mean& std dev&   mean& std dev&   mean& std dev&    mean& std dev&  mean& std dev&         &                \\
+\hline
+       20 &        29.51 &        3.561 &        49.23 &        2.658 &         4479 &         11.4 &       12.554 &       0.0035 &        0.267 &       0.0060 &        3.358 &        8.788 \\
+       25 &        47.36 &        3.561 &        70.72 &        2.657 &         5448 &         17.3 &       12.548 &       0.0053 &        0.424 &       0.0106 &        5.320 &        8.902 \\
+       30 &        69.00 &        3.562 &        95.18 &        2.661 &         6395 &         24.9 &       12.540 &       0.0050 &        0.618 &       0.0101 &        7.755 &        8.897 \\
+       35 &        92.24 &        3.561 &       125.52 &        2.658 &         7354 &         30.2 &       12.529 &       0.0033 &        0.907 &       0.0156 &       11.361 &        8.119 \\
+       40 &       119.64 &        3.574 &       154.06 &        2.674 &         8221 &         52.4 &       12.518 &       0.0037 &        1.222 &       0.0165 &       15.298 &        7.821 \\
+       45 &       150.73 &        3.566 &       187.89 &        2.664 &         9124 &         43.9 &       12.501 &       0.0046 &        1.646 &       0.0182 &       20.580 &        7.324 \\
+       50 &       181.03 &        3.565 &       225.65 &        2.672 &        10023 &         39.0 &       12.483 &       0.0067 &        2.071 &       0.0230 &       25.849 &        7.003 \\
+       55 &       214.21 &        3.569 &       267.26 &        2.669 &        10879 &         60.1 &       12.460 &       0.0055 &        2.458 &       0.0217 &       30.626 &        6.994 \\
+       60 &       254.20 &        3.566 &       314.84 &        2.669 &        11814 &         87.9 &       12.429 &       0.0054 &        2.841 &       0.0232 &       35.308 &        7.200 \\
+       65 &       289.89 &        3.569 &       362.26 &        2.678 &        12531 &        102.4 &       12.399 &       0.0057 &        3.357 &       0.0261 &       41.618 &        6.965 \\
+       70 &       329.40 &        3.568 &       415.45 &        2.678 &        13366 &         58.0 &       12.363 &       0.0044 &        3.978 &       0.0482 &       49.182 &        6.698 \\
+       75 &       371.95 &        3.594 &       472.64 &        2.702 &        14152 &        129.3 &       12.325 &       0.0047 &        4.946 &       0.0310 &       60.959 &        6.102 \\
+       80 &       411.32 &        3.570 &       529.93 &        2.684 &        15074 &        182.7 &       12.276 &       0.0073 &        6.096 &       0.0484 &       74.831 &        5.497 \\
+       90 &       469.33 &        3.569 &       619.79 &        2.903 &        16617 &         79.5 &       12.192 &       0.0047 &        8.776 &       0.0587 &      106.991 &        4.387 \\
+      100 &       526.89 &        3.575 &       736.29 &        2.824 &        18024 &         82.8 &       12.086 &       0.0051 &       11.537 &       0.0221 &      139.438 &        3.779 \\
+\hline
+\end{tabular}
+}
+
+\vspace{3mm}
+
+\noindent
+{\large \bf Measurement Results 2:}
+\vspace{3mm}
+
+\noindent
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|r|rr|rr|rr|rr|rr|r|r|}
+\hline 
+ \multirow[c]{2}{11mm}{Output [\%]} & \multicolumn{2}{l|}{Thrust [G]} & \multicolumn{2}{l|}{Torque [G cm]} & \multicolumn{2}{l|}{RPM [1/min]} 
+   & \multicolumn{2}{l|}{Voltage [V]} & \multicolumn{2}{l|}{Current [A]} &\multirow{2}{14mm}{Pin [W]}  &\multirow{2}{14mm}{ThrustEff [G/W]}  \\
+\cline{2-11} 
+    &    mean& std dev&   mean& std dev&   mean& std dev&    mean& std dev&  mean& std dev&         &                \\
+\hline
+       20 &        29.07 &        3.636 &        48.01 &        2.998 &         4445 &         10.5 &       12.461 &       0.0047 &        0.256 &       0.0078 &        3.185 &        9.126 \\
+       25 &        46.52 &        3.636 &        68.17 &        2.996 &         5407 &         14.3 &       12.455 &       0.0038 &        0.403 &       0.0106 &        5.013 &        9.279 \\
+       30 &        65.55 &        3.636 &        91.35 &        2.997 &         6303 &         29.7 &       12.446 &       0.0035 &        0.602 &       0.0147 &        7.498 &        8.742 \\
+       35 &        91.08 &        3.636 &       122.12 &        2.994 &         7290 &         32.4 &       12.436 &       0.0042 &        0.879 &       0.0209 &       10.928 &        8.335 \\
+       40 &       120.06 &        3.680 &       150.15 &        3.054 &         8173 &         36.1 &       12.424 &       0.0047 &        1.207 &       0.0191 &       14.990 &        8.009 \\
+       45 &       149.67 &        3.653 &       186.16 &        3.003 &         9048 &         46.8 &       12.407 &       0.0041 &        1.594 &       0.0183 &       19.780 &        7.567 \\
+       50 &       179.31 &        3.649 &       221.47 &        3.007 &         9956 &         61.2 &       12.390 &       0.0049 &        2.012 &       0.0192 &       24.930 &        7.193 \\
+       55 &       211.63 &        3.648 &       263.14 &        3.013 &        10791 &         93.5 &       12.368 &       0.0023 &        2.398 &       0.0182 &       29.654 &        7.137 \\
+       60 &       250.83 &        3.666 &       311.83 &        3.024 &        11639 &         62.0 &       12.339 &       0.0058 &        2.784 &       0.0230 &       34.356 &        7.301 \\
+       65 &       285.57 &        3.641 &       358.33 &        3.013 &        12441 &         94.9 &       12.307 &       0.0046 &        3.297 &       0.0285 &       40.579 &        7.037 \\
+       70 &       323.79 &        3.640 &       410.62 &        3.004 &        13308 &         98.7 &       12.273 &       0.0059 &        3.961 &       0.0300 &       48.610 &        6.661 \\
+       75 &       364.16 &        3.643 &       465.44 &        3.006 &        14077 &        133.1 &       12.233 &       0.0069 &        4.873 &       0.0473 &       59.612 &        6.109 \\
+       80 &       402.19 &        3.652 &       522.37 &        3.004 &        14999 &        136.3 &       12.189 &       0.0066 &        6.034 &       0.0571 &       73.546 &        5.469 \\
+       90 &       452.95 &        3.649 &       611.35 &        3.166 &        16486 &         85.2 &       12.108 &       0.0052 &        8.657 &       0.0422 &      104.817 &        4.321 \\
+      100 &       511.73 &        3.651 &       722.45 &        4.742 &        17855 &         79.8 &       12.003 &       0.0057 &       11.371 &       0.0341 &      136.481 &        3.749 \\
+\hline
+\end{tabular}
+}
+
+\vspace{3mm}
+
+\noindent
+{\large \bf Measurement Results 3:}
+\vspace{3mm}
+
+\noindent
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|r|rr|rr|rr|rr|rr|r|r|}
+\hline 
+ \multirow[c]{2}{11mm}{Output [\%]} & \multicolumn{2}{l|}{Thrust [G]} & \multicolumn{2}{l|}{Torque [G cm]} & \multicolumn{2}{l|}{RPM [1/min]} 
+   & \multicolumn{2}{l|}{Voltage [V]} & \multicolumn{2}{l|}{Current [A]} &\multirow{2}{14mm}{Pin [W]}  &\multirow{2}{14mm}{ThrustEff [G/W]}  \\
+\cline{2-11} 
+    &    mean& std dev&   mean& std dev&   mean& std dev&    mean& std dev&  mean& std dev&         &                \\
+\hline
+       20 &        31.28 &        2.655 &        47.88 &        2.530 &         4413 &         10.1 &       12.371 &       0.0051 &        0.258 &       0.0062 &        3.197 &        9.784 \\
+       25 &        47.80 &        2.652 &        69.08 &        2.531 &         5388 &         19.3 &       12.366 &       0.0025 &        0.401 &       0.0101 &        4.956 &        9.645 \\
+       30 &        67.27 &        2.655 &        91.88 &        2.537 &         6268 &         19.9 &       12.361 &       0.0045 &        0.594 &       0.0154 &        7.346 &        9.158 \\
+       35 &        91.81 &        2.654 &       122.48 &        2.533 &         7248 &         48.3 &       12.348 &       0.0038 &        0.869 &       0.0157 &       10.730 &        8.557 \\
+       40 &       119.55 &        2.654 &       150.48 &        2.542 &         8165 &         48.3 &       12.334 &       0.0053 &        1.197 &       0.0198 &       14.760 &        8.100 \\
+       45 &       147.10 &        2.658 &       182.17 &        2.533 &         8988 &         56.2 &       12.320 &       0.0040 &        1.586 &       0.0198 &       19.535 &        7.530 \\
+       50 &       175.98 &        2.655 &       221.72 &        2.535 &         9884 &         86.4 &       12.301 &       0.0038 &        2.016 &       0.0263 &       24.803 &        7.095 \\
+       55 &       209.42 &        2.681 &       260.55 &        2.547 &        10670 &         86.3 &       12.280 &       0.0048 &        2.381 &       0.0210 &       29.243 &        7.161 \\
+       60 &       250.19 &        2.715 &       304.71 &        2.546 &        11604 &         80.7 &       12.252 &       0.0058 &        2.785 &       0.0203 &       34.117 &        7.333 \\
+       65 &       283.93 &        2.670 &       350.99 &        2.550 &        12362 &        126.7 &       12.225 &       0.0056 &        3.277 &       0.0294 &       40.061 &        7.088 \\
+       70 &       321.96 &        2.668 &       403.13 &        2.533 &        13220 &         94.9 &       12.186 &       0.0032 &        3.944 &       0.0290 &       48.062 &        6.699 \\
+       75 &       362.82 &        2.658 &       458.71 &        2.552 &        14048 &        127.3 &       12.147 &       0.0057 &        4.851 &       0.0509 &       58.929 &        6.157 \\
+       80 &       399.80 &        2.672 &       516.02 &        2.592 &        14857 &        104.2 &       12.101 &       0.0044 &        5.982 &       0.0636 &       72.386 &        5.523 \\
+       90 &       449.74 &        2.687 &       606.08 &        2.819 &        16393 &         96.1 &       12.020 &       0.0058 &        8.573 &       0.0378 &      103.043 &        4.365 \\
+      100 &       504.52 &        2.721 &       714.87 &        2.727 &        17869 &         80.1 &       11.920 &       0.0082 &       11.243 &       0.0393 &      134.023 &        3.764 \\
+\hline
+\end{tabular}
+}
+
+\vspace{3mm}
+
+\noindent
+{\large \bf Measurement Results 4:}
+\vspace{3mm}
+
+\noindent
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|r|rr|rr|rr|rr|rr|r|r|}
+\hline 
+ \multirow[c]{2}{11mm}{Output [\%]} & \multicolumn{2}{l|}{Thrust [G]} & \multicolumn{2}{l|}{Torque [G cm]} & \multicolumn{2}{l|}{RPM [1/min]} 
+   & \multicolumn{2}{l|}{Voltage [V]} & \multicolumn{2}{l|}{Current [A]} &\multirow{2}{14mm}{Pin [W]}  &\multirow{2}{14mm}{ThrustEff [G/W]}  \\
+\cline{2-11} 
+    &    mean& std dev&   mean& std dev&   mean& std dev&    mean& std dev&  mean& std dev&         &                \\
+\hline
+       20 &        27.00 &        3.359 &        46.44 &        1.120 &         4394 &          9.1 &       12.288 &       0.0052 &        0.255 &       0.0072 &        3.136 &        8.610 \\
+       25 &        45.13 &        3.359 &        67.43 &        1.124 &         5341 &         16.0 &       12.282 &       0.0049 &        0.404 &       0.0073 &        4.961 &        9.098 \\
+       30 &        64.68 &        3.359 &        90.28 &        1.124 &         6242 &         26.3 &       12.278 &       0.0040 &        0.593 &       0.0086 &        7.282 &        8.883 \\
+       35 &        88.66 &        3.363 &       120.45 &        1.454 &         7194 &         25.0 &       12.265 &       0.0053 &        0.859 &       0.0201 &       10.536 &        8.415 \\
+       40 &       114.60 &        3.360 &       149.53 &        1.183 &         8058 &         43.4 &       12.250 &       0.0059 &        1.180 &       0.0156 &       14.457 &        7.927 \\
+       45 &       146.31 &        3.362 &       183.03 &        1.147 &         8906 &         49.7 &       12.236 &       0.0046 &        1.571 &       0.0198 &       19.224 &        7.611 \\
+       50 &       173.86 &        3.376 &       218.84 &        1.174 &         9808 &         53.0 &       12.220 &       0.0042 &        1.989 &       0.0191 &       24.300 &        7.155 \\
+       55 &       205.98 &        3.362 &       258.87 &        1.175 &        10621 &         60.8 &       12.197 &       0.0053 &        2.374 &       0.0253 &       28.956 &        7.113 \\
+       60 &       244.31 &        3.363 &       303.82 &        1.135 &        11559 &         61.8 &       12.170 &       0.0057 &        2.768 &       0.0186 &       33.691 &        7.252 \\
+       65 &       278.99 &        3.376 &       351.42 &        1.161 &        12365 &        153.7 &       12.137 &       0.0050 &        3.270 &       0.0253 &       39.684 &        7.030 \\
+       70 &       316.23 &        3.382 &       402.22 &        1.186 &        13123 &         95.0 &       12.110 &       0.0044 &        3.930 &       0.0407 &       47.591 &        6.645 \\
+       75 &       356.31 &        3.369 &       455.14 &        1.174 &        13949 &         77.8 &       12.067 &       0.0039 &        4.796 &       0.0308 &       57.871 &        6.157 \\
+       80 &       396.00 &        3.381 &       513.77 &        1.252 &        14788 &        127.6 &       12.020 &       0.0059 &        5.971 &       0.0352 &       71.774 &        5.517 \\
+       90 &       444.69 &        3.366 &       595.36 &        1.196 &        16285 &         90.0 &       11.936 &       0.0064 &        8.481 &       0.0243 &      101.223 &        4.393 \\
+      100 &       496.42 &        3.387 &       710.24 &        1.724 &        17718 &         99.8 &       11.842 &       0.0070 &       11.166 &       0.0283 &      132.228 &        3.754 \\
+\hline
+\end{tabular}
+}
+
+\vspace{3mm}
+
+\noindent
+{\large \bf Measurement Results 5:}
+\vspace{3mm}
+
+\noindent
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|r|rr|rr|rr|rr|rr|r|r|}
+\hline 
+ \multirow[c]{2}{11mm}{Output [\%]} & \multicolumn{2}{l|}{Thrust [G]} & \multicolumn{2}{l|}{Torque [G cm]} & \multicolumn{2}{l|}{RPM [1/min]} 
+   & \multicolumn{2}{l|}{Voltage [V]} & \multicolumn{2}{l|}{Current [A]} &\multirow{2}{14mm}{Pin [W]}  &\multirow{2}{14mm}{ThrustEff [G/W]}  \\
+\cline{2-11} 
+    &    mean& std dev&   mean& std dev&   mean& std dev&    mean& std dev&  mean& std dev&         &                \\
+\hline
+       20 &        23.52 &        1.718 &        46.27 &        2.013 &         4365 &          7.1 &       12.212 &       0.0038 &        0.249 &       0.0063 &        3.045 &        7.725 \\
+       25 &        41.37 &        1.718 &        67.37 &        2.011 &         5321 &         15.2 &       12.204 &       0.0018 &        0.392 &       0.0070 &        4.787 &        8.643 \\
+       30 &        61.72 &        1.719 &        89.76 &        2.018 &         6214 &         25.8 &       12.199 &       0.0040 &        0.578 &       0.0100 &        7.046 &        8.759 \\
+       35 &        84.71 &        1.718 &       118.79 &        2.012 &         7156 &         16.5 &       12.190 &       0.0037 &        0.849 &       0.0174 &       10.355 &        8.180 \\
+       40 &       109.78 &        1.719 &       147.48 &        2.022 &         8026 &         47.5 &       12.173 &       0.0040 &        1.163 &       0.0215 &       14.163 &        7.751 \\
+       45 &       141.10 &        1.722 &       179.39 &        2.024 &         8884 &         49.0 &       12.162 &       0.0049 &        1.562 &       0.0208 &       18.993 &        7.429 \\
+       50 &       168.41 &        1.739 &       217.82 &        2.019 &         9769 &         60.9 &       12.143 &       0.0053 &        1.978 &       0.0235 &       24.017 &        7.012 \\
+       55 &       199.60 &        1.729 &       255.46 &        2.042 &        10613 &         52.7 &       12.119 &       0.0043 &        2.356 &       0.0175 &       28.554 &        6.990 \\
+       60 &       239.98 &        1.741 &       301.96 &        2.047 &        11506 &         87.7 &       12.093 &       0.0051 &        2.787 &       0.0177 &       33.699 &        7.121 \\
+       65 &       274.26 &        1.774 &       348.44 &        2.022 &        12251 &        113.8 &       12.066 &       0.0052 &        3.283 &       0.0195 &       39.607 &        6.925 \\
+       70 &       311.08 &        1.745 &       396.76 &        2.044 &        13076 &         64.6 &       12.030 &       0.0057 &        3.926 &       0.0382 &       47.226 &        6.587 \\
+       75 &       351.50 &        1.745 &       451.02 &        2.033 &        13902 &         88.2 &       11.991 &       0.0043 &        4.796 &       0.0339 &       57.509 &        6.112 \\
+       80 &       390.10 &        1.743 &       507.20 &        2.102 &        14704 &        175.2 &       11.948 &       0.0050 &        5.920 &       0.0360 &       70.734 &        5.515 \\
+       90 &       440.96 &        1.727 &       590.51 &        2.034 &        16235 &         48.1 &       11.870 &       0.0056 &        8.419 &       0.0363 &       99.937 &        4.412 \\
+      100 &       492.83 &        1.818 &       700.86 &        2.612 &        17601 &        112.4 &       11.770 &       0.0094 &       11.042 &       0.0296 &      129.964 &        3.792 \\
+\hline
+\end{tabular}
+}
+
+\vspace{3mm}
+
+
+
+
+
+
+\pagebreak
+\noindent
+{\large \bf Plots for Measurement Results:}
+\vspace{5mm}
+
+\noindent
+\begin{tikzpicture}
+	\begin{axis}[
+		height=8cm,
+		width=8cm,  %\textwidth,
+		ticklabel style = {font=\tiny},
+		minor tick num=4,
+		ymin=0,
+		grid=both,
+		major grid style={gray!80},
+		minor grid style={gray!25},
+		xlabel={\footnotesize Motor Output [\%]},
+		ylabel={\footnotesize Thrust [G]},
+		legend pos=north west,
+		legend style={draw=none}]
+	\addplot[
+		blue, mark options={black, scale=0.175},
+		smooth, 
+		error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit,
+	] 
+	table [x=out, y=th, y error=th_err, col sep=comma] {table1.dat};
+	\addplot[
+		blue, mark options={black, scale=0.175},
+		smooth, 
+		error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit,
+	] 
+	table [x=out, y=th, y error=th_err, col sep=comma] {table2.dat};
+	\addplot[
+		blue, mark options={black, scale=0.175},
+		smooth, 
+		error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit,
+	] 
+	table [x=out, y=th, y error=th_err, col sep=comma] {table3.dat};
+	\addplot[
+		blue, mark options={black, scale=0.175},
+		smooth, 
+		error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit,
+	] 
+	table [x=out, y=th, y error=th_err, col sep=comma] {table4.dat};
+	\addplot[
+		blue, mark options={black, scale=0.175},
+		smooth, 
+		error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit,
+	] 
+	table [x=out, y=th, y error=th_err, col sep=comma] {table5.dat};
+
+	\end{axis}
+\end{tikzpicture}
+\hspace{3mm}
+\begin{tikzpicture}
+	\begin{axis}[
+		height=8cm,
+		width=8cm,  %\textwidth,
+		ticklabel style = {font=\tiny},
+		minor tick num=4,
+		ymin=0,
+		grid=both,
+		major grid style={gray!80},
+		minor grid style={gray!25},
+		xlabel={\footnotesize Motor Output [\%]},
+		ylabel={\footnotesize Torque [G cm]},
+		legend pos=north west,
+		legend style={draw=none}]
+	\addplot[
+		blue, mark options={black, scale=0.175},
+		smooth, 
+		error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit,
+	] 
+	table [x=out, y=tq, y error=tq_err, col sep=comma] {table1.dat};
+	\addplot[
+		blue, mark options={black, scale=0.175},
+		smooth, 
+		error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit,
+	] 
+	table [x=out, y=tq, y error=tq_err, col sep=comma] {table2.dat};
+	\addplot[
+		blue, mark options={black, scale=0.175},
+		smooth, 
+		error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit,
+	] 
+	table [x=out, y=tq, y error=tq_err, col sep=comma] {table3.dat};
+	\addplot[
+		blue, mark options={black, scale=0.175},
+		smooth, 
+		error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit,
+	] 
+	table [x=out, y=tq, y error=tq_err, col sep=comma] {table4.dat};
+	\addplot[
+		blue, mark options={black, scale=0.175},
+		smooth, 
+		error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit,
+	] 
+	table [x=out, y=tq, y error=tq_err, col sep=comma] {table5.dat};
+
+	\end{axis}
+\end{tikzpicture}
+  
+\noindent 
+\vspace{3mm}
+\begin{tikzpicture}
+	\begin{axis}[
+		height=8cm,
+		width=8cm,  %\textwidth,
+		ticklabel style = {font=\tiny},
+		tick scale binop=\times, %base 10:-3,
+		minor tick num=4,
+		grid=both,
+		major grid style={gray!80},
+		minor grid style={gray!25},
+		xlabel={\footnotesize Motor Output [\%]},
+		ylabel={\footnotesize RPM [1/min]},
+		legend pos=north west,
+		legend style={draw=none}]
+	\addplot[
+		blue, mark options={black, scale=0.175},
+		smooth, 
+		error bars/.cd, 
+			y fixed,
+			y dir=both, 
+			y explicit,
+	] 
+	table [x=out, y=rpm, y error=rpm_err, col sep=comma] {table1.dat};
+	\addplot[
+		blue, mark options={black, scale=0.175},
+		smooth, 
+		error bars/.cd, 
+			y fixed,
+			y dir=both, 
+			y explicit,
+	] 
+	table [x=out, y=rpm, y error=rpm_err, col sep=comma] {table2.dat};
+	\addplot[
+		blue, mark options={black, scale=0.175},
+		smooth, 
+		error bars/.cd, 
+			y fixed,
+			y dir=both, 
+			y explicit,
+	] 
+	table [x=out, y=rpm, y error=rpm_err, col sep=comma] {table3.dat};
+	\addplot[
+		blue, mark options={black, scale=0.175},
+		smooth, 
+		error bars/.cd, 
+			y fixed,
+			y dir=both, 
+			y explicit,
+	] 
+	table [x=out, y=rpm, y error=rpm_err, col sep=comma] {table4.dat};
+	\addplot[
+		blue, mark options={black, scale=0.175},
+		smooth, 
+		error bars/.cd, 
+			y fixed,
+			y dir=both, 
+			y explicit,
+	] 
+	table [x=out, y=rpm, y error=rpm_err, col sep=comma] {table5.dat};
+
+	\end{axis}
+\end{tikzpicture}
+\hspace{4.65mm}
+\begin{tikzpicture}
+	\begin{axis}[
+		height=8cm,
+		width=8cm,
+		ticklabel style = {font=\tiny},
+		ymin=0,
+		grid=both,
+		xlabel={\footnotesize Motor Output [\%]},
+		ylabel={\footnotesize Current [A]},
+		legend pos=north west,
+		legend style={draw=none}]
+	\addplot[
+	  blue, mark options={black, scale=0.175},
+	  smooth, 
+	  error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit
+	] 
+	table [x=out, y=a, y error=a_err, col sep=comma] {table1.dat};
+	\addplot[
+	  blue, mark options={black, scale=0.175},
+	  smooth, 
+	  error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit
+	] 
+	table [x=out, y=a, y error=a_err, col sep=comma] {table2.dat};
+	\addplot[
+	  blue, mark options={black, scale=0.175},
+	  smooth, 
+	  error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit
+	] 
+	table [x=out, y=a, y error=a_err, col sep=comma] {table3.dat};
+	\addplot[
+	  blue, mark options={black, scale=0.175},
+	  smooth, 
+	  error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit
+	] 
+	table [x=out, y=a, y error=a_err, col sep=comma] {table4.dat};
+	\addplot[
+	  blue, mark options={black, scale=0.175},
+	  smooth, 
+	  error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit
+	] 
+	table [x=out, y=a, y error=a_err, col sep=comma] {table5.dat};
+
+	\end{axis}
+	\begin{axis}[
+		height=8cm,
+		width=8cm,  %\textwidth,
+		axis y line*=right,
+		axis x line=none,
+		scaled y ticks=false,
+		ticklabel style = {font=\tiny},
+		grid style=dashed,
+		grid=major,
+		ylabel={\footnotesize Voltage [V]},
+		legend style={
+			nodes={scale=0.5, transform shape},
+			cells={anchor=east},
+			% legend pos=south east,
+			at={(0.5,0.97)},anchor=north,
+		}
+	]
+%	\addlegendimage{/pgfplots/refstyle=plot_1}\addlegendentry{Current [A]}
+	\addplot[
+		red, mark options={red, scale=0.15},
+		smooth,
+		error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit  
+	] 
+	table [x=out, y=v, y error=v_err, col sep=comma] {table1.dat};
+	\addplot[
+		red, mark options={red, scale=0.15},
+		smooth,
+		error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit  
+	] 
+	table [x=out, y=v, y error=v_err, col sep=comma] {table2.dat};
+	\addplot[
+		red, mark options={red, scale=0.15},
+		smooth,
+		error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit  
+	] 
+	table [x=out, y=v, y error=v_err, col sep=comma] {table3.dat};
+	\addplot[
+		red, mark options={red, scale=0.15},
+		smooth,
+		error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit  
+	] 
+	table [x=out, y=v, y error=v_err, col sep=comma] {table4.dat};
+	\addplot[
+		red, mark options={red, scale=0.15},
+		smooth,
+		error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit  
+	] 
+	table [x=out, y=v, y error=v_err, col sep=comma] {table5.dat};
+
+%	\addlegendentry{Voltage [V]}
+	\end{axis}
+\end{tikzpicture}
+\vspace{3mm}
+
+\noindent 
+\begin{tikzpicture}
+	\begin{axis}[
+		height=8cm,
+		width=8cm,  %\textwidth,
+		ticklabel style = {font=\tiny},
+		minor tick num=4,
+		ymin=0,
+		grid=both,
+		major grid style={gray!80},
+		minor grid style={gray!25},
+		xlabel={\footnotesize Motor Output [\%]},
+		ylabel={\footnotesize Power In [W]},
+		legend pos=north west,
+		legend style={
+			nodes={scale=0.75, transform shape},
+			cells={anchor=west},
+			legend pos=north west,
+		}	
+	]			
+	\addplot[
+		blue, mark=*, mark options={blue, scale=0.5},
+		smooth, 
+	] 
+	table [x=out, y=pin, col sep=comma] {table1.dat};
+	\addplot[
+		blue, mark=*, mark options={blue, scale=0.5},
+		smooth, 
+	] 
+	table [x=out, y=pin, col sep=comma] {table2.dat};
+	\addplot[
+		blue, mark=*, mark options={blue, scale=0.5},
+		smooth, 
+	] 
+	table [x=out, y=pin, col sep=comma] {table3.dat};
+	\addplot[
+		blue, mark=*, mark options={blue, scale=0.5},
+		smooth, 
+	] 
+	table [x=out, y=pin, col sep=comma] {table4.dat};
+	\addplot[
+		blue, mark=*, mark options={blue, scale=0.5},
+		smooth, 
+	] 
+	table [x=out, y=pin, col sep=comma] {table5.dat};
+
+	\end{axis}
+	\end{tikzpicture}
+\hspace{3mm}
+	\begin{tikzpicture}
+	\begin{axis}[
+		height=8cm,
+		width=8cm,  %\textwidth,
+		ticklabel style = {font=\tiny},
+		minor tick num=4,
+		grid=both,
+		major grid style={gray!80},
+		minor grid style={gray!25},
+		xlabel={\footnotesize Motor Output [\%]},
+		ylabel={\footnotesize Thrust Efficiency [G/W]},
+		legend pos=north west,
+		legend style={draw=none}]
+	\addplot[
+		blue, mark=*, mark options={blue, scale=0.5},
+		smooth, 
+	] 
+	table [x=out, y=theff, col sep=comma] {table1.dat};
+	\addplot[
+		blue, mark=*, mark options={blue, scale=0.5},
+		smooth, 
+	] 
+	table [x=out, y=theff, col sep=comma] {table2.dat};
+	\addplot[
+		blue, mark=*, mark options={blue, scale=0.5},
+		smooth, 
+	] 
+	table [x=out, y=theff, col sep=comma] {table3.dat};
+	\addplot[
+		blue, mark=*, mark options={blue, scale=0.5},
+		smooth, 
+	] 
+	table [x=out, y=theff, col sep=comma] {table4.dat};
+	\addplot[
+		blue, mark=*, mark options={blue, scale=0.5},
+		smooth, 
+	] 
+	table [x=out, y=theff, col sep=comma] {table5.dat};
+
+	\end{axis}
+\end{tikzpicture}
+
+	
+\end{document}
+
+

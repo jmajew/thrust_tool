@@ -147,7 +147,7 @@ StatisticValue Analyzer::ComputeChannel(int ch, const TLevelDef& def)
 		// remove spikes
 		for (auto e : tab)
 		{
-			if ( std::fabs( e - sval.Mean() ) < 2.*marg )
+			if ( std::fabs( e - sval.Mean() ) < marg )
 				tab_fin.push_back( e);
 		}
 

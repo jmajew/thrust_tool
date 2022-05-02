@@ -1,0 +1,304 @@
+\documentclass[10pt]{article}
+
+\usepackage{pgfplots}
+\usepackage{multirow}
+\usepackage{filecontents}
+
+\pgfplotsset{compat=1.14}
+
+\usepackage[margin=20mm]{geometry}
+
+\setlength{\textheight}{240 mm}
+
+\begin{filecontents*}{table1.dat}
+out,      th,    th_err, tq,     tq_err,  rpm,   rpm_err,  v,    v_err,   a,     a_err,   pin,        theff
+    2e+01,        0.75,       4.004,        4.67,       3.013,        4759,        10.9,      12.141,      0.0039,       0.130,      0.0088,       1.580,       0.474
+       25,        0.65,       4.004,        4.80,       3.013,        5899,        17.7,      12.140,      0.0041,       0.166,      0.0126,       2.014,       0.323
+       30,       -0.30,       4.005,        4.98,       3.013,        7108,        27.4,      12.141,      0.0049,       0.188,      0.0129,       2.287,      -0.129
+       35,       -0.30,       4.004,        5.04,       3.013,        8272,        32.6,      12.135,      0.0042,       0.242,      0.0171,       2.942,      -0.104
+       40,       -0.38,       4.004,        5.62,       3.013,        9472,        56.0,      12.133,      0.0031,       0.263,      0.0177,       3.194,      -0.119
+       45,       -1.53,       4.004,        4.44,       3.014,       10621,        81.1,      12.134,      0.0052,       0.294,      0.0325,       3.573,      -0.430
+       50,       -2.90,       4.004,        4.27,       3.013,       11750,        85.6,      12.129,      0.0038,       0.322,      0.0218,       3.900,      -0.744
+       55,       -3.37,       4.004,        3.33,       3.014,       12883,        89.5,      12.127,      0.0044,       0.373,      0.0309,       4.520,      -0.746
+       60,       -3.35,       4.004,        2.68,       3.015,       14102,        69.3,      12.123,      0.0040,       0.403,      0.0262,       4.890,      -0.684
+       65,       -3.38,       4.004,        1.43,       3.044,       15312,        95.8,      12.123,      0.0040,       0.429,      0.0445,       5.203,      -0.650
+       70,       -3.38,       4.004,        0.38,       3.015,       16479,       119.5,      12.121,      0.0039,       0.455,      0.0333,       5.512,      -0.614
+       75,       -3.38,       4.004,        0.92,       3.018,       17717,        80.4,      12.119,      0.0047,       0.470,      0.0248,       5.698,      -0.593
+       80,       -7.57,       4.043,        5.10,       3.017,       18809,       122.2,      12.116,      0.0043,       0.488,      0.0333,       5.915,      -1.280
+       90,       -4.35,       4.005,        6.84,       3.013,       21142,        92.4,      12.113,      0.0035,       0.535,      0.0127,       6.485,      -0.671
+      100,       -0.64,       4.009,        4.66,       3.014,       23243,       100.8,      12.109,      0.0048,       0.592,      0.0144,       7.167,      -0.089
+\end{filecontents*}
+
+
+
+
+
+\begin{document}
+
+\noindent
+{\large \bf Tool info}
+\vspace{3mm}
+
+\noindent
+\begin{tabular}{ll}
+Serial API:  & 1:1.0\\ 
+Board:       & Custom STM32F401RE thrustBoard v2\\ 
+Firmware:    & thrust++ : ChibiOS RT 7.1.0 : HAL 8.1.0\\ 
+Commit:      & [7ea798b] : Apr 25 2022 - 18:19:20
+\end{tabular}
+\vspace{3mm}
+
+\noindent
+{\large \bf Measurement info}
+\vspace{3mm}
+
+\noindent
+\begin{tabular}{ll}
+Motor:        & T-Motor MN2206-13\\ 
+KV:           & 2000\\ 
+Magnet poles: & 14\\ 
+Propeler:     & no propeller\\ 
+Blade count:  & 0\\ 
+Note:         & 
+\end{tabular}
+
+\vspace{3mm}
+
+\noindent
+{\large \bf Measurement Results 1:}
+\vspace{3mm}
+
+\noindent
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|r|rr|rr|rr|rr|rr|r|r|}
+\hline 
+ \multirow[c]{2}{11mm}{Output [\%]} & \multicolumn{2}{l|}{Thrust [G]} & \multicolumn{2}{l|}{Torque [G cm]} & \multicolumn{2}{l|}{RPM [1/min]} 
+   & \multicolumn{2}{l|}{Voltage [V]} & \multicolumn{2}{l|}{Current [A]} &\multirow{2}{14mm}{Pin [W]}  &\multirow{2}{14mm}{ThrustEff [G/W]}  \\
+\cline{2-11} 
+    &    mean& std dev&   mean& std dev&   mean& std dev&    mean& std dev&  mean& std dev&         &                \\
+\hline
+       20 &         0.75 &        4.004 &         4.67 &        3.013 &         4759 &         10.9 &       12.141 &       0.0039 &        0.130 &       0.0088 &        1.580 &        0.474 \\
+       25 &         0.65 &        4.004 &         4.80 &        3.013 &         5899 &         17.7 &       12.140 &       0.0041 &        0.166 &       0.0126 &        2.014 &        0.323 \\
+       30 &        -0.30 &        4.005 &         4.98 &        3.013 &         7108 &         27.4 &       12.141 &       0.0049 &        0.188 &       0.0129 &        2.287 &       -0.129 \\
+       35 &        -0.30 &        4.004 &         5.04 &        3.013 &         8272 &         32.6 &       12.135 &       0.0042 &        0.242 &       0.0171 &        2.942 &       -0.104 \\
+       40 &        -0.38 &        4.004 &         5.62 &        3.013 &         9472 &         56.0 &       12.133 &       0.0031 &        0.263 &       0.0177 &        3.194 &       -0.119 \\
+       45 &        -1.53 &        4.004 &         4.44 &        3.014 &        10621 &         81.1 &       12.134 &       0.0052 &        0.294 &       0.0325 &        3.573 &       -0.430 \\
+       50 &        -2.90 &        4.004 &         4.27 &        3.013 &        11750 &         85.6 &       12.129 &       0.0038 &        0.322 &       0.0218 &        3.900 &       -0.744 \\
+       55 &        -3.37 &        4.004 &         3.33 &        3.014 &        12883 &         89.5 &       12.127 &       0.0044 &        0.373 &       0.0309 &        4.520 &       -0.746 \\
+       60 &        -3.35 &        4.004 &         2.68 &        3.015 &        14102 &         69.3 &       12.123 &       0.0040 &        0.403 &       0.0262 &        4.890 &       -0.684 \\
+       65 &        -3.38 &        4.004 &         1.43 &        3.044 &        15312 &         95.8 &       12.123 &       0.0040 &        0.429 &       0.0445 &        5.203 &       -0.650 \\
+       70 &        -3.38 &        4.004 &         0.38 &        3.015 &        16479 &        119.5 &       12.121 &       0.0039 &        0.455 &       0.0333 &        5.512 &       -0.614 \\
+       75 &        -3.38 &        4.004 &         0.92 &        3.018 &        17717 &         80.4 &       12.119 &       0.0047 &        0.470 &       0.0248 &        5.698 &       -0.593 \\
+       80 &        -7.57 &        4.043 &         5.10 &        3.017 &        18809 &        122.2 &       12.116 &       0.0043 &        0.488 &       0.0333 &        5.915 &       -1.280 \\
+       90 &        -4.35 &        4.005 &         6.84 &        3.013 &        21142 &         92.4 &       12.113 &       0.0035 &        0.535 &       0.0127 &        6.485 &       -0.671 \\
+      100 &        -0.64 &        4.009 &         4.66 &        3.014 &        23243 &        100.8 &       12.109 &       0.0048 &        0.592 &       0.0144 &        7.167 &       -0.089 \\
+\hline
+\end{tabular}
+}
+
+\vspace{3mm}
+
+
+
+
+
+
+\pagebreak
+\noindent
+{\large \bf Plots for Measurement Results:}
+\vspace{5mm}
+
+\noindent
+\begin{tikzpicture}
+	\begin{axis}[
+		height=8cm,
+		width=8cm,  %\textwidth,
+		ticklabel style = {font=\tiny},
+		minor tick num=4,
+		ymin=0,
+		grid=both,
+		major grid style={gray!80},
+		minor grid style={gray!25},
+		xlabel={\footnotesize Motor Output [\%]},
+		ylabel={\footnotesize Thrust [G]},
+		legend pos=north west,
+		legend style={draw=none}]
+	\addplot[
+		blue, mark options={black, scale=0.175},
+		smooth, 
+		error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit,
+	] 
+	table [x=out, y=th, y error=th_err, col sep=comma] {table1.dat};
+
+	\end{axis}
+\end{tikzpicture}
+\hspace{3mm}
+\begin{tikzpicture}
+	\begin{axis}[
+		height=8cm,
+		width=8cm,  %\textwidth,
+		ticklabel style = {font=\tiny},
+		minor tick num=4,
+		ymin=0,
+		grid=both,
+		major grid style={gray!80},
+		minor grid style={gray!25},
+		xlabel={\footnotesize Motor Output [\%]},
+		ylabel={\footnotesize Torque [G cm]},
+		legend pos=north west,
+		legend style={draw=none}]
+	\addplot[
+		blue, mark options={black, scale=0.175},
+		smooth, 
+		error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit,
+	] 
+	table [x=out, y=tq, y error=tq_err, col sep=comma] {table1.dat};
+
+	\end{axis}
+\end{tikzpicture}
+  
+\noindent 
+\vspace{3mm}
+\begin{tikzpicture}
+	\begin{axis}[
+		height=8cm,
+		width=8cm,  %\textwidth,
+		ticklabel style = {font=\tiny},
+		tick scale binop=\times, %base 10:-3,
+		minor tick num=4,
+		grid=both,
+		major grid style={gray!80},
+		minor grid style={gray!25},
+		xlabel={\footnotesize Motor Output [\%]},
+		ylabel={\footnotesize RPM [1/min]},
+		legend pos=north west,
+		legend style={draw=none}]
+	\addplot[
+		blue, mark options={black, scale=0.175},
+		smooth, 
+		error bars/.cd, 
+			y fixed,
+			y dir=both, 
+			y explicit,
+	] 
+	table [x=out, y=rpm, y error=rpm_err, col sep=comma] {table1.dat};
+
+	\end{axis}
+\end{tikzpicture}
+\hspace{4.65mm}
+\begin{tikzpicture}
+	\begin{axis}[
+		height=8cm,
+		width=8cm,
+		ticklabel style = {font=\tiny},
+		ymin=0,
+		grid=both,
+		xlabel={\footnotesize Motor Output [\%]},
+		ylabel={\footnotesize Current [A]},
+		legend pos=north west,
+		legend style={draw=none}]
+	\addplot[
+	  blue, mark options={black, scale=0.175},
+	  smooth, 
+	  error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit
+	] 
+	table [x=out, y=a, y error=a_err, col sep=comma] {table1.dat};
+
+	\end{axis}
+	\begin{axis}[
+		height=8cm,
+		width=8cm,  %\textwidth,
+		axis y line*=right,
+		axis x line=none,
+		scaled y ticks=false,
+		ticklabel style = {font=\tiny},
+		grid style=dashed,
+		grid=major,
+		ylabel={\footnotesize Voltage [V]},
+		legend style={
+			nodes={scale=0.5, transform shape},
+			cells={anchor=east},
+			% legend pos=south east,
+			at={(0.5,0.97)},anchor=north,
+		}
+	]
+%	\addlegendimage{/pgfplots/refstyle=plot_1}\addlegendentry{Current [A]}
+	\addplot[
+		red, mark options={red, scale=0.15},
+		smooth,
+		error bars/.cd, 
+		y fixed,
+		y dir=both, 
+		y explicit  
+	] 
+	table [x=out, y=v, y error=v_err, col sep=comma] {table1.dat};
+
+%	\addlegendentry{Voltage [V]}
+	\end{axis}
+\end{tikzpicture}
+\vspace{3mm}
+
+\noindent 
+\begin{tikzpicture}
+	\begin{axis}[
+		height=8cm,
+		width=8cm,  %\textwidth,
+		ticklabel style = {font=\tiny},
+		minor tick num=4,
+		ymin=0,
+		grid=both,
+		major grid style={gray!80},
+		minor grid style={gray!25},
+		xlabel={\footnotesize Motor Output [\%]},
+		ylabel={\footnotesize Power In [W]},
+		legend pos=north west,
+		legend style={
+			nodes={scale=0.75, transform shape},
+			cells={anchor=west},
+			legend pos=north west,
+		}	
+	]			
+	\addplot[
+		blue, mark=*, mark options={blue, scale=0.5},
+		smooth, 
+	] 
+	table [x=out, y=pin, col sep=comma] {table1.dat};
+
+	\end{axis}
+	\end{tikzpicture}
+\hspace{3mm}
+	\begin{tikzpicture}
+	\begin{axis}[
+		height=8cm,
+		width=8cm,  %\textwidth,
+		ticklabel style = {font=\tiny},
+		minor tick num=4,
+		grid=both,
+		major grid style={gray!80},
+		minor grid style={gray!25},
+		xlabel={\footnotesize Motor Output [\%]},
+		ylabel={\footnotesize Thrust Efficiency [G/W]},
+		legend pos=north west,
+		legend style={draw=none}]
+	\addplot[
+		blue, mark=*, mark options={blue, scale=0.5},
+		smooth, 
+	] 
+	table [x=out, y=theff, col sep=comma] {table1.dat};
+
+	\end{axis}
+\end{tikzpicture}
+
+	
+\end{document}
+
+
