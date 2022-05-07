@@ -280,10 +280,18 @@ void MainWindow::onProcess( const MeasurementData* data)
 
 void MainWindow::newFile()
 {
-    mDoc.Reset();
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "New Document", "Are you sure to discard all current data?",
+                                QMessageBox::Yes|QMessageBox::No);
 
-    mOutput->mDataTab->setModel( &mDoc.rData() );
-    mOutput->mGraphTab->reinitData( &mDoc.rData() );
+    if (reply == QMessageBox::Yes) 
+    {
+        qDebug() << "Document reset";
+        mDoc.Reset();
+
+        mOutput->mDataTab->setModel( &mDoc.rData() );
+        mOutput->mGraphTab->reinitData( &mDoc.rData() );
+    }
 }
 
 void MainWindow::open()

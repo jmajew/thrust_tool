@@ -1,0 +1,9 @@
+build*
+*.aux
+*bak
+*.log
+*.synctex
+*.toc
+*.tps
+
+
