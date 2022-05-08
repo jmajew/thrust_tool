@@ -140,9 +140,11 @@ Note:         &
 
 \vspace{3mm}
 
-\noindent
-{\large \bf Measurement Results 1:}
-\vspace{3mm}
+%\noindent
+%{\large \bf Measurement Results 1:}
+%\vspace{3mm}
+
+\subsection*{\large \bf Measurement Results 1:}
 
 \noindent
 \resizebox{\textwidth}{!}{
@@ -172,11 +174,13 @@ Note:         &
 \end{tabular}
 }
 
-\vspace{3mm}
+%\vspace{3mm}
 
-\noindent
-{\large \bf Measurement Results 2:}
-\vspace{3mm}
+%\noindent
+%{\large \bf Measurement Results 2:}
+%\vspace{3mm}
+
+\subsection*{\large \bf Measurement Results 2:}
 
 \noindent
 \resizebox{\textwidth}{!}{
@@ -206,11 +210,13 @@ Note:         &
 \end{tabular}
 }
 
-\vspace{3mm}
+%\vspace{3mm}
 
-\noindent
-{\large \bf Measurement Results 3:}
-\vspace{3mm}
+%\noindent
+%{\large \bf Measurement Results 3:}
+%\vspace{3mm}
+
+\subsection*{\large \bf Measurement Results 3:}
 
 \noindent
 \resizebox{\textwidth}{!}{
@@ -240,11 +246,13 @@ Note:         &
 \end{tabular}
 }
 
-\vspace{3mm}
+%\vspace{3mm}
 
-\noindent
-{\large \bf Measurement Results 4:}
-\vspace{3mm}
+%\noindent
+%{\large \bf Measurement Results 4:}
+%\vspace{3mm}
+
+\subsection*{\large \bf Measurement Results 4:}
 
 \noindent
 \resizebox{\textwidth}{!}{
@@ -274,11 +282,13 @@ Note:         &
 \end{tabular}
 }
 
-\vspace{3mm}
+%\vspace{3mm}
 
-\noindent
-{\large \bf Measurement Results 5:}
-\vspace{3mm}
+%\noindent
+%{\large \bf Measurement Results 5:}
+%\vspace{3mm}
+
+\subsection*{\large \bf Measurement Results 5:}
 
 \noindent
 \resizebox{\textwidth}{!}{
@@ -308,7 +318,7 @@ Note:         &
 \end{tabular}
 }
 
-\vspace{3mm}
+%\vspace{3mm}
 
 
 
@@ -316,23 +326,30 @@ Note:         &
 
 
 \pagebreak
-\noindent
-{\large \bf Plots for Measurement Results:}
-\vspace{5mm}
+%\noindent
+%{\large \bf Plots for Measurement Results:}
+%\vspace{3mm}
 
-\noindent
+\subsection*{Plots for Measurement Results:}
+%\noindent
+\centerline{
+\hspace{-10mm}
 \begin{tikzpicture}
 	\begin{axis}[
 		height=8cm,
 		width=8cm,  %\textwidth,
-		ticklabel style = {font=\tiny},
-		minor tick num=4,
+		xmin=15,
+		xmax=105,
 		ymin=0,
+		minor x tick num=3,
+		minor y tick num=3,
+		ticklabel style = {font=\tiny},
 		grid=both,
 		major grid style={gray!80},
 		minor grid style={gray!25},
 		xlabel={\footnotesize Motor Output [\%]},
 		ylabel={\footnotesize Thrust [G]},
+		%ylabel style={ yshift = {-1mm}, },
 		legend pos=north west,
 		legend style={draw=none}]
 	\addplot[
@@ -383,14 +400,17 @@ Note:         &
 
 	\end{axis}
 \end{tikzpicture}
-\hspace{3mm}
+\hspace{5mm}
 \begin{tikzpicture}
 	\begin{axis}[
 		height=8cm,
 		width=8cm,  %\textwidth,
-		ticklabel style = {font=\tiny},
-		minor tick num=4,
+		xmin=15,
+		xmax=105,
 		ymin=0,
+		minor x tick num=3,
+		minor y tick num=3,
+		ticklabel style = {font=\tiny},
 		grid=both,
 		major grid style={gray!80},
 		minor grid style={gray!25},
@@ -446,16 +466,22 @@ Note:         &
 
 	\end{axis}
 \end{tikzpicture}
+}
   
-\noindent 
+%\noindent 
+\centerline{
 \vspace{3mm}
 \begin{tikzpicture}
 	\begin{axis}[
 		height=8cm,
 		width=8cm,  %\textwidth,
+		xmin=15,
+		xmax=105,
+		%ymin=0,
+		minor x tick num=3,
+		minor y tick num=3,	
 		ticklabel style = {font=\tiny},
 		tick scale binop=\times, %base 10:-3,
-		minor tick num=4,
 		grid=both,
 		major grid style={gray!80},
 		minor grid style={gray!25},
@@ -516,8 +542,12 @@ Note:         &
 	\begin{axis}[
 		height=8cm,
 		width=8cm,
-		ticklabel style = {font=\tiny},
+		axis y line*=right,		
+		xmin=15,
+		xmax=105,
 		ymin=0,
+		minor x tick num=3,
+		ticklabel style = {font=\tiny},
 		grid=both,
 		xlabel={\footnotesize Motor Output [\%]},
 		ylabel={\footnotesize Current [A]},
@@ -573,7 +603,7 @@ Note:         &
 	\begin{axis}[
 		height=8cm,
 		width=8cm,  %\textwidth,
-		axis y line*=right,
+		axis y line*=left,
 		axis x line=none,
 		scaled y ticks=false,
 		ticklabel style = {font=\tiny},
@@ -638,15 +668,21 @@ Note:         &
 	\end{axis}
 \end{tikzpicture}
 \vspace{3mm}
+}
 
-\noindent 
+%\noindent 
+\centerline{
+\hspace{-10mm}
 \begin{tikzpicture}
 	\begin{axis}[
 		height=8cm,
 		width=8cm,  %\textwidth,
-		ticklabel style = {font=\tiny},
-		minor tick num=4,
+		xmin=15,
+		xmax=105,
 		ymin=0,
+		minor x tick num=3,
+		minor y tick num=3,		
+		ticklabel style = {font=\tiny},
 		grid=both,
 		major grid style={gray!80},
 		minor grid style={gray!25},
@@ -686,14 +722,17 @@ Note:         &
 	table [x=out, y=pin, col sep=comma] {table5.dat};
 
 	\end{axis}
-	\end{tikzpicture}
-\hspace{3mm}
-	\begin{tikzpicture}
+\end{tikzpicture}
+\hspace{9mm}
+\begin{tikzpicture}
 	\begin{axis}[
 		height=8cm,
 		width=8cm,  %\textwidth,
+		xmin=15,
+		xmax=105,
+		minor x tick num=3,
+		minor y tick num=3,
 		ticklabel style = {font=\tiny},
-		minor tick num=4,
 		grid=both,
 		major grid style={gray!80},
 		minor grid style={gray!25},
@@ -729,7 +768,7 @@ Note:         &
 
 	\end{axis}
 \end{tikzpicture}
-
+}
 	
 \end{document}
 

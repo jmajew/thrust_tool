@@ -43,9 +43,11 @@
 \vspace{3mm}
 
 <<<LOOP_BEG>>>
-\noindent
-{\large \bf Measurement Results <<<LOOP_ID>>>:}
-\vspace{3mm}
+%\noindent
+%{\large \bf Measurement Results <<<LOOP_ID>>>:}
+%\vspace{3mm}
+
+\subsection*{\large \bf Measurement Results <<<LOOP_ID>>>:}
 
 \noindent
 \resizebox{\textwidth}{!}{
@@ -61,7 +63,7 @@
 \end{tabular}
 }
 
-\vspace{3mm}
+%\vspace{3mm}
 
 <<<LOOP_END>>>
 
@@ -69,11 +71,14 @@
 
 
 \pagebreak
-\noindent
-{\large \bf Plots for Measurement Results:}
-\vspace{5mm}
+%\noindent
+%{\large \bf Plots for Measurement Results:}
+%\vspace{3mm}
 
-\noindent
+\subsection*{Plots for Measurement Results:}
+%\noindent
+\centerline{
+\hspace{-10mm}
 \begin{tikzpicture}
 	\begin{axis}[
 		height=8cm,
@@ -89,6 +94,7 @@
 		minor grid style={gray!25},
 		xlabel={\footnotesize Motor Output [\%]},
 		ylabel={\footnotesize Thrust [G]},
+		%ylabel style={ yshift = {-1mm}, },
 		legend pos=north west,
 		legend style={draw=none}]
 <<<LOOP_BEG>>>
@@ -104,7 +110,7 @@
 <<<LOOP_END>>>	
 	\end{axis}
 \end{tikzpicture}
-\hspace{3mm}
+\hspace{5mm}
 \begin{tikzpicture}
 	\begin{axis}[
 		height=8cm,
@@ -135,8 +141,10 @@
 <<<LOOP_END>>>
 	\end{axis}
 \end{tikzpicture}
+}
   
-\noindent 
+%\noindent 
+\centerline{
 \vspace{3mm}
 \begin{tikzpicture}
 	\begin{axis}[
@@ -144,7 +152,7 @@
 		width=8cm,  %\textwidth,
 		xmin=15,
 		xmax=105,
-		ymin=0,
+		%ymin=0,
 		minor x tick num=3,
 		minor y tick num=3,	
 		ticklabel style = {font=\tiny},
@@ -230,8 +238,11 @@
 	\end{axis}
 \end{tikzpicture}
 \vspace{3mm}
+}
 
-\noindent 
+%\noindent 
+\centerline{
+\hspace{-10mm}
 \begin{tikzpicture}
 	\begin{axis}[
 		height=8cm,
@@ -262,9 +273,9 @@
 	table [x=out, y=pin, col sep=comma] {table<<<LOOP_ID>>>.dat};
 <<<LOOP_END>>>
 	\end{axis}
-	\end{tikzpicture}
-\hspace{3mm}
-	\begin{tikzpicture}
+\end{tikzpicture}
+\hspace{9mm}
+\begin{tikzpicture}
 	\begin{axis}[
 		height=8cm,
 		width=8cm,  %\textwidth,
@@ -289,7 +300,7 @@
 <<<LOOP_END>>>
 	\end{axis}
 \end{tikzpicture}
-
+}
 	
 \end{document}
 
