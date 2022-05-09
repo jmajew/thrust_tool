@@ -296,21 +296,28 @@ void MainWindow::newFile()
 
 void MainWindow::open()
 {
-    //infoLabel->setText(tr("Invoked <b>File|Open</b>"));
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Document"), 
-        "", tr("Bla bla bla (*.th)"));
-    qDebug() << "open file " << fileName;
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Open Document", "Are you sure to discard all current data?",
+                                QMessageBox::Yes|QMessageBox::No);
 
-    if (fileName.length() == 0)
-        return;
+    if (reply == QMessageBox::Yes) 
+    {
+        //infoLabel->setText(tr("Invoked <b>File|Open</b>"));
+        QString fileName = QFileDialog::getOpenFileName(this, tr("Open Document"), 
+            "", tr("thrust measurement data (*.th)"));
+        qDebug() << "open file " << fileName;
 
-    mDoc.Load( fileName);
+        if (fileName.length() == 0)
+            return;
+
+        mDoc.Load( fileName);
     
-    //emit dataChanged();
-    this->setSetup();     // apply mDoc.mSetup
+        //emit dataChanged();
+        this->setSetup();     // apply mDoc.mSetup
 
-    mOutput->mDataTab->setModel( &mDoc.rData() );
-    mOutput->mGraphTab->reinitData( &mDoc.rData() );
+        mOutput->mDataTab->setModel( &mDoc.rData() );
+        mOutput->mGraphTab->reinitData( &mDoc.rData() );
+    }
 }
 
 void MainWindow::save()
@@ -349,7 +356,7 @@ void MainWindow::export_rep()
     QString dir = dialog.directory().absolutePath() + "/" + fi.baseName();
 
     QString fileName = dialog.getSaveFileName(this, tr("Export report"), 
-        dir, tr("Text Report (*.txt);;Latex Report (*.tex)"));
+        dir, tr("Latex Report (*.tex);;Text Report (*.txt)"));
     qDebug() << "export report file as" << fileName;
 
     if (fileName.length() == 0)

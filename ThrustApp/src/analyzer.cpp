@@ -137,7 +137,9 @@ StatisticValue Analyzer::ComputeChannel(int ch, const TLevelDef& def)
 
 	double mean = sval.Mean();
 	double dev = sval.Deviation();
-	double marg = 1.*dev;
+	double marg = dev;
+	if ( ch == CH_EXT_RPM_ID)
+		marg *= 5.;
 
 	std::vector<double> tab_fin;
 	tab_fin.reserve( tab.size());

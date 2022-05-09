@@ -836,6 +836,7 @@ void GraphWidget::reinitData( MeasurementData* pdat)
     const double h = paintArea.height();
 
     mData.reinitData( pdat );
+    mData.loadSettings();
     
     mpDlgProbe->initData( &mData);
 
