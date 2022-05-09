@@ -136,8 +136,10 @@ StatisticValue Analyzer::ComputeChannel(int ch, const TLevelDef& def)
 	}
 
 	double mean = sval.Mean();
-	double dev = sval.Deviation();
-	double marg = dev;
+	double var = sval.Variance();
+	var = var < 0. ? 0. : var;
+	double dev = sqrt(var);
+	double marg = dev == 0.0 ? 1. : dev;
 	if ( ch == CH_EXT_RPM_ID)
 		marg *= 5.;
 
