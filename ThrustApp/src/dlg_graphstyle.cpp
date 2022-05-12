@@ -73,6 +73,7 @@ DlgGraphStyle::DlgGraphStyle( GraphData* pdata, GraphWidget* parent)
 
 //		QTableWidgetItem *item = new QTableWidgetItem( ch.cName() );
 		QTableWidgetItem *item = new QTableWidgetItem( mpData->getData()->getChannel(i).getName() );
+//		QTableWidgetItem *item = new QTableWidgetItem( mpData->getData()->getChannel(ch.getId()).getName() );
 		ui.tableWidget->setItem( i, 0, item );
 
 		item = new QTableWidgetItem;
