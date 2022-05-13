@@ -122,6 +122,7 @@ void CfgConvert::Pack( SBuf& sbout )
 	sbout.WriteU16( VbatDivider );
 	sbout.WriteU16( VbatCorr );
 	sbout.WriteU16( VIcoeff );
+	sbout.WriteU16( RawIzero );
 
 	sbout.WriteU16( ts_cal1 );
 	sbout.WriteU16( ts_cal2 );
@@ -141,6 +142,7 @@ void CfgConvert::Unpack( SBuf& sbin )
 	VbatDivider = sbin.ReadU16();
 	VbatCorr = sbin.ReadU16();
 	VIcoeff = sbin.ReadU16();
+	RawIzero = sbin.ReadU16();
 
 	ts_cal1 = sbin.ReadU16();
 	ts_cal2 = sbin.ReadU16();

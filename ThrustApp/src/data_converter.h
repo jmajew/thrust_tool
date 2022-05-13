@@ -10,6 +10,8 @@
 class ToolSetup;
 class MeasurementSetup;
 
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // class DataConverter
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -36,13 +38,15 @@ private:
 	double	mVbatCorr;
 	double	mCoeffCurr;
 	double	mVoltCurr0;		// if negative use measured CH_ADC_IBATTZERO_ID
+	int		mRawCurr0;		// set manually
 
 	double	mtabCoeffStG[STGAUGE_CH_COUNT];
 	double	mtabOffsetStG[STGAUGE_CH_COUNT];
 	double	mLengthTq;
 
-	bool		mbCurZero;
-	ERpmSource	mRpmSrc;
+	ECurrZeroSource	meCurZero;
+	ERpmSource		meRpmSrc;
+
 	qint32		mnMagnetPoles;
 	qint32		mnPropBlades;
 	float		mTempSlope;

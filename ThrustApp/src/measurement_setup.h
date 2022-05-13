@@ -11,6 +11,15 @@ enum class ERpmSource
 	EscTelem	= 2
 };
 
+enum class ECurrZeroSource
+{
+	None	= 0,
+	Auto	= 1,
+	Sensor	= 2,
+	Manual	= 3
+};
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // class MeasurementSetup
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,9 +41,10 @@ public:
 	const QString&		cComment() const		{ return mComment; }
 
 	ERpmSource			cRpmSource() const		{ return mRpmSource; }
+	ECurrZeroSource		cCurZeroSource() const	{ return mCurZeroSource; }
 
 	bool				cEscTelemEnabled() const	{ return mbEnableEscTelem; }
-	bool				cCurZeroEnabled() const		{ return mbEnableCurrZero; }
+//	bool				cCurZeroEnabled() const		{ return mbEnableCurrZero; }
 
 
 	QString&			rMotorName()			{ return mMotorName; }
@@ -45,9 +55,10 @@ public:
 	QString&			rComment()				{ return mComment; }
 
 	ERpmSource&			rRpmSource()			{ return mRpmSource; }
+	ECurrZeroSource&	rCurZeroSource()		{ return mCurZeroSource; }
 
 	bool&				rEscTelemEnabled()		{ return mbEnableEscTelem; }
-	bool&				rCurZeroEnabled()		{ return mbEnableCurrZero; }
+	//bool&				rCurZeroEnabled()		{ return mbEnableCurrZero; }
 
 private:
 	// motor info
@@ -58,10 +69,11 @@ private:
 	int			mPropBlades;
 	QString		mComment;
 
-	ERpmSource	mRpmSource;
+	ERpmSource		mRpmSource;
+	ECurrZeroSource	mCurZeroSource;
 
 	bool		mbEnableEscTelem;
-	bool		mbEnableCurrZero;
+	//bool		mbEnableCurrZero;
 };
 
 QDataStream &operator<<( QDataStream &, const MeasurementSetup &);

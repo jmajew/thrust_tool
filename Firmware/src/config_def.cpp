@@ -91,6 +91,7 @@ const VarDef	tabCliVar[] =
 	{ "adc_vbatt_divider", 		VARTP_UINT16, 				{.valuedef = {0, 65535, 11000} }, 						offsetof( Config, groupConvert)	+ offsetof(CfgConvert, VbatDivider) },
 	{ "adc_vbatt_corr", 		VARTP_UINT16, 				{.valuedef = {0, 65535, 9918} }, 						offsetof( Config, groupConvert)	+ offsetof(CfgConvert, VbatCorr) },
 	{ "adc_icoeff", 			VARTP_UINT16, 				{.valuedef = {0, 65535, 3670} }, 						offsetof( Config, groupConvert)	+ offsetof(CfgConvert, VIcoeff) },
+	{ "adc_raw_zero", 			VARTP_UINT16, 				{.valuedef = {0, 4096, 2048} }, 						offsetof( Config, groupConvert)	+ offsetof(CfgConvert, RawIzero) },
 	{ "stgauge_l", 				VARTP_UINT16, 				{.valuedef = {0, 65535, 3500} }, 						offsetof( Config, groupConvert)	+ offsetof(CfgConvert, LeverArmLength) },
 
 	{ "stgauge_scale_thrust", 	VARTP_INT32, 				{.valuedef = {-0x1ffffff, 0x1ffffff, 1054501L} }, 		offsetof( Config, groupConvert) + offsetof(CfgConvert, tabStGScale[0]) },
