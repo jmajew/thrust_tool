@@ -147,7 +147,7 @@ void ADConvertDev::ReadData()
 
 void ADConvertDev::AverageCur()
 {
-	const uint8_t nsamp = ADC_BUF_LENGTH; // TODO :: should be mpConfig->nADCSamples;
+	const uint8_t nsamp = ADC_BUF_LENGTH;
 	const uint8_t nch = ADC_SENS_ARRAY_SIZE;
 
 	for ( int ich=0; ich<nch; ++ich)
