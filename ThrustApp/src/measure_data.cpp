@@ -16,8 +16,8 @@ const DefChannel tabDefChannel[] =
 
 	{ CH_ADC_VREF_ID,		"Vref",						0,			4096},
 	{ CH_ADC_VBATT_ID,		"VoltBatt",					0,			4096},
-	{ CH_ADC_IBATTZERO_ID,	"CurrBatt Zero",			0,			4096},
 	{ CH_ADC_IBATT_ID,		"CurrBatt",					0,			4096},
+	{ CH_ADC_IBATTZERO_ID,	"CurrBatt Zero",			0,			4096},
 	{ CH_ADC_MPUTEMP_ID,	"MPU Temperature",			0,			4096},
 
 	{ CH_RPM_ID,			"RPM",						0,			50000},

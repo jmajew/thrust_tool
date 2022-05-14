@@ -202,6 +202,7 @@ int main( void)
 	lcd.UpdateScreen();
 	chibi::BaseThread::sleep( TIME_MS2I( 500));
 	lcd.Fill(Black);
+	lcd.UpdateScreen();
 	////////////////////////////////////////////////////////
 #endif
 
@@ -209,8 +210,8 @@ int main( void)
 
 	blinker_th.start( NORMALPRIO + 5);
 	
-	hbeat_th.start( NORMALPRIO );
 	hbeat_th.SetMaster( &master );
+	hbeat_th.start( NORMALPRIO );
 
 //	dev_rpm.Init( &RPM_ICUD, RPM_ICU_CH);
 //	dev_rpm.Start();

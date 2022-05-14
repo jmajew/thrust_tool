@@ -431,16 +431,19 @@ void MainWindow::setSetup()
     mControl->mFormSetup->spinMotorKV->setValue( setup.cMotorKV() );
     mControl->mFormSetup->spinMotorPolesCount->setValue( setup.cMotorPoles() );
 
-    if ( setup.cEscTelemEnabled() ) 
-        mControl->mFormSetup->checkBox_EscTelem->setChecked(true);
-
-    if ( setup.cCurZeroEnabled() )
-        mControl->mFormSetup->checkBox_CurrZero->setChecked(true);
-
     mControl->mFormSetup->editPropName->setText( setup.cPropName() );
     mControl->mFormSetup->spinBladeCount->setValue( setup.cPropBlades() );
 
     mControl->mFormSetup->editComment->setText( setup.cComment() );
+
+
+    if ( setup.cEscTelemEnabled() ) 
+        mControl->mFormSetup->checkBox_EscTelem->setChecked(true);
+
+    //if ( setup.cCurZeroEnabled() )
+    //    mControl->mFormSetup->checkBox_CurrZero->setChecked(true);
+
+    // TODO :: set curzero and rpm sources / notify board
 
     // TODO :: could be disconnected
     //if ( setup.cEscTelemEnabled() || setup.cRpmSource() == ERpmSource::EscTelem )
@@ -463,19 +466,28 @@ void MainWindow::applySetup()
     setup.rMotorKV() = mControl->mFormSetup->spinMotorKV->value();
     setup.rMotorPoles() = mControl->mFormSetup->spinMotorPolesCount->value();
 
-    setup.rEscTelemEnabled() = mControl->mFormSetup->checkBox_EscTelem->isChecked();
-    setup.rCurZeroEnabled() = mControl->mFormSetup->checkBox_CurrZero->isChecked();
-
     setup.rPropName() = mControl->mFormSetup->editPropName->text();
     setup.rPropBlades() = mControl->mFormSetup->spinBladeCount->value();
 
     setup.rComment() = mControl->mFormSetup->editComment->text();
+
+    setup.rCurZeroSource() = ECurrZeroSource::None;
+    if ( mControl->mFormSetup->radioButton_AutoZ->isChecked() )
+        setup.rCurZeroSource() = ECurrZeroSource::Auto;
+    else if ( mControl->mFormSetup->radioButton_WithZ->isChecked() )
+        setup.rCurZeroSource() = ECurrZeroSource::Sensor;
+    else if ( mControl->mFormSetup->radioButton_ManualZ->isChecked() )
+        setup.rCurZeroSource() = ECurrZeroSource::Manual;
 
     setup.rRpmSource() = ERpmSource::None;
     if ( mControl->mFormSetup->radioButton_Sensor->isChecked() )
         setup.rRpmSource() = ERpmSource::IrSensor;
     else if ( mControl->mFormSetup->radioButton_Telem->isChecked() )
         setup.rRpmSource() = ERpmSource::EscTelem;
+
+    setup.rEscTelemEnabled() = mControl->mFormSetup->checkBox_EscTelem->isChecked();
+//    setup.rCurZeroEnabled() = mControl->mFormSetup->checkBox_CurrZero->isChecked();
+
 
     // TODO :: apply new setup to measurement
     
@@ -909,6 +921,8 @@ void MainWindow::receive(bool b)
             mSetup.initCfgConvert( msg);
 
             mDoc.initConverter( mSetup);
+            mControl->mFormSetup->InitCurrZero( mSetup );
+
             break;
 
         case THSP_GET_DATA_ZERO:

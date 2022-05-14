@@ -7,10 +7,6 @@
 
 
 #include "data.hpp"
-#include "master.hpp"
-
-extern Master master;
-
 
 #define  BUFF_SIZE 	48
 char  sbuff[BUFF_SIZE];
@@ -74,15 +70,14 @@ void Data::PrintOnScreen( Display* plcd)
 
 
 	// StG
+	this->grpStGauge.mux.lock();
 	for ( int i=0; i<STGAUGE_CH_COUNT; ++i)
 	{
-		this->grpStGauge.mux.lock();
-		chsnprintf( sbuff, BUFF_SIZE, "%9d", this->grpStGauge.tab[i] );	// TODO :: id from config
-		this->grpStGauge.mux.unlock();
-
+		chsnprintf( sbuff, BUFF_SIZE, "%9d", this->grpStGauge.tab[i] );
 		plcd->SetCursor(64, offset+i*8);
 		plcd->WriteString( sbuff, font5x7, White);
 	}
+	this->grpStGauge.mux.unlock();
 
 	// ADC
 	this->grpAdc.mux.lock();
@@ -92,59 +87,20 @@ void Data::PrintOnScreen( Display* plcd)
 		plcd->SetCursor(0, offset+i*8 );
 		plcd->WriteString( sbuff, font5x7, White);
 	}
+
+	uint16_t itemp = adc_to_temp( this->grpAdc.tab[ID_CH_MPUTEMP].Mean() );
 	this->grpAdc.mux.unlock();
 
+	chsnprintf( sbuff, BUFF_SIZE, "%d.%0dc", itemp/100, itemp%100 );
+	plcd->SetCursor(64, 7 );
+	plcd->WriteString( sbuff, font5x7, White);
+
+	// RPM
 	this->grpRpm.mux.lock();
 	chsnprintf( sbuff, BUFF_SIZE, "%r: %4d", this->grpRpm.freq );
 	plcd->SetCursor(0, offset+5*8 );
 	plcd->WriteString( sbuff, font5x7, White);
 	this->grpRpm.mux.unlock();
-
-
-//	{
-//		chsnprintf( sbuff, BUFF_SIZE, "%d", master.pConfig()->groupConvert.VbatDivider );
-//		plcd->SetCursor(0, offset+0*8 );
-//		plcd->WriteString( sbuff, font5x7, White);
-//
-//		chsnprintf( sbuff, BUFF_SIZE, "%d", master.pConfig()->groupConvert.VbatCorr );
-//		plcd->SetCursor(0, offset+1*8 );
-//		plcd->WriteString( sbuff, font5x7, White);
-//
-//		chsnprintf( sbuff, BUFF_SIZE, "%d", master.pConfig()->groupConvert.tabStGScale[1] );
-//		plcd->SetCursor(0, offset+2*8 );
-//		plcd->WriteString( sbuff, font5x7, White);
-//
-//		chsnprintf( sbuff, BUFF_SIZE, "%d", master.pConfig()->groupConvert.tabStGScale[1] );
-//		plcd->SetCursor(0, offset+3*8 );
-//		plcd->WriteString( sbuff, font5x7, White);
-//
-//		chsnprintf( sbuff, BUFF_SIZE, "%d", master.pConfig()->groupConvert.tabStGZero[0] );
-//		plcd->SetCursor(0, offset+4*8 );
-//		plcd->WriteString( sbuff, font5x7, White);
-//
-//		chsnprintf( sbuff, BUFF_SIZE, "%d", master.pConfig()->groupConvert.tabStGZero[1] );
-//		plcd->SetCursor(0, offset+5*8 );
-//		plcd->WriteString( sbuff, font5x7, White);
-//	}
-
-
-
-//		chsnprintf( sbuff, BUFF_SIZE, "%d %d", this->grpAdc.tab[6].Mean(), this->grpAdc.tab[6].Deviation() );
-//		plcd->SetCursor(0, offset+3*8 );
-//		plcd->WriteString( sbuff, font5x7, White);
-
-//	float temp = (float)( this->grpAdc.tab[ADC_ID_MPUTEMP].Mean() - 948.0) / 3.175 + 30.0; //in deg C
-//	uint16_t itemp = (uint16_t)temp*100.0;
-
-//	int id_adc_temp = master.pConfig()->groupADC.tabCh[4];
-	uint16_t itemp = adc_to_temp( this->grpAdc.tab[ ID_CH_MPUTEMP ].Mean() );
-
-	chsnprintf( sbuff, BUFF_SIZE, "%d.%0dc", itemp/100, itemp%100 );
-//		plcd->SetCursor(40, offset+3*9 );
-	plcd->SetCursor(64, 7 );
-	plcd->WriteString( sbuff, font5x7, White);
-
-	this->grpAdc.mux.unlock();
 
 //	uint16_t* cal1 = (uint16_t*)0x1fff7a2c;
 //	uint16_t* cal2 = (uint16_t*)0x1fff7a2e;

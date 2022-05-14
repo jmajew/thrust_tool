@@ -24,7 +24,7 @@ static void icuperiodcb(ICUDriver *icup)
 
 	palToggleLine( LINE_LED_YELLOW );
 
-	//	palClearPad(GPIOD, GPIOD_LED4);
+//	palClearPad(GPIOD, GPIOD_LED4);
 //	icu_mux.lock();
 	last_period = icuGetPeriodX(icup);
 //	icu_mux.unlock();

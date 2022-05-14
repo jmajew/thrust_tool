@@ -201,6 +201,7 @@ public:
 		VbatDivider(11000),
 		VbatCorr(0),
 		VIcoeff(1000),
+		RawIzero(2048),
 		ts_cal1(0),
 		ts_cal2(0),
 		LeverArmLength(100)
@@ -220,6 +221,7 @@ public:
 	uint16_t	VbatDivider;	// *1000
 	uint16_t	VbatCorr;		// * 10000
 	uint16_t	VIcoeff;		// mV/A * 100
+	uint16_t	RawIzero;
 
 	uint16_t	ts_cal1;
 	uint16_t	ts_cal2;

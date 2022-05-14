@@ -12,7 +12,7 @@
 #include "measurement_setup.h"
 #include "measure_data.h"
 #include "dlg_autocreate.h"
-
+#include "appsetup.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // class FormConnection
@@ -113,6 +113,8 @@ FormSetup::FormSetup(QWidget *parent)
     //connect( spinNSamples, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &FormCalibration::updateTime);
 }
 
+
+
 void FormSetup::InitValues( const MeasurementSetup& setup)
 {
     this->editMotorName->setText( setup.cMotorName() );
@@ -120,13 +122,25 @@ void FormSetup::InitValues( const MeasurementSetup& setup)
     this->spinMotorPolesCount->setValue( setup.cMotorPoles() );
     this->spinBladeCount->setValue( setup.cPropBlades() );
     
-    this->checkBox_CurrZero->setChecked( setup.cCurZeroEnabled() );
-    this->checkBox_EscTelem->setChecked( setup.cEscTelemEnabled() );
+    if ( setup.cCurZeroSource() == ECurrZeroSource::Auto )
+        this->radioButton_AutoZ->setChecked(true);
+    else if ( setup.cCurZeroSource() == ECurrZeroSource::Sensor )
+        this->radioButton_WithZ->setChecked(true);
+    else if ( setup.cCurZeroSource() == ECurrZeroSource::Manual )
+        this->radioButton_ManualZ->setChecked(true);
 
     if ( setup.cRpmSource() == ERpmSource::IrSensor )
         this->radioButton_Sensor->setChecked( true);
     else if ( setup.cRpmSource() == ERpmSource::EscTelem )
         this->radioButton_Telem->setChecked( true);
+
+    //this->checkBox_CurrZero->setChecked( setup.cCurZeroEnabled() );
+    this->checkBox_EscTelem->setChecked( setup.cEscTelemEnabled() );
+}
+
+void FormSetup::InitCurrZero( const ToolSetup& tool_setup)
+{
+    this->lineEdit_ManualZ->setText( QString::number( tool_setup.cConfig().groupConvert.RawIzero ));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -8,6 +8,9 @@ int batteryNCellDetect( double vbat)
     return std::min(batteryCellCount, 6);
 }
 
+
+
+
 double DataConverter::convertVBat(uint16_t ibat, uint16_t iref) const
 {
 	const double adc_coeff = mVref / iref;
@@ -20,8 +23,8 @@ double DataConverter::convertVBat(uint16_t ibat, uint16_t iref) const
 
 void DataConverter::init( const MeasurementSetup& mesetup, const ToolSetup& setup)
 {
-	mbCurZero = mesetup.cCurZeroEnabled();
-	mRpmSrc = mesetup.cRpmSource();
+	meCurZero = mesetup.cCurZeroSource();
+	meRpmSrc = mesetup.cRpmSource();
 	mnMagnetPoles = mesetup.cMotorPoles();
 	mnPropBlades = mesetup.cPropBlades();
 
@@ -31,6 +34,7 @@ void DataConverter::init( const MeasurementSetup& mesetup, const ToolSetup& setu
 	mVbatCorr = (double)setup.cConfig().groupConvert.VbatCorr / 10000.0;
 	mLengthTq = (double)setup.cConfig().groupConvert.LeverArmLength / 100.0;	// <-- mm
 	mCoeffCurr = (double)setup.cConfig().groupConvert.VIcoeff / 100.0;
+	mRawCurr0 = setup.cConfig().groupConvert.RawIzero;
 
 	//(*ts_cal2 - *ts_cal1) / ( 110 - 30 );
 	mTempSlope = (setup.cConfig().groupConvert.ts_cal2 - setup.cConfig().groupConvert.ts_cal1) / (110.-30.);
@@ -55,12 +59,12 @@ void DataConverter::convert( RawData& data ) const
 
 	data[CH_EXT_TORQUE_ID] *= mLengthTq / 10.;	// torque [G * cm]
 
-	if ( mRpmSrc == ERpmSource::IrSensor )
+	if ( meRpmSrc == ERpmSource::IrSensor )
 	{
 		data[CH_EXT_RPM_ID]		= data[CH_RPM_ID] / mnPropBlades;		// sensor rpm
 	}
 	else 
-	if ( mRpmSrc == ERpmSource::EscTelem )
+	if ( meRpmSrc == ERpmSource::EscTelem )
 	{
 		data[CH_EXT_RPM_ID]		= data[CH_ESCT_RPM_ID] * 200. / mnMagnetPoles;		// Esc Telem rpm [1/min]
 	}
@@ -68,24 +72,27 @@ void DataConverter::convert( RawData& data ) const
 	{	// error	
 	}
 
-
+	// mpu temp
 	//const float ts_slope = (*ts_cal2 - *ts_cal1) / ( 110 - 30 );
 	//return (uint16_t)( ( ((float)val - (float)*ts_cal1) / ts_slope + 30.0 ) * 100.0 );
 	data[CH_EXT_MPUTEMP_ID] = (data[CH_ADC_MPUTEMP_ID] - mTempOff) / mTempSlope + 30.0;		// [deg C]
 
-
+	// battery voltage
 	const double adc_coeff = mVref / data[CH_ADC_VREF_ID];
 	data[CH_EXT_BATT_VOLT_ID] = data[CH_ADC_VBATT_ID] * adc_coeff * mVbatDivider * mVbatCorr;	// [V]
 
-	double m_curr0 = 0; 
-	if ( mbCurZero )
-		m_curr0 = data[CH_ADC_IBATTZERO_ID];
-	else
+	// current
+	double m_curr0 = 0;
+	if ( meCurZero == ECurrZeroSource::Auto )
 		m_curr0 = 2048;
+	else if ( meCurZero == ECurrZeroSource::Sensor )
+		m_curr0 = data[CH_ADC_IBATTZERO_ID];
+	else if ( meCurZero == ECurrZeroSource::Manual )
+		m_curr0 = mRawCurr0;
 
 	data[CH_EXT_BATT_CURR_ID] = mCoeffCurr * (data[CH_ADC_IBATT_ID] - m_curr0) / 4096.0;	// [A]
 
-
+	// calc others
 	data[CH_EXT_POWER_IN_ID] = data[CH_EXT_BATT_VOLT_ID] * data[CH_EXT_BATT_CURR_ID];
 
 	data[CH_EXT_POWER_OUT_ID] = data[CH_EXT_TORQUE_ID] * data[CH_EXT_RPM_ID] / 60.0;
@@ -133,8 +140,9 @@ QDataStream& operator<<( QDataStream& out, const DataConverter& datc)
 	}
 	out << datc.mLengthTq;
 
-	out << datc.mbCurZero;
-	out << datc.mRpmSrc;
+	//out << datc.mbCurZero;
+	out << datc.meCurZero;
+	out << datc.meRpmSrc;
 	out << datc.mnMagnetPoles;
 	out << datc.mnPropBlades;
 
@@ -157,8 +165,9 @@ QDataStream& operator>>( QDataStream& in, DataConverter& datc)
 	}
 	in >> datc.mLengthTq;
 
-	in >> datc.mbCurZero;
-	in >> datc.mRpmSrc;
+	//in >> datc.mbCurZero;
+	in >> datc.meCurZero;	// TODO :: possible compat issues
+	in >> datc.meRpmSrc;
 	in >> datc.mnMagnetPoles;
 	in >> datc.mnPropBlades;
 

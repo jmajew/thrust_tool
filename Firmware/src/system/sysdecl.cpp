@@ -45,12 +45,14 @@ extern "C" {
 //===========================================================================
 #ifndef SIMULATOR
 
-__attribute__((used))
-void __cxa_pure_virtual(void)
-{
-	osalSysHalt("__cxa_pure_virtual called");
-	while (TRUE);
-}
+// __attribute__((used))
+// void __cxa_pure_virtual(void)
+// {
+	// osalSysHalt("__cxa_pure_virtual called");
+	// while (TRUE);
+// }
+
+
 
 // stub needed for  __libc_fini_array
 // should be placed in chibios -> syscalls_cpp.cpp
