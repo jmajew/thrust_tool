@@ -140,7 +140,6 @@ QDataStream& operator<<( QDataStream& out, const DataConverter& datc)
 	}
 	out << datc.mLengthTq;
 
-	//out << datc.mbCurZero;
 	out << datc.meCurZero;
 	out << datc.meRpmSrc;
 	out << datc.mnMagnetPoles;
@@ -165,9 +164,16 @@ QDataStream& operator>>( QDataStream& in, DataConverter& datc)
 	}
 	in >> datc.mLengthTq;
 
-	//in >> datc.mbCurZero;
-	in >> datc.meCurZero;	// TODO :: possible compat issues
+	//// HACK
+	//{
+	//	bool b;
+	//	in >> b;
+	//	datc.meCurZero = ECurrZeroSource::Auto;
+	//}
+
+	in >> datc.meCurZero;
 	in >> datc.meRpmSrc;
+
 	in >> datc.mnMagnetPoles;
 	in >> datc.mnPropBlades;
 

@@ -39,7 +39,6 @@ QDataStream& operator<<( QDataStream& out, const MeasurementSetup& setup)
 	out << static_cast<quint32>( setup.mCurZeroSource );
 
 	out << setup.mbEnableEscTelem;
-	//out << setup.mbEnableEscTelem;
 
 	return out;
 }
@@ -62,20 +61,23 @@ QDataStream& operator>>( QDataStream& in, MeasurementSetup& setup)
 	else
 		setup.mRpmSource = ERpmSource::None;
 
-	//in >> isrc;
-	//if ( isrc == 1)
-	//	setup.mCurZeroSource = ECurrZeroSource::Auto;
-	//else if ( isrc == 2 )
-	//	setup.mCurZeroSource = ECurrZeroSource::Sensor;
-	//else if ( isrc == 3 )
-	//	setup.mCurZeroSource = ECurrZeroSource::Manual;
-	//else
-	//	setup.mCurZeroSource = ECurrZeroSource::None;
-
+	in >> isrc;
+	if ( isrc == 1)
+		setup.mCurZeroSource = ECurrZeroSource::Auto;
+	else if ( isrc == 2 )
+		setup.mCurZeroSource = ECurrZeroSource::Sensor;
+	else if ( isrc == 3 )
+		setup.mCurZeroSource = ECurrZeroSource::Manual;
+	else
+		setup.mCurZeroSource = ECurrZeroSource::None;
 
 	in >> setup.mbEnableEscTelem;
-	//in >> setup.mbEnableCurrZero;
-	in >> isrc; // HACK :: for compat. purposes
+
+	//// HACK :: for compat. purposes
+	//{
+	//	bool b;
+	//	in >> b;
+	//}
 
 	return in;
 }
