@@ -921,6 +921,8 @@ void MainWindow::receive(bool b)
             mSetup.initCfgConvert( msg);
 
             mDoc.initConverter( mSetup);
+            mControl->mFormSetup->InitCurrZero( mSetup );
+
             break;
 
         case THSP_GET_DATA_ZERO:

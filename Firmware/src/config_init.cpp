@@ -13,9 +13,12 @@
 void	ConfigInit::Init( Config* pcfg )
 {
     chThdSleepMilliseconds(100);
-//    EFlashError error = Flash::ReadData( pcfg, sizeof(Config) );
-//	if ( error )
+    EFlashError error = Flash::ReadData( pcfg, sizeof(Config) );
+	if ( error )
+	{
+		dbg_puts( "default config init" );
 		SetDefault( pcfg );
+	}
 
 	dbg_printf( "config sizeof = %d", sizeof(Config) );
 }

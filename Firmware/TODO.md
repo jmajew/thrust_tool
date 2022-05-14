@@ -1,6 +1,7 @@
 ## TODO
 
 ### firmware
+* process current fault on PB5
 * RPM measurement fixing and testing
 * Add msg_id to DATA_STREAM messages
 * ChibiOS EFL driver for internal flash?

@@ -21,6 +21,7 @@
 class MainWindow;
 class MeasurementSetup;
 class MeasurementData;
+class ToolSetup;
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -51,6 +52,7 @@ public:
     explicit FormSetup(QWidget *parent = nullptr);
 
     void    InitValues( const MeasurementSetup& setup);
+    void    InitCurrZero( const ToolSetup& tool_setup);
 
 private:
 };

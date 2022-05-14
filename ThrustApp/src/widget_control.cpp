@@ -12,7 +12,7 @@
 #include "measurement_setup.h"
 #include "measure_data.h"
 #include "dlg_autocreate.h"
-
+#include "appsetup.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // class FormConnection
@@ -113,6 +113,8 @@ FormSetup::FormSetup(QWidget *parent)
     //connect( spinNSamples, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &FormCalibration::updateTime);
 }
 
+
+
 void FormSetup::InitValues( const MeasurementSetup& setup)
 {
     this->editMotorName->setText( setup.cMotorName() );
@@ -134,6 +136,11 @@ void FormSetup::InitValues( const MeasurementSetup& setup)
 
     //this->checkBox_CurrZero->setChecked( setup.cCurZeroEnabled() );
     this->checkBox_EscTelem->setChecked( setup.cEscTelemEnabled() );
+}
+
+void FormSetup::InitCurrZero( const ToolSetup& tool_setup)
+{
+    this->lineEdit_ManualZ->setText( QString::number( tool_setup.cConfig().groupConvert.RawIzero ));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

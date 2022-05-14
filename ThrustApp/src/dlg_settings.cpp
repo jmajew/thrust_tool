@@ -120,6 +120,7 @@ void FormCfgConvert::initValues( const Config& cfg)
 	this->dspin_VbatCorr->setValue( (double)cfg.groupConvert.VbatCorr / 10000.0 );
 	this->dspin_TroqueL->setValue( (double)cfg.groupConvert.LeverArmLength / 100.0 ); 	// <-- mm
 	this->dspin_CurrCoef->setValue( (double)cfg.groupConvert.VIcoeff / 100.0 );
+	this->dspin_RawZero->setValue( (int)cfg.groupConvert.RawIzero );
 
 	this->dspin_ThrustCoef->setValue( (double)cfg.groupConvert.tabStGScale[0] / 1000. );
 	this->dspin_TorqueCoef->setValue( (double)cfg.groupConvert.tabStGScale[1] / 1000. );
@@ -137,6 +138,7 @@ void FormCfgConvert::fetchValues( Config& cfg)
 	cfg.groupConvert.VbatCorr = (int) ( this->dspin_VbatCorr->value() * 10000.0 );
 	cfg.groupConvert.LeverArmLength = (int) (this->dspin_TroqueL->value() * 100.0 ); 	// <-- mm
 	cfg.groupConvert.VIcoeff = (int) (this->dspin_CurrCoef->value() * 100.0 );
+    cfg.groupConvert.RawIzero = (int) (this->dspin_RawZero->value() );
 
 	cfg.groupConvert.tabStGScale[0] = (int) (this->dspin_ThrustCoef->value() * 1000. );
 	cfg.groupConvert.tabStGScale[1] = (int) (this->dspin_TorqueCoef->value() * 1000. );
@@ -160,6 +162,8 @@ bool FormCfgConvert::compareValues( const Config& cfg)
     else if (cfg.groupConvert.LeverArmLength != (int) (this->dspin_TroqueL->value() * 100.0) )
         return false;
     else if (cfg.groupConvert.VIcoeff != (int) (this->dspin_CurrCoef->value() * 100.0) )
+        return false;
+    else if (cfg.groupConvert.RawIzero != (int) (this->dspin_RawZero->value() ) )
         return false;
 
     else if (cfg.groupConvert.tabStGScale[0] != (int) (this->dspin_ThrustCoef->value() * 1000.) )
