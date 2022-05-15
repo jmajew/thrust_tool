@@ -82,6 +82,35 @@ static const ADCConversionGroup adcgrpcfg =
 // uint16_t* cal2 = (uint16_t*)0x1fff7a2e;
 
 
+#define ADC_ACCEL_ARRAY_SIZE 3
+
+// ADC conversion group for accel
+// PC0, PC1, PC2
+// Channels:    IN10, IN11, IN12.
+static const ADCConversionGroup adcgrpcfg_accel =
+{
+	FALSE,                        	   		// NOT CIRCULAR
+	ADC_ACCEL_ARRAY_SIZE,        					// NUMB OF CH
+	adccallback,                        	// ADC CALLBACK
+	NULL,				           	    	// NO ADC ERROR CALLBACK
+	0,                           	     	// CR1
+	ADC_CR2_SWSTART,       	   				// CR2
+	ADC_SMPR1_SMP_AN10(ADC_SAMPLE_144) |
+	ADC_SMPR1_SMP_AN11(ADC_SAMPLE_144) |
+	ADC_SMPR1_SMP_AN12(ADC_SAMPLE_144),   	// SMPR1
+	0,										// SMPR2
+	0,										// HTR
+	0,										// LTR
+	ADC_SQR1_NUM_CH(ADC_ACCEL_ARRAY_SIZE), 	// SQR1
+
+	0,     // SQR2
+
+	ADC_SQR3_SQ1_N(ADC_CHANNEL_IN10) |
+	ADC_SQR3_SQ2_N(ADC_CHANNEL_IN11) |
+	ADC_SQR3_SQ3_N(ADC_CHANNEL_IN12)		// SQR3
+	//ADC_CHANNEL_SENSOR
+};
+
 
 ///*
 // * ADC conversion group.
