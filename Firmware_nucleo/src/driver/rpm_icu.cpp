@@ -22,7 +22,7 @@ static icucnt_t last_period;
 static void icuperiodcb(ICUDriver *icup)
 {
 
-	palToggleLine( LINE_LED_YELLOW );
+//	palToggleLine( LINE_LED_YELLOW );
 
 //	palClearPad(GPIOD, GPIOD_LED4);
 //	icu_mux.lock();

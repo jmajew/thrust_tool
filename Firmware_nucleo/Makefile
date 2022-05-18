@@ -111,7 +111,8 @@ include $(CHIBIOS)/os/hal/hal.mk
 include $(CHIBIOS)/os/hal/ports/STM32/STM32F4xx/platform.mk
 
 #include target/QQ_THRUST_V2/board_cur.mk
-include $(CHIBIOS)/os/hal/boards/ST_NUCLEO64_F401RE/board.mk
+include target/ST_NUCLEO64_F401RE/board.mk
+#include $(CHIBIOS)/os/hal/boards/ST_NUCLEO64_F401RE/board.mk
 
 include $(CHIBIOS)/os/hal/osal/rt-nil/osal.mk
 

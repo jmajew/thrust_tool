@@ -50,7 +50,7 @@ void Master::Init()
 void Master::Start()
 {
 	mthSerial.start( NORMALPRIO+1 );
-	mthMeasure.start( NORMALPRIO+1 );
+//	mthMeasure.start( NORMALPRIO+1 );
 }
 
 void Master::Stop()

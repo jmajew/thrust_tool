@@ -37,13 +37,13 @@
 #include "th_esctelem.hpp"
 
 
-#define WITH_LCD_DISPLAY
+//#define WITH_LCD_DISPLAY
 
 
 using blink_def = std::pair<systime_t,systime_t>;
 
 blink_def blink_arr[] = { {250,250}, {125,300}, {80,80} };
-uint8_t blink_mode = 1;
+uint8_t blink_mode = 0;
 
 //===========================================================================
 // Red LED blinker thread, times are in milliseconds.
@@ -66,9 +66,12 @@ protected:
 
 		while ( true)
 		{
-			palClearLine( LINE_LED_BLUE);
+//			palClearLine( LINE_LED_BLUE);
+			palClearLine( LINE_LED_GREEN);
 			sleep( TIME_MS2I( blink_arr[blink_mode].first));
-			palSetLine( LINE_LED_BLUE);
+
+//			palSetLine( LINE_LED_BLUE);
+			palSetLine( LINE_LED_GREEN);
 			sleep( TIME_MS2I( blink_arr[blink_mode].second));
 
 //			palToggleLine( LINE_LCD_SPI_CS );
@@ -161,8 +164,10 @@ int main( void)
 	halInit();
 	chibi::System::init();
 
+	palSetLine( LINE_LED_GREEN);
 
 	gpioInit();
+
 
 	InitSystem();
 	shellInit();
@@ -171,9 +176,9 @@ int main( void)
 	master.Init();
 	io.Start();
 
-	palClearLine( LINE_LED_YELLOW);
-	palClearLine( LINE_LED_GREEN);
-	palClearLine( LINE_LED_BLUE);
+//	palClearLine( LINE_LED_YELLOW);
+//	palClearLine( LINE_LED_GREEN);
+//	palClearLine( LINE_LED_BLUE);
 
 
 
@@ -209,7 +214,7 @@ int main( void)
 	master.Start();
 
 	blinker_th.start( NORMALPRIO + 5);
-	
+
 	hbeat_th.SetMaster( &master );
 	hbeat_th.start( NORMALPRIO );
 
@@ -220,6 +225,8 @@ int main( void)
 
 	while ( true)
 	{
+//		palToggleLine( LINE_LED_GREEN );
+
 		now = chVTGetSystemTime();
 		dbg_printf("systime = %d\n", now);
 
@@ -236,7 +243,7 @@ int main( void)
 //			 shellStart( (BaseSequentialStream*)&SD_OUTPUT);
 //		}
 
-		palToggleLine( LINE_DEBUG_1 );
+//		palToggleLine( LINE_DEBUG_1 );
 
 #ifdef WITH_LCD_DISPLAY
 		master.pData()->PrintOnScreen(&lcd);

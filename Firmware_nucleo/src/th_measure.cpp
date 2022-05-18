@@ -45,7 +45,7 @@ void MeasureThread::main( void)
 
 	while ( !shouldTerminate() )
 	{
-		palToggleLine( LINE_LED_YELLOW );
+//		palToggleLine( LINE_LED_YELLOW );
 
 		eventmask_t evt = waitAnyEventTimeout( ALL_EVENTS, TIME_MS2I( 2) ); // CHECKME :: is 2ms ok for 80Hz stgauge
 		if ( evt & EVENT_MASK(0) )
