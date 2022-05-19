@@ -8,7 +8,14 @@
  #include "th_accel.hpp"
  
  
- #define FFT_INPUT_DAT_LENGTH	1024
+ #define FFT_INPUT_LENGTH	1024
+ 
+float	tabInput[ 2 * FFT_INPUT_LENGTH ];
+float	tabOutput[ 2 * FFT_INPUT_LENGTH ];
+
+
+chibi::BinarySemaphore	semT2Read( false);
+
  
  static void gpt5_cb(GPTDriver *gptp) {
 
@@ -17,12 +24,16 @@
   // chSysLockFromISR();
   // gptStartOneShotI(&GPTD3, 1000);   /* 0.1 second pulse.*/
   // chSysUnlockFromISR();
+
+	chSysLockFromISR();
+	semT2Read.signalI();
+	chSysUnlockFromISR();
 }
 
  static const GPTConfig gpt5_cfg = 
  {
-	10000,    /* 10kHz timer clock.*/
-	gpt5_cb,   /* Timer callback.*/
+	100000,    // 100kHz timer clock.
+	gpt5_cb,   // Timer callback.
 	0,
 	0
 };
@@ -31,6 +42,11 @@
  ////////////////////////////////////////////////////////////////////////////////////////////////////
 // class ThAccel
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ void ComputeFFT()
+ {
+ }
+
 
 void AccelThread::Init()
 {
@@ -44,6 +60,7 @@ void AccelThread::main()
 	dbg_puts("AccelThread - main\r\n");
 
 	mMode = EAccelMode::Read;
+	gptStartContinuous( &GPTD5, 25);
 	
 	int count = 0;
 	while ( ! shouldTerminate() )
@@ -54,18 +71,28 @@ void AccelThread::main()
 		
 		if ( mMode == EAccelMode::Read )
 		{
+			// wait for semaphore
+			semT2Read.wait();
+
 			// read data from adc
-			;
+			mpADCDev->ReadData_Accel();
+			mpADCDev->FetchData_Accel();
 			
-			if  ( ++count == FFT_INPUT_DAT_LENGTH )
+			if  ( ++count == FFT_INPUT_LENGTH )
 				mMode = EAccelMode::Compute;
 		}
 		
 		if ( mMode == EAccelMode::Compute)
 		{
+			gptStopTimer( &GPTD5);
+			// do some computing
+
+			count = 0;
+			mMode = EAccelMode::Read;
+			gptStartContinuous( &GPTD5, 25);
 		}
 
-		sleep( TIME_MS2I( 100));  // HACK ::
+//		sleep( TIME_MS2I( 100));  // HACK ::
 	}
 
 	exit( MSG_OK );

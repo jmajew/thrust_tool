@@ -10,12 +10,14 @@
 
 #include "system/sysdecl.hpp"
 #include "common.hpp"
+
 #include "util/util.hpp"
+#include "driver/adc.hpp"
 
 enum class EAccelMode
 {
 	Unknown = 0,
-	DataRead,
+	Read,
 	Compute
 };
 
@@ -27,9 +29,10 @@ enum class EAccelMode
 class AccelThread : public chibi::BaseStaticThread<STACK_SIZE>
 {
 public:
-	AccelThread()
+	AccelThread( ADConvertDev* padc = nullptr)
 		: chibi::BaseStaticThread<STACK_SIZE>(),
-		mMode(EAccelMode::Unknown)		{}
+		mMode(EAccelMode::Unknown),
+		mpADCDev(padc)					{}
 
 	virtual ~AccelThread()				{}
 	
@@ -40,7 +43,8 @@ protected:
 	void 	main() override;
 
 private:
-	EAccelMode	mMode;
+	EAccelMode		mMode;
+	ADConvertDev*	mpADCDev;
 };
 
 

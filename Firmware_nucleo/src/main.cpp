@@ -232,7 +232,7 @@ int main( void)
 		now = chVTGetSystemTime();
 		dbg_printf("systime = %d\n", now);
 
-		dbg_puts("HELLO\n" );
+//		dbg_puts("HELLO\n" );
 
 //		palToggleLine( LINE_LED_BLUE );
 //		palToggleLine( LINE_DEBUG_1 );

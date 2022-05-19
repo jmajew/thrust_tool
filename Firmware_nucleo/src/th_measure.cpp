@@ -45,6 +45,7 @@ void MeasureThread::main( void)
 
 	while ( !shouldTerminate() )
 	{
+		dbg_puts("Hello from MeasureThread\r\n");
 //		palToggleLine( LINE_LED_YELLOW );
 
 		eventmask_t evt = waitAnyEventTimeout( ALL_EVENTS, TIME_MS2I( 2) ); // CHECKME :: is 2ms ok for 80Hz stgauge
@@ -101,8 +102,8 @@ void MeasureThread::main( void)
 			// save systime
 //			systime_t now = chVTGetSystemTime();
 
-			mpADCDev->ReadData();
-			mpADCDev->FetchData( mpData->grpAdc);
+			mpADCDev->ReadData_Sensor();
+			mpADCDev->FetchData_Sensor( mpData->grpAdc);
 
 			if ( bRpmOn)
 			{

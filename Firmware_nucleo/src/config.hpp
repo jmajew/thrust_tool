@@ -34,6 +34,9 @@
 #define ADC_SENS_COUNT			6	// count of active ADC sensors
 #define ADC_CH_COUNT			5	// count of stored in data;
 									// Vref, Vbat, Ibat, Ibat0, MPUtemp
+
+#define ADC_ACCEL_COUNT			3	// count of active ADC sensors
+
 // RPM channels
 #define RPM_CH_COUNT			1
 

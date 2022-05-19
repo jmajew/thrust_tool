@@ -9,6 +9,7 @@
 
 
 #define ADC_SENS_ARRAY_SIZE		6
+#define ADC_ACCEL_ARRAY_SIZE 	3
 
 
 const uint16_t* const ts_cal1 = (uint16_t*)0x1fff7a2c;	// 30 °C, VDDA= 3.3 V
@@ -43,23 +44,37 @@ static void adccallback(ADCDriver *adcp)
 	(void)adcp;
 }
 
+// ADCCLK 	= 0.6 - 36 MHz
+// Sampling	= 3 - 480 ticks
+
+//#define ADC_SAMPLE_3            0   /**< @brief 3 cycles sampling time.     */
+//#define ADC_SAMPLE_15           1   /**< @brief 15 cycles sampling time.    */
+//#define ADC_SAMPLE_28           2   /**< @brief 28 cycles sampling time.    */
+//#define ADC_SAMPLE_56           3   /**< @brief 56 cycles sampling time.    */
+//#define ADC_SAMPLE_84           4   /**< @brief 84 cycles sampling time.    */
+//#define ADC_SAMPLE_112          5   /**< @brief 112 cycles sampling time.   */
+//#define ADC_SAMPLE_144          6   /**< @brief 144 cycles sampling time.   */
+//#define ADC_SAMPLE_480          7   /**< @brief 480 cycles sampling time.   */
 
 // ADC conversion group.
 // Channels:    IN3, IN4, IN5, IN6, IN7.
 static const ADCConversionGroup adcgrpcfg =
 {
 	FALSE,                        	   		// NOT CIRCULAR
-	ADC_SENS_ARRAY_SIZE,        					// NUMB OF CH
+	ADC_SENS_ARRAY_SIZE,        			// NUMB OF CH
 	adccallback,                        	// ADC CALLBACK
 	NULL,				           	    	// NO ADC ERROR CALLBACK
 	0,                           	     	// CR1
 	ADC_CR2_SWSTART,       	   				// CR2
-	ADC_SMPR1_SMP_VREF(ADC_SAMPLE_144) |	// internal VRef
-	ADC_SMPR1_SMP_SENSOR(ADC_SAMPLE_480),   // SMPR1
-	ADC_SMPR2_SMP_AN0(ADC_SAMPLE_144) |
-	ADC_SMPR2_SMP_AN1(ADC_SAMPLE_144) |
-	ADC_SMPR2_SMP_AN4(ADC_SAMPLE_144) |
-	ADC_SMPR2_SMP_AN5(ADC_SAMPLE_144) ,		// SMPR2
+	// SMPR1:
+	ADC_SMPR1_SMP_VREF(ADC_SAMPLE_56) |		// internal VRef org 144  TODO :: drop this
+	//ADC_SMPR1_SMP_SENSOR(ADC_SAMPLE_480),	// internal temp
+	ADC_SMPR1_SMP_SENSOR(ADC_SAMPLE_56),	// internal temp
+	// SMPR2:
+	ADC_SMPR2_SMP_AN0(ADC_SAMPLE_56) |
+	ADC_SMPR2_SMP_AN1(ADC_SAMPLE_56) |
+	ADC_SMPR2_SMP_AN4(ADC_SAMPLE_56) |
+	ADC_SMPR2_SMP_AN5(ADC_SAMPLE_56) ,
 	0,										// HTR
 	0,										// LTR
 	ADC_SQR1_NUM_CH(ADC_SENS_ARRAY_SIZE), 	// SQR1
@@ -82,7 +97,6 @@ static const ADCConversionGroup adcgrpcfg =
 // uint16_t* cal2 = (uint16_t*)0x1fff7a2e;
 
 
-#define ADC_ACCEL_ARRAY_SIZE 3
 
 // ADC conversion group for accel
 // PC0, PC1, PC2
@@ -95,10 +109,12 @@ static const ADCConversionGroup adcgrpcfg_accel =
 	NULL,				           	    	// NO ADC ERROR CALLBACK
 	0,                           	     	// CR1
 	ADC_CR2_SWSTART,       	   				// CR2
-	ADC_SMPR1_SMP_AN10(ADC_SAMPLE_144) |
-	ADC_SMPR1_SMP_AN11(ADC_SAMPLE_144) |
-	ADC_SMPR1_SMP_AN12(ADC_SAMPLE_144),   	// SMPR1
-	0,										// SMPR2
+	// SMPR1:
+	ADC_SMPR1_SMP_AN10(ADC_SAMPLE_56) |
+	ADC_SMPR1_SMP_AN11(ADC_SAMPLE_56) |
+	ADC_SMPR1_SMP_AN12(ADC_SAMPLE_56),
+	// SMPR2:
+	0,
 	0,										// HTR
 	0,										// LTR
 	ADC_SQR1_NUM_CH(ADC_ACCEL_ARRAY_SIZE), 	// SQR1
@@ -140,7 +156,6 @@ static const ADCConversionGroup adcgrpcfg_accel =
 
 void ADConvertDev::Init( void)
 {
-
 //	resetADCResults( tabADCResults, ADC_ARRAY_SIZE);
 
 	adcStart( &ADCD1, NULL);
@@ -152,9 +167,9 @@ void ADConvertDev::Stop( void)
 	adcStop( &ADCD1);
 }
 
-void ADConvertDev::ReadData()
+void ADConvertDev::ReadData_Sensor()
 {
-//	resetADCResults( tabADCResults, ADC_ARRAY_SIZE);
+//	reset mtabSensCurRes
 
 	const uint8_t ntimes = mpConfig->nADCSamples;
 
@@ -164,19 +179,17 @@ void ADConvertDev::ReadData()
 
 		//  sampling data for demo purpose
 		adcAcquireBus( &ADCD1);
-		adcConvert( &ADCD1, &adcgrpcfg, (adcsample_t*) mSamplesBuf, ADC_BUF_LENGTH);
+		adcConvert( &ADCD1, &adcgrpcfg, (adcsample_t*) mSensSamplesBuf, ADC_SENS_BUF_LENGTH);
 		adcReleaseBus( &ADCD1);
 
-		AverageCur();
-//		averageADCBuffer( tabCur, samples_buf2, ADC_BUF_LENGTH, ADC_ARRAY_SIZE );
-//		sumADCResults( tabADCResults, tabCur, ADC_ARRAY_SIZE);
+		AverageCur(); // FIXME :: it overwrites the previous data
 	}
 }
 
 
 void ADConvertDev::AverageCur()
 {
-	const uint8_t nsamp = ADC_BUF_LENGTH;
+	const uint8_t nsamp = ADC_SENS_BUF_LENGTH;
 	const uint8_t nch = ADC_SENS_ARRAY_SIZE;
 
 	for ( int ich=0; ich<nch; ++ich)
@@ -186,27 +199,51 @@ void ADConvertDev::AverageCur()
 
 		for( int ii = 0; ii<nsamp; ii++)
 		{
-			tmp += mSamplesBuf[ii*nch+ich];
-			tmp2 += mSamplesBuf[ii*nch+ich]*mSamplesBuf[ii*nch+ich];
+			tmp  += mSensSamplesBuf[ii*nch+ich];
+			tmp2 += mSensSamplesBuf[ii*nch+ich] * mSensSamplesBuf[ii*nch+ich];
 		}
 
-		mtabCurRes[ich] = StatValue12( nsamp, tmp, tmp2);
+		mtabSensCurRes[ich] = StatValue12( nsamp, tmp, tmp2);
+//		mtabSensCurRes[ich].Accumulate( StatValue12( nsamp, tmp, tmp2) );
 	}
 }
 
 
-void ADConvertDev::FetchData( Adc_Data& dataOut )
+void ADConvertDev::FetchData_Sensor( Adc_Data& dataOut )
 {
 	dataOut.mux.lock();
 	const int nch = ADC_CH_COUNT;
 	for ( int ich=0; ich<nch; ++ich)
 	{
 		dataOut.tab[ich].Reset();		// INFO :: <-----------------------
-		dataOut.tab[ich].Accumulate( mtabCurRes[ mpConfig->tabCh[ich] ] );
+		dataOut.tab[ich].Accumulate( mtabSensCurRes[ mpConfig->tabCh[ich] ] );
 	}
 	dataOut.mux.unlock();
 }
 
 
+
+void ADConvertDev::ReadData_Accel()
+{
+//	resetADCResults( tabADCResults, ADC_ARRAY_SIZE);
+
+	const uint8_t ntimes = 1;
+
+	for ( int iadc=0; iadc<ntimes; ++iadc )
+	{
+		//palClearLine(LINE_ADC_END_PULSE);
+
+		//  sampling data for demo purpose
+		adcAcquireBus( &ADCD1);
+		adcConvert( &ADCD1, &adcgrpcfg_accel, (adcsample_t*) mAccelSamplesBuf, ADC_ACCEL_BUF_LENGTH);
+		adcReleaseBus( &ADCD1);
+
+		//AverageCur(); // FIXME :: it overwrites the previous data
+	}
+}
+
+void ADConvertDev::FetchData_Accel()
+{
+}
 
 

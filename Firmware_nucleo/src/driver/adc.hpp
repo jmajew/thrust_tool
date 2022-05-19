@@ -16,7 +16,9 @@
 
 
 //#define ADC_ARRAY_SIZE   		6	// vref, vbat, current, current_zero, vref_int, temp_int  // ew. accx, accy, accz
-#define ADC_BUF_LENGTH      	16	// 1 ore even
+#define ADC_SENS_BUF_LENGTH      	16	// 1 ore even
+#define ADC_ACCEL_BUF_LENGTH      	1	// 1 ore even
+
 
 //#define ADC_ID_VREF			0
 //#define ADC_ID_VBATT			1
@@ -59,10 +61,13 @@ public:
 
 	void	Init();
 	void	Stop();			// TODO :: check this
-	void	ReadData();
+
+	void	ReadData_Sensor();
+	void	ReadData_Accel();
 
 
-	void	FetchData( Adc_Data& data );	//, adcsample_t buf[], uint8_t nsamp, uint8_t nch);
+	void	FetchData_Sensor( Adc_Data& data );
+	void	FetchData_Accel();
 
 //	bool 	IsReady( ioline_t gpioLine);
 
@@ -72,8 +77,11 @@ private:
 private:
 	const CfgADConvert*	mpConfig;
 
-	adcsample_t 	mSamplesBuf[ADC_BUF_LENGTH*ADC_SENS_COUNT];
-	StatValue12		mtabCurRes[ADC_SENS_COUNT];
+	adcsample_t 	mSensSamplesBuf[ ADC_SENS_BUF_LENGTH * ADC_SENS_COUNT ];
+	StatValue12		mtabSensCurRes[ADC_SENS_COUNT];
+
+	adcsample_t 	mAccelSamplesBuf[ ADC_ACCEL_BUF_LENGTH * ADC_ACCEL_COUNT ];
+	StatValue12		mAcceltabCurRes[ADC_ACCEL_COUNT];
 };
 
 
