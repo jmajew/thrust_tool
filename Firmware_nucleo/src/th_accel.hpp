@@ -12,6 +12,12 @@
 #include "common.hpp"
 #include "util/util.hpp"
 
+enum class EAccelMode
+{
+	Unknown = 0,
+	DataRead,
+	Compute
+};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // class ThAccel
@@ -22,15 +28,19 @@ class AccelThread : public chibi::BaseStaticThread<STACK_SIZE>
 {
 public:
 	AccelThread()
-		: chibi::BaseStaticThread<STACK_SIZE>()		{}
+		: chibi::BaseStaticThread<STACK_SIZE>(),
+		mMode(EAccelMode::Unknown)		{}
 
 	virtual ~AccelThread()				{}
+	
+	void	Init();
 
 protected:
 
 	void 	main() override;
 
 private:
+	EAccelMode	mMode;
 };
 
 
