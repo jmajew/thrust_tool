@@ -36,6 +36,8 @@
 #include "th_serial.hpp"
 #include "th_esctelem.hpp"
 
+#include "arm_math.h"
+
 
 //#define WITH_LCD_DISPLAY
 

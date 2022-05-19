@@ -36,6 +36,11 @@ ifeq ($(USE_LTO),)
   USE_LTO = yes
 endif
 
+# If enabled, this option allows to compile the application in THUMB mode.
+ifeq ($(USE_THUMB),)
+  USE_THUMB = yes
+endif
+
 # Enable this if you want to see the full log while compiling.
 ifeq ($(USE_VERBOSE_COMPILE),)
   USE_VERBOSE_COMPILE = no
@@ -203,20 +208,20 @@ CPPWARN = -Wall -Wextra -Wundef
 #UDEFS =
 #UDEFS = -DBOARD_OTG_NOVBUSSENS -DSHELL_CONFIG_FILE -D'__REVISION__="[$(REVISION)]"'
 #UDEFS = -D_DEBUG  -DBOARD_OTG_NOVBUSSENS -DSHELL_CONFIG_FILE -D'__REVISION__="$(REVISION)"'
-UDEFS = -D_DEBUG  -DBOARD_OTG_NOVBUSSENS -DSHELL_CONFIG_FILE -D'__REVISION__="[$(REVISION)]"'
+UDEFS = -DARM_MATH_CM4 -D_DEBUG  -DBOARD_OTG_NOVBUSSENS -DSHELL_CONFIG_FILE -D'__REVISION__="[$(REVISION)]"'
 #UDEFS = -D_DEBUG  -DSHELL_CONFIG_FILE -D'__REVISION__="[$(REVISION)]"'
 
 # Define ASM defines here
 UADEFS =
 
 # List all user directories here
-UINCDIR = $(SRCDIR)
+UINCDIR = $(SRCDIR) ./dsp/include
 
 # List the user directory to look for the libraries here
-ULIBDIR =
+ULIBDIR = ./dsp/lib
 
 # List all user libraries here
-ULIBS = -lm
+ULIBS = -lmath-dsp -lm 
 
 #
 # End of user section
