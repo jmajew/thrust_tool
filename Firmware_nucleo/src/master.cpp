@@ -54,8 +54,10 @@ void Master::Init()
 
 void Master::Start()
 {
-	mthSerial.start( NORMALPRIO+1 );
+	mADC.Init();
+	mthSerial.start( NORMALPRIO+2 );
 	mthMeasure.start( NORMALPRIO+1 );
+	mthAccel.start( NORMALPRIO+2 );
 }
 
 void Master::Stop()

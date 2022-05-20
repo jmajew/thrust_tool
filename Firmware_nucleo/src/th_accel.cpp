@@ -57,42 +57,44 @@ void AccelThread::main()
 {
 	chRegSetThreadName( "Accel");
 
-	dbg_puts("AccelThread - main\r\n");
+//	dbg_puts("AccelThread - main\r\n");
+
+	ASSERT( mpADCDev != nullptr);
 
 	mMode = EAccelMode::Read;
-	gptStartContinuous( &GPTD5, 25);
+	//gptStartContinuous( &GPTD5, 25);
 	
 	int count = 0;
 	while ( ! shouldTerminate() )
 	{
-		dbg_puts("AccelThread inside loop\r\n");
+		//dbg_puts("AccelThread inside loop\r\n");
 		
 		// wait for sig gpt5 callback
 		
 		if ( mMode == EAccelMode::Read )
 		{
 			// wait for semaphore
-			semT2Read.wait();
+			//semT2Read.wait();
 
 			// read data from adc
 			mpADCDev->ReadData_Accel();
-			mpADCDev->FetchData_Accel();
+//			mpADCDev->FetchData_Accel();
 			
-			if  ( ++count == FFT_INPUT_LENGTH )
-				mMode = EAccelMode::Compute;
+//			if  ( ++count == FFT_INPUT_LENGTH )
+//				mMode = EAccelMode::Compute;
 		}
 		
-		if ( mMode == EAccelMode::Compute)
-		{
-			gptStopTimer( &GPTD5);
-			// do some computing
+//		if ( mMode == EAccelMode::Compute)
+//		{
+//			gptStopTimer( &GPTD5);
+//			// do some computing
+//
+//			count = 0;
+//			mMode = EAccelMode::Read;
+//			gptStartContinuous( &GPTD5, 25);
+//		}
 
-			count = 0;
-			mMode = EAccelMode::Read;
-			gptStartContinuous( &GPTD5, 25);
-		}
-
-//		sleep( TIME_MS2I( 100));  // HACK ::
+		sleep( TIME_MS2I( 100));  // HACK ::
 	}
 
 	exit( MSG_OK );

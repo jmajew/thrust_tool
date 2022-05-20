@@ -21,7 +21,7 @@ void MeasureThread::main( void)
 {
 	setName( "MeasureThread");
 
-	dbg_puts("MeasureThread - main\r\n");
+//	dbg_puts("MeasureThread - main\r\n");
 
 	bool bGo = true;
 	bool bCalibZero = false;
@@ -35,7 +35,7 @@ void MeasureThread::main( void)
 	mpHX711Dev->SetRate();
 	//mpHX711Dev->SetRate(HX711_RATE_10SPS);	// HACK ::
 
-	mpADCDev->Init();
+	//mpADCDev->Init();
 
 	mpRPMDev->Init( &RPM_ICUD, RPM_ICU_CH);
 
@@ -44,7 +44,7 @@ void MeasureThread::main( void)
 
 	while ( !shouldTerminate() )
 	{
-		dbg_puts("Hello from MeasureThread\r\n");
+//		dbg_puts("Hello from MeasureThread\r\n");
 //		palToggleLine( LINE_LED_YELLOW );
 
 		eventmask_t evt = waitAnyEventTimeout( ALL_EVENTS, TIME_MS2I( 2) ); // CHECKME :: is 2ms ok for 80Hz stgauge

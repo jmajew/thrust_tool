@@ -81,7 +81,7 @@ private:
 	StatValue12		mtabSensCurRes[ADC_SENS_COUNT];
 
 	adcsample_t 	mAccelSamplesBuf[ ADC_ACCEL_BUF_LENGTH * ADC_ACCEL_COUNT ];
-	StatValue12		mAcceltabCurRes[ADC_ACCEL_COUNT];
+	adcsample_t		mAcceltabCurRes[ADC_ACCEL_COUNT];
 };
 
 

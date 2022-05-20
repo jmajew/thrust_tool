@@ -58,10 +58,10 @@ static void adccallback(ADCDriver *adcp)
 
 // ADC conversion group.
 // Channels:    IN3, IN4, IN5, IN6, IN7.
-static const ADCConversionGroup adcgrpcfg =
+static const ADCConversionGroup adcgrpcfg_sens =
 {
 	FALSE,                        	   		// NOT CIRCULAR
-	ADC_SENS_ARRAY_SIZE,        			// NUMB OF CH
+	ADC_SENS_ARRAY_SIZE,        			// NUM OF CH
 	adccallback,                        	// ADC CALLBACK
 	NULL,				           	    	// NO ADC ERROR CALLBACK
 	0,                           	     	// CR1
@@ -104,8 +104,8 @@ static const ADCConversionGroup adcgrpcfg =
 static const ADCConversionGroup adcgrpcfg_accel =
 {
 	FALSE,                        	   		// NOT CIRCULAR
-	ADC_ACCEL_ARRAY_SIZE,        					// NUMB OF CH
-	adccallback,                        	// ADC CALLBACK
+	ADC_ACCEL_ARRAY_SIZE,        			// NUM OF CH
+	NULL,                        			// ADC CALLBACK
 	NULL,				           	    	// NO ADC ERROR CALLBACK
 	0,                           	     	// CR1
 	ADC_CR2_SWSTART,       	   				// CR2
@@ -118,12 +118,12 @@ static const ADCConversionGroup adcgrpcfg_accel =
 	0,										// HTR
 	0,										// LTR
 	ADC_SQR1_NUM_CH(ADC_ACCEL_ARRAY_SIZE), 	// SQR1
-
-	0,     // SQR2
-
+	// SQR2:
+	0,
+	// SQR3:
 	ADC_SQR3_SQ1_N(ADC_CHANNEL_IN10) |
 	ADC_SQR3_SQ2_N(ADC_CHANNEL_IN11) |
-	ADC_SQR3_SQ3_N(ADC_CHANNEL_IN12)		// SQR3
+	ADC_SQR3_SQ3_N(ADC_CHANNEL_IN12)
 	//ADC_CHANNEL_SENSOR
 };
 
@@ -171,7 +171,7 @@ void ADConvertDev::ReadData_Sensor()
 {
 //	reset mtabSensCurRes
 
-	const uint8_t ntimes = mpConfig->nADCSamples;
+	const uint8_t ntimes = 1;	//mpConfig->nADCSamples;
 
 	for ( int iadc=0; iadc<ntimes; ++iadc )
 	{
@@ -179,7 +179,7 @@ void ADConvertDev::ReadData_Sensor()
 
 		//  sampling data for demo purpose
 		adcAcquireBus( &ADCD1);
-		adcConvert( &ADCD1, &adcgrpcfg, (adcsample_t*) mSensSamplesBuf, ADC_SENS_BUF_LENGTH);
+		adcConvert( &ADCD1, &adcgrpcfg_sens, (adcsample_t*) mSensSamplesBuf, ADC_SENS_BUF_LENGTH);
 		adcReleaseBus( &ADCD1);
 
 		AverageCur(); // FIXME :: it overwrites the previous data
@@ -227,6 +227,7 @@ void ADConvertDev::ReadData_Accel()
 {
 //	resetADCResults( tabADCResults, ADC_ARRAY_SIZE);
 
+	const int nch = ADC_ACCEL_COUNT;
 	const uint8_t ntimes = 1;
 
 	for ( int iadc=0; iadc<ntimes; ++iadc )
@@ -238,12 +239,24 @@ void ADConvertDev::ReadData_Accel()
 		adcConvert( &ADCD1, &adcgrpcfg_accel, (adcsample_t*) mAccelSamplesBuf, ADC_ACCEL_BUF_LENGTH);
 		adcReleaseBus( &ADCD1);
 
+		for ( int ich=0; ich<nch; ++ich)
+			mAcceltabCurRes[ich] = mAccelSamplesBuf[ 0*nch + ich];
+
+		//for ( int ich=0; ich<nch; ++ich)
+		dbg_printf("accel = %d\t %d\t %d \r\n", mAcceltabCurRes[0], mAcceltabCurRes[1], mAcceltabCurRes[2]);
+
 		//AverageCur(); // FIXME :: it overwrites the previous data
 	}
 }
 
 void ADConvertDev::FetchData_Accel()
 {
+//	const int nch = ADC_ACCEL_COUNT;
+//	for ( int ich=0; ich<nch; ++ich)
+//	{
+//		dataOut.tab[ich].Reset();		// INFO :: <-----------------------
+//		dataOut.tab[ich].Accumulate( mtabSensCurRes[ mpConfig->tabCh[ich] ] );
+//	}
 }
 
 
