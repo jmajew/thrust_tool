@@ -317,6 +317,18 @@ ETHSerialResult	ThspProcessor::ProcessCommand( uint8_t command, SBuf& sbin, SBuf
 		break;
 	}
 
+	case THSP_ACCEL_START:
+	{
+		mpMaster->AccelStart();
+		break;
+	}
+
+	case THSP_ACCEL_STOP:
+	{
+		mpMaster->AccelStop();
+		break;
+	}
+
 	case THSP_SEND_DATA:
 	{
 		systime_t time = chVTGetSystemTime();

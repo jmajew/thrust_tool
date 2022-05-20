@@ -76,6 +76,9 @@
 #define THSP_RPM_START						85
 #define THSP_RPM_STOP						86
 
+#define THSP_ACCEL_START					87
+#define THSP_ACCEL_STOP						88
+
 #define THSP_DATASTREAM_START				90
 #define THSP_DATASTREAM_STOP				91
 #define THSP_SEND_DATA						92	// Motor, StG, ADC, RPM, EscTelem

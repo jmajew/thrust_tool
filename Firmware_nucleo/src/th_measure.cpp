@@ -40,7 +40,6 @@ void MeasureThread::main( void)
 	mpRPMDev->Init( &RPM_ICUD, RPM_ICU_CH);
 
 	chibi::EventListener elMeasure;
-
 	evtMeasure.registerMask( &elMeasure, EVENT_MASK(0) );
 
 	while ( !shouldTerminate() )
@@ -57,10 +56,16 @@ void MeasureThread::main( void)
 			if ( command == SIG_MEAS_START )
 			{
 				bGo = true;
+				mpData->mux.lock();
+				mpData->bActive = true;		// activates display
+				mpData->mux.unlock();
 			}
 			else if ( command == SIG_MEAS_STOP )
 			{
 				bGo = false;
+				mpData->mux.lock();
+				mpData->bActive = false;	// desactivate display
+				mpData->mux.unlock();
 			}
 			else if ( command == SIG_CALIB_ZERO_START )
 			{
@@ -86,9 +91,9 @@ void MeasureThread::main( void)
 
 		if ( bGo)
 		{
-			mpData->mux.lock();
-			mpData->bActive = true;
-			mpData->mux.unlock();
+			// mpData->mux.lock();
+			// mpData->bActive = true;
+			// mpData->mux.unlock();
 
 //			mpData->grpStGauge.Reset();
 //			mpData->grpAdc.Reset();
@@ -129,9 +134,9 @@ void MeasureThread::main( void)
 		}
 		else
 		{
-			mpData->mux.lock();
-			mpData->bActive = false;
-			mpData->mux.unlock();
+			// mpData->mux.lock();
+			// mpData->bActive = false;
+			// mpData->mux.unlock();
 
 			chibi::BaseThread::sleep( TIME_MS2I( 50));
 		}
