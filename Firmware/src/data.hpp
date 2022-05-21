@@ -111,7 +111,7 @@ public:
 		for ( int i=0; i<STGAUGE_CH_COUNT; ++i)
 			tabStGauge[i].Reset();
 
-		for ( int i=0; i<ADC_CH_COUNT; ++i)
+		for ( int i=0; i<ADC_SENS_DATA_CH_COUNT; ++i)
 			tabADC[i].Reset();
 
 		mux.unlock();
@@ -121,7 +121,7 @@ public:
 	chibi::Mutex	mux;
 	uint16_t		nSmpls;
 	StatValue24		tabStGauge[STGAUGE_CH_COUNT];
-	StatValue12		tabADC[ADC_CH_COUNT];
+	StatValue12		tabADC[ADC_SENS_DATA_CH_COUNT];
 };
 
 

@@ -21,7 +21,7 @@ void MeasureThread::main( void)
 {
 	setName( "MeasureThread");
 
-	dbg_puts("MeasureThread - main\r\n");
+//	dbg_puts("MeasureThread - main\r\n");
 
 	bool bGo = true;
 	bool bCalibZero = false;
@@ -35,7 +35,7 @@ void MeasureThread::main( void)
 	mpHX711Dev->SetRate();
 	//mpHX711Dev->SetRate(HX711_RATE_10SPS);	// HACK ::
 
-	mpADCDev->Init();
+	//mpADCDev->Init();
 
 	mpRPMDev->Init( &RPM_ICUD, RPM_ICU_CH);
 
@@ -45,6 +45,7 @@ void MeasureThread::main( void)
 
 	while ( !shouldTerminate() )
 	{
+//		dbg_puts("Hello from MeasureThread\r\n");
 		palToggleLine( LINE_LED_YELLOW );
 
 		eventmask_t evt = waitAnyEventTimeout( ALL_EVENTS, TIME_MS2I( 2) ); // CHECKME :: is 2ms ok for 80Hz stgauge
@@ -56,10 +57,16 @@ void MeasureThread::main( void)
 			if ( command == SIG_MEAS_START )
 			{
 				bGo = true;
+				mpData->mux.lock();
+				mpData->bActive = true;		// activates display
+				mpData->mux.unlock();
 			}
 			else if ( command == SIG_MEAS_STOP )
 			{
 				bGo = false;
+				mpData->mux.lock();
+				mpData->bActive = false;	// desactivate display
+				mpData->mux.unlock();
 			}
 			else if ( command == SIG_CALIB_ZERO_START )
 			{
@@ -85,9 +92,9 @@ void MeasureThread::main( void)
 
 		if ( bGo)
 		{
-			mpData->mux.lock();
-			mpData->bActive = true;
-			mpData->mux.unlock();
+			// mpData->mux.lock();
+			// mpData->bActive = true;
+			// mpData->mux.unlock();
 
 //			mpData->grpStGauge.Reset();
 //			mpData->grpAdc.Reset();
@@ -101,8 +108,8 @@ void MeasureThread::main( void)
 			// save systime
 //			systime_t now = chVTGetSystemTime();
 
-			mpADCDev->ReadData();
-			mpADCDev->FetchData( mpData->grpAdc);
+			mpADCDev->ReadData_Sensor();
+			mpADCDev->FetchData_Sensor( mpData->grpAdc);
 
 			if ( bRpmOn)
 			{
@@ -128,9 +135,9 @@ void MeasureThread::main( void)
 		}
 		else
 		{
-			mpData->mux.lock();
-			mpData->bActive = false;
-			mpData->mux.unlock();
+			// mpData->mux.lock();
+			// mpData->bActive = false;
+			// mpData->mux.unlock();
 
 			chibi::BaseThread::sleep( TIME_MS2I( 50));
 		}

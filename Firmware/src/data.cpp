@@ -23,7 +23,7 @@ void Data::UpdateZero()
 	grpStGauge.mux.unlock();
 
 	grpAdc.mux.lock();
-	for ( int i=0; i<ADC_CH_COUNT; ++i)
+	for ( int i=0; i<ADC_SENS_DATA_CH_COUNT; ++i)
 	{
 		dataZero.tabADC[i].Accumulate( grpAdc.tab[i] );
 	}
@@ -81,7 +81,7 @@ void Data::PrintOnScreen( Display* plcd)
 
 	// ADC
 	this->grpAdc.mux.lock();
-	for ( int i=0; i<ADC_CH_COUNT; ++i)
+	for ( int i=0; i<ADC_SENS_DATA_CH_COUNT; ++i)
 	{
 		chsnprintf( sbuff, BUFF_SIZE, "%d: %4d %d", i, this->grpAdc.tab[i].Mean(), this->grpAdc.tab[i].Deviation() );
 		plcd->SetCursor(0, offset+i*8 );

@@ -77,7 +77,7 @@ void SerialThread::sendMessage()
 
 void SerialThread::main()
 {
-	chRegSetThreadName( "THSerialThread");
+	chRegSetThreadName( "THSerial");
 
 	dbg_puts("THSerialThread - main\r\n");
 

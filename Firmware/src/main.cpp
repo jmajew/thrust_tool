@@ -43,7 +43,7 @@
 using blink_def = std::pair<systime_t,systime_t>;
 
 blink_def blink_arr[] = { {250,250}, {125,300}, {80,80} };
-uint8_t blink_mode = 1;
+uint8_t blink_mode = 0;
 
 //===========================================================================
 // Red LED blinker thread, times are in milliseconds.
@@ -221,9 +221,9 @@ int main( void)
 	while ( true)
 	{
 		now = chVTGetSystemTime();
-		dbg_printf("systime = %d\n", now);
+//		dbg_printf("systime = %d\n", now);
 
-		dbg_puts("HELLO\n" );
+//		dbg_puts("HELLO\n" );
 
 //		palToggleLine( LINE_LED_BLUE );
 //		palToggleLine( LINE_DEBUG_1 );

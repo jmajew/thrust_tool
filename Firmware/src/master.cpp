@@ -18,12 +18,17 @@ Master::Master()
 	  mRPM( &mConfig.groupRpm),
 	  mProcessor( this),
 	  mPort( (BaseAsynchronousChannel*)&SD_SERIAL, &mProcessor),
+
 	  mthSerial( &mPort ),
 	  mthMeasure( &mHX, &mADC, &mRPM ),
 	  mthEscTelem( (BaseAsynchronousChannel*)&SD_ESC_TELEM),
 //	  mthRpm( &mRPM),
+	  mthAccel( &mADC),
+
 	  mrefThEscTelem(nullptr),
-	  mrefThRpm(nullptr)
+	  mrefThRpm(nullptr),
+	  mrefThAccel(nullptr)
+
 {
 	mthMeasure.SetData( &this->mData );
 	mthEscTelem.SetData( &this->mData );
@@ -49,8 +54,10 @@ void Master::Init()
 
 void Master::Start()
 {
-	mthSerial.start( NORMALPRIO+1 );
+	mADC.Init();
+	mthSerial.start( NORMALPRIO+2 );
 	mthMeasure.start( NORMALPRIO+1 );
+	mthAccel.start( NORMALPRIO+2 );
 }
 
 void Master::Stop()
@@ -83,10 +90,41 @@ void Master::EscTelemStop()
 	msg_t msg = mrefThEscTelem.wait();
 	if ( msg == MSG_OK)
 	{
-		dbg_puts("Master::EscTelemStop : thRpm successfuly terminated");
+		dbg_puts("Master::EscTelemStop : thEscTelem successfuly terminated");
 		mrefThEscTelem = nullptr;
 	}
 }
+
+void Master::AccelStart()
+{
+	if ( ! mrefThAccel.isNull() )
+	{
+		dbg_puts("Master::AccelStart : mrefThAccel != nullptr");
+		return;
+	}
+
+	mrefThAccel = mthAccel.start( NORMALPRIO+1 );
+}
+
+void Master::AccelStop()
+{
+	if ( mrefThAccel.isNull() )
+	{
+		dbg_puts("Master::AccelStop : mrefThAccel == nullptr");
+		return;
+	}
+
+	mrefThAccel.requestTerminate();
+	dbg_puts("Master::AccelStop : term. req.");
+
+	msg_t msg = mrefThAccel.wait();
+	if ( msg == MSG_OK)
+	{
+		dbg_puts("Master::AccelStop : thAccel successfuly terminated");
+		mrefThAccel = nullptr;
+	}
+}
+
 
 void Master::RpmStart()
 {

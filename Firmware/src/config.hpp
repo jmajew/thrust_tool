@@ -23,6 +23,8 @@
 // measurement channels
 
 
+// TODO :: correct CUNTs naming
+
 // motor channels
 #define MOTOR_CH_COUNT			1
 
@@ -31,9 +33,12 @@
 #define STGAUGE_CH_COUNT		2	// thrust, torque
 
 // ADC channels
-#define ADC_SENS_COUNT			6	// count of active ADC sensors
-#define ADC_CH_COUNT			5	// count of stored in data;
+#define ADC_SENS_CH_COUNT		6	// count of active ADC sensors
+#define ADC_SENS_DATA_CH_COUNT	5	// count of channels stored in data;
 									// Vref, Vbat, Ibat, Ibat0, MPUtemp
+
+#define ADC_ACCEL_COUNT			3	// count of active ADC sensors
+
 // RPM channels
 #define RPM_CH_COUNT			1
 
@@ -114,7 +119,7 @@ public:
 	//uint8_t			bIbat0Active;
 
 	// id:  0 - Vref, 1 - Vbat, 2 - Ibat, 3 - Ibat0, 4 - MPUtemp
-	uint8_t			tabCh[ADC_CH_COUNT];
+	uint8_t			tabCh[ADC_SENS_DATA_CH_COUNT];
 };
 
 

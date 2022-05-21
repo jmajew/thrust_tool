@@ -125,14 +125,14 @@ enum EAdcChannels
 // serial comm
 
 // UART UART1
-#define UART_TX		PAL_LINE(GPIOB,6)
-#define UART_RX		PAL_LINE(GPIOB,7)
+#define LINE_UART_TX		PAL_LINE(GPIOB,6)
+#define LINE_UART_RX		PAL_LINE(GPIOB,7)
 
 
 //#define SUSB				SDU1
-#define SDA					SD1
+//#define SDA					SD1
 
-#define SD_OUTPUT	SDA
+#define SD_OUTPUT	SD1
 #define SD_SERIAL	SDU1
 
 

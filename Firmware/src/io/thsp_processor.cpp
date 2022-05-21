@@ -81,7 +81,7 @@ ETHSerialResult	ThspProcessor::ProcessCommand( uint8_t command, SBuf& sbin, SBuf
 	{
 		sbout.WriteU8( MOTOR_CH_COUNT );
 		sbout.WriteU8( STGAUGE_CH_COUNT );
-		sbout.WriteU8( ADC_CH_COUNT );
+		sbout.WriteU8( ADC_SENS_DATA_CH_COUNT );
 		sbout.WriteU8( RPM_CH_COUNT );
 		sbout.WriteU8( ESCTELEM_CH_COUNT );
 
@@ -150,8 +150,8 @@ ETHSerialResult	ThspProcessor::ProcessCommand( uint8_t command, SBuf& sbin, SBuf
 			sbout.WriteU32( dev );
 		}
 
-		sbout.WriteU8( (uint8_t)ADC_CH_COUNT );
-		for (int i=0; i<ADC_CH_COUNT; ++i)
+		sbout.WriteU8( (uint8_t)ADC_SENS_DATA_CH_COUNT );
+		for (int i=0; i<ADC_SENS_DATA_CH_COUNT; ++i)
 		{
 			uint16_t n 		= (uint16_t)pdata->dataZero.tabADC[i].Count();
 			uint16_t x 		= (uint16_t)pdata->dataZero.tabADC[i].Mean();
@@ -317,6 +317,18 @@ ETHSerialResult	ThspProcessor::ProcessCommand( uint8_t command, SBuf& sbin, SBuf
 		break;
 	}
 
+	case THSP_ACCEL_START:
+	{
+		mpMaster->AccelStart();
+		break;
+	}
+
+	case THSP_ACCEL_STOP:
+	{
+		mpMaster->AccelStop();
+		break;
+	}
+
 	case THSP_SEND_DATA:
 	{
 		systime_t time = chVTGetSystemTime();
@@ -340,7 +352,7 @@ ETHSerialResult	ThspProcessor::ProcessCommand( uint8_t command, SBuf& sbin, SBuf
 		// ADC
 		pdata->grpAdc.mux.lock();
 //		sbout.WriteU8( (uint8_t)ADC_CH_COUNT );			// TODO :: do not send
-		for (int i=0; i<ADC_CH_COUNT; ++i)
+		for (int i=0; i<ADC_SENS_DATA_CH_COUNT; ++i)
 		{
 			sbout.WriteU16( (uint16_t)pdata->grpAdc.tab[i].Mean() );
 

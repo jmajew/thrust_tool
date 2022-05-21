@@ -21,6 +21,7 @@
 #include "th_serial.hpp"
 #include "th_esctelem.hpp"
 //#include "th_rpm.hpp"
+#include "th_accel.hpp"
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -40,6 +41,10 @@ public:
 
 	void	RpmStart();
 	void	RpmStop();
+
+	void	AccelStart();
+	void	AccelStop();
+
 
 	void	MotorArm();
 	void	MotorDisarm();
@@ -77,9 +82,12 @@ private:
 	MeasureThread	mthMeasure;
 	EscTelemThread	mthEscTelem;
 //	RpmThread		mthRpm;
+	AccelThread		mthAccel;
 
 	chibi::ThreadReference	mrefThEscTelem;
 	chibi::ThreadReference	mrefThRpm;
+	chibi::ThreadReference	mrefThAccel;
+
 //	MotorMaster		mMotor;
 //	MeasureMaster	mMeasure;
 };

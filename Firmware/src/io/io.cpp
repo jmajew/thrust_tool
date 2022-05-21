@@ -53,7 +53,7 @@ void	IoMaster::Start()
 	usbConnectBus( serusbcfg.usbp);
 
 
-	sdStart( &SDA, &sdacfg);
+	sdStart( &SD1, &sdacfg);
 
 //	sdStart( &SDB, &sdbcfg);
 	
