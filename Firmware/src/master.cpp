@@ -56,8 +56,8 @@ void Master::Start()
 {
 	mADC.Init();
 	mthSerial.start( NORMALPRIO+2 );
-	mthMeasure.start( NORMALPRIO+1 );
-	mthAccel.start( NORMALPRIO+2 );
+	mthMeasure.start( NORMALPRIO+2 );
+	mrefThAccel = mthAccel.start( NORMALPRIO+1 );
 }
 
 void Master::Stop()

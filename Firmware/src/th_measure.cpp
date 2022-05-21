@@ -19,7 +19,7 @@ extern Display lcd;
 
 void MeasureThread::main( void)
 {
-	setName( "MeasureThread");
+	setName( "Measure");
 
 //	dbg_puts("MeasureThread - main\r\n");
 
@@ -57,16 +57,16 @@ void MeasureThread::main( void)
 			if ( command == SIG_MEAS_START )
 			{
 				bGo = true;
-				mpData->mux.lock();
-				mpData->bActive = true;		// activates display
-				mpData->mux.unlock();
+//				mpData->mux.lock();
+//				mpData->bActive = true;		// activates display
+//				mpData->mux.unlock();
 			}
 			else if ( command == SIG_MEAS_STOP )
 			{
 				bGo = false;
-				mpData->mux.lock();
-				mpData->bActive = false;	// desactivate display
-				mpData->mux.unlock();
+//				mpData->mux.lock();
+//				mpData->bActive = false;	// desactivate display
+//				mpData->mux.unlock();
 			}
 			else if ( command == SIG_CALIB_ZERO_START )
 			{
@@ -92,9 +92,9 @@ void MeasureThread::main( void)
 
 		if ( bGo)
 		{
-			// mpData->mux.lock();
-			// mpData->bActive = true;
-			// mpData->mux.unlock();
+			 mpData->mux.lock();
+			 mpData->bActive = true;
+			 mpData->mux.unlock();
 
 //			mpData->grpStGauge.Reset();
 //			mpData->grpAdc.Reset();
@@ -135,9 +135,9 @@ void MeasureThread::main( void)
 		}
 		else
 		{
-			// mpData->mux.lock();
-			// mpData->bActive = false;
-			// mpData->mux.unlock();
+			 mpData->mux.lock();
+			 mpData->bActive = false;
+			 mpData->mux.unlock();
 
 			chibi::BaseThread::sleep( TIME_MS2I( 50));
 		}

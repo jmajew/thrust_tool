@@ -62,18 +62,18 @@ const uint16_t* const pts_cal2 = (uint16_t*)0x1fff7a2e;
 
 const VarDef	tabCliVar[] =
 {
-	{ "adc_nsamp", 				VARTP_UINT16, 				{.valuedef = {1, 100, 6} }, 							offsetof( Config, groupADC) 	+ offsetof(CfgADConvert, nADCSamples) },
+//	{ "adc_nsamp", 				VARTP_UINT16, 				{.valuedef = {1, 100, 6} }, 							offsetof( Config, groupADC) 	+ offsetof(CfgADConvert, nADCSamples) },
 //	{ "adc_ibat0_active", 		VARTP_UINT8 | MODE_LOOKUP,	{.lookup = {TABLE_OFF_ON, false}}, 						offsetof( Config, groupADC) 	+ offsetof(CfgADConvert, bIbat0Active) },
-	{ "adc_ch_vref", 			VARTP_UINT8, 				{.valuedef = {0, ADC_SENS_CH_COUNT, 0} }, 					offsetof( Config, groupADC) 	+ offsetof(CfgADConvert, tabCh[ID_CH_VREF]) },
-	{ "adc_ch_vbat", 			VARTP_UINT8, 				{.valuedef = {0, ADC_SENS_CH_COUNT, 1} }, 					offsetof( Config, groupADC) 	+ offsetof(CfgADConvert, tabCh[ID_CH_VBATT]) },
-	{ "adc_ch_ibat", 			VARTP_UINT8, 				{.valuedef = {0, ADC_SENS_CH_COUNT, 3} }, 					offsetof( Config, groupADC) 	+ offsetof(CfgADConvert, tabCh[ID_CH_IBATT]) },
-	{ "adc_ch_ibat0", 			VARTP_UINT8, 				{.valuedef = {0, ADC_SENS_CH_COUNT, 2} }, 					offsetof( Config, groupADC) 	+ offsetof(CfgADConvert, tabCh[ID_CH_IBATTZERO]) },
-	{ "adc_ch_mputemp", 		VARTP_UINT8, 				{.valuedef = {0, ADC_SENS_CH_COUNT, 5} }, 					offsetof( Config, groupADC) 	+ offsetof(CfgADConvert, tabCh[ID_CH_MPUTEMP]) },
+	{ "adc_ch_vref", 			VARTP_UINT8, 				{.valuedef = {0, ADC_SENS_CH_COUNT-1, 0} }, 			offsetof( Config, groupADC) 	+ offsetof(CfgADConvert, tabCh[ID_CH_VREF]) },
+	{ "adc_ch_vbat", 			VARTP_UINT8, 				{.valuedef = {0, ADC_SENS_CH_COUNT-1, 1} }, 			offsetof( Config, groupADC) 	+ offsetof(CfgADConvert, tabCh[ID_CH_VBATT]) },
+	{ "adc_ch_ibat", 			VARTP_UINT8, 				{.valuedef = {0, ADC_SENS_CH_COUNT-1, 3} }, 			offsetof( Config, groupADC) 	+ offsetof(CfgADConvert, tabCh[ID_CH_IBATT]) },
+	{ "adc_ch_ibat0", 			VARTP_UINT8, 				{.valuedef = {0, ADC_SENS_CH_COUNT-1, 2} }, 			offsetof( Config, groupADC) 	+ offsetof(CfgADConvert, tabCh[ID_CH_IBATTZERO]) },
+	{ "adc_ch_mputemp", 		VARTP_UINT8, 				{.valuedef = {0, ADC_SENS_CH_COUNT-1, 4} }, 			offsetof( Config, groupADC) 	+ offsetof(CfgADConvert, tabCh[ID_CH_MPUTEMP]) },
 
 	{ "stgauge_rate", 			VARTP_UINT8 | MODE_LOOKUP, 	{.lookup = {TABLE_TENSOR_RATE, HX711_RATE_10SPS}},		offsetof( Config, groupStrain) 	+ offsetof(CfgStrainGauge, sampleRate) },
 	{ "stgauge_gain", 			VARTP_UINT8 | MODE_LOOKUP, 	{.lookup = {TABLE_TENSOR_GAIN, HX711_GAIN_128}}, 		offsetof( Config, groupStrain) 	+ offsetof(CfgStrainGauge, gain) },
-	{ "stgauge_ch_thrust", 		VARTP_UINT8, 				{.valuedef = {0, STGAUGE_SENS_COUNT, 0} }, 				offsetof( Config, groupStrain) 	+ offsetof(CfgStrainGauge, tabCh[ID_CH_THRUST]) },
-	{ "stgauge_ch_torque",		VARTP_UINT8, 				{.valuedef = {0, STGAUGE_SENS_COUNT, 1} }, 				offsetof( Config, groupStrain) 	+ offsetof(CfgStrainGauge, tabCh[ID_CH_TORQUE]) },
+	{ "stgauge_ch_thrust", 		VARTP_UINT8, 				{.valuedef = {0, STGAUGE_SENS_COUNT-1, 0} }, 			offsetof( Config, groupStrain) 	+ offsetof(CfgStrainGauge, tabCh[ID_CH_THRUST]) },
+	{ "stgauge_ch_torque",		VARTP_UINT8, 				{.valuedef = {0, STGAUGE_SENS_COUNT-1, 1} }, 			offsetof( Config, groupStrain) 	+ offsetof(CfgStrainGauge, tabCh[ID_CH_TORQUE]) },
 
 	{ "motor_protocol", 		VARTP_UINT8 | MODE_LOOKUP, 	{.lookup = {TABLE_MOTOR_PROTOCOL, MOTPROT_PWM1000}},	offsetof( Config, groupMotor) 	+ offsetof(CfgMotor, protocol) },
 //	{ "motor_protocol", 		VARTP_UINT8 | MODE_LOOKUP, 	{.lookup = {TABLE_MOTOR_PROTOCOL, MOTPROT_ONESHOT125}},	offsetof( Config, groupMotor) 	+ offsetof(CfgMotor, protocol) },

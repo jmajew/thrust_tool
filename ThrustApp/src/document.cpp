@@ -274,7 +274,7 @@ void Document::appendData( ThspMessage& msg)
 		data[CH_STG_THRUST_ID + i] = static_cast<double>( (int32_t)sbin.ReadU32() );
 
 	// adc
-	uint8_t  nadc = ADC_CH_COUNT;
+	uint8_t  nadc = ADC_SENS_DATA_CH_COUNT;
 
 	//StatValueU16 sval;
 	for ( int i=0; i< nadc; ++i)

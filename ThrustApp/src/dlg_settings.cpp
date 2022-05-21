@@ -34,7 +34,7 @@ void FormCfgTool::initValues(const Config& cfg)
     this->spinBox_MotorMax->setValue(cfg.groupMotor.maxOutput);
 
     this->spinBox_RpmFreq->setValue(cfg.groupRpm.smplFreq);
-    this->spinBox_AdcSmpls->setValue(cfg.groupADC.nADCSamples);
+    //this->spinBox_AdcSmpls->setValue(cfg.groupADC.nADCSamples);
 
 
     //this->comboBox_StGSmpls
@@ -53,7 +53,7 @@ void FormCfgTool::fetchValues(Config& cfg)
     cfg.groupMotor.maxOutput = this->spinBox_MotorMax->value();
 
     cfg.groupRpm.smplFreq = this->spinBox_RpmFreq->value();
-    cfg.groupADC.nADCSamples = this->spinBox_AdcSmpls->value();
+    //cfg.groupADC.nADCSamples = this->spinBox_AdcSmpls->value();
 
 
     //this->comboBox_StGSmpls
@@ -74,8 +74,8 @@ bool FormCfgTool::compareValues(const Config& cfg)
         return false;
     else if (this->spinBox_RpmFreq->value() != cfg.groupRpm.smplFreq)
         return false;
-    else if (this->spinBox_AdcSmpls->value() != cfg.groupADC.nADCSamples)
-        return false;
+    //else if (this->spinBox_AdcSmpls->value() != cfg.groupADC.nADCSamples)
+    //    return false;
     else if (this->comboBox_MotorProt->currentIndex() != cfg.groupMotor.protocol)
         return false;
     else if (this->comboBox_StGSmpls->currentIndex() != cfg.groupStrain.sampleRate)

@@ -13,7 +13,7 @@ bool ToolSetup::initChannels( ThspMessage& msg)
 
 	if (mcountMotorCh != MOTOR_CH_COUNT ||
 		mcountStgCh != STGAUGE_CH_COUNT ||
-		mcountAdcCh != ADC_CH_COUNT ||
+		mcountAdcCh != ADC_SENS_DATA_CH_COUNT ||
 		mcountRpmCh != RPM_CH_COUNT ||
 		mcountEsctCh != ESCTELEM_CH_COUNT  )
 	{

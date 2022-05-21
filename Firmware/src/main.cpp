@@ -222,6 +222,8 @@ int main( void)
 	{
 		now = chVTGetSystemTime();
 //		dbg_printf("systime = %d\n", now);
+//		dbg_printf("systime = %d\n", SYSTEM_CLOCK);
+
 
 //		dbg_puts("HELLO\n" );
 

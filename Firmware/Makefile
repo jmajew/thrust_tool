@@ -6,7 +6,7 @@
 # Compiler options here. nosys, nano, rdimon
 ifeq ($(USE_OPT),)
 #  USE_OPT = -O2 --specs=nosys.specs -fomit-frame-pointer -falign-functions=16
-  USE_OPT = -O0 -ggdb -specs=nano.specs -specs=nosys.specs -falign-functions=16
+  USE_OPT = -O0 -ggdb -specs=nosys.specs -falign-functions=16
 ##  USE_OPT = -O2 -ggdb --specs=nosys.specs -fomit-frame-pointer -falign-functions=16
 ##  USE_OPT = -O0 -ggdb --specs=nosys.specs 
 endif

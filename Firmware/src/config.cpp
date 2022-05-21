@@ -42,7 +42,7 @@ const uint8_t size_StGaugeGain = ARRAYLEN(names_StGaugeGain);
 
 void CfgADConvert::Pack( SBuf& sbout )
 {
-	sbout.WriteU16( nADCSamples );
+//	sbout.WriteU16( nADCSamples );
 //	sbout.WriteU8( bIbat0Active );
 
 	for (int i=0; i<ADC_SENS_DATA_CH_COUNT; ++i)
@@ -51,7 +51,7 @@ void CfgADConvert::Pack( SBuf& sbout )
 
 void CfgADConvert::Unpack( SBuf& sbin )
 {
-	nADCSamples = sbin.ReadU16();
+//	nADCSamples = sbin.ReadU16();
 //	bIbat0Active = sbin.ReadU8();
 
 	for (int i=0; i<ADC_SENS_DATA_CH_COUNT; ++i)

@@ -33,7 +33,7 @@
 #define STGAUGE_CH_COUNT		2	// thrust, torque
 
 // ADC channels
-#define ADC_SENS_CH_COUNT		6	// count of active ADC sensors
+#define ADC_SENS_CH_COUNT		5	// count of active ADC sensors
 #define ADC_SENS_DATA_CH_COUNT	5	// count of channels stored in data;
 									// Vref, Vbat, Ibat, Ibat0, MPUtemp
 
@@ -107,17 +107,12 @@ extern const uint8_t size_StGaugeGain;
 struct CfgADConvert
 {
 public:
-	CfgADConvert() :
-		nADCSamples(16)
-	{}
+	CfgADConvert()		{}
 
 	void	Pack( SBuf& sbout );
 	void	Unpack( SBuf& sbin );
 
 public:
-	uint16_t		nADCSamples;
-	//uint8_t			bIbat0Active;
-
 	// id:  0 - Vref, 1 - Vbat, 2 - Ibat, 3 - Ibat0, 4 - MPUtemp
 	uint8_t			tabCh[ADC_SENS_DATA_CH_COUNT];
 };

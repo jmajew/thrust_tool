@@ -15,9 +15,8 @@
 
 
 
-//#define ADC_ARRAY_SIZE   		6	// vref, vbat, current, current_zero, vref_int, temp_int  // ew. accx, accy, accz
-#define ADC_SENS_BUF_LENGTH      	16	// 1 ore even
-#define ADC_ACCEL_BUF_LENGTH      	4	// 1 ore even
+#define ADC_SENS_BUF_LENGTH      	4	// 1 ore even (max.16)
+#define ADC_ACCEL_BUF_LENGTH      	1	// 1 ore even
 
 
 
@@ -60,10 +59,7 @@ public:
 	void	FetchData_Sensor( Adc_Data& data );
 	void	FetchData_Accel();
 
-//	bool 	IsReady( ioline_t gpioLine);
-
 private:
-	void	AverageCur();
 
 private:
 	const CfgADConvert*	mpConfig;
