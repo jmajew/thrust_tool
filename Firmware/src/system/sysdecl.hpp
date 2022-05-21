@@ -46,8 +46,8 @@ namespace chibi = chibios_rt;
 #define USE_VERBOSE_ALLOC			1
 
 
-#define HEAP_STD_SIZE				32768
-//#define HEAP_STD_SIZE				16384
+//#define HEAP_STD_SIZE				32768
+#define HEAP_STD_SIZE				16384
 
 
 
