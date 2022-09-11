@@ -15,5 +15,17 @@
 ### hardware v2
 * low-pass filter for ADC
   
+### sensor settings
   
+* stgauge_scale_thrust	2kG -- 1054.501
+* stgauge_scale_thrust	3kG -- 789. ?
 
+* stgauge_scale_torque	1kG -- 1740.526
+* stgauge_scale_torque	2kG -- ?
+
+* adc_icoeff 	(ACS709)	+- 75A [0.028V/A 5V] 	-- 178.57
+* adc_icoeff	(ACHS-7125)	+- 50A [0.04V/A 5V] 	-- 125
+* adc_icoeff	ACHS-7124)	+- 40A [0.05V/A 5V] 	-- 100
+* adc_icoeff	(ACS711EX)	+- 31A [0.045V/A 3.3V] 	-- 73.3
+
+36.70 ?
