@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.5)
 
 project(ThrustApp LANGUAGES CXX)
 
+
+#C:\scratch\Qt\5.15.2\msvc2019_64\bin
+set ( CMAKE_PREFIX_PATH "C:\\scratch\\Qt\\5.12.2\\msvc2019_64" )
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_AUTOUIC ON)
