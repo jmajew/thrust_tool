@@ -41,8 +41,8 @@ static const char* const lookupTable_TensRate[] =
 
 static const char* const lookupTable_TensGain[] =
 {
-    "128",
-    "64"
+    "64",
+    "128"
 };
 
 
@@ -90,7 +90,7 @@ const VarDef	tabCliVar[] =
 	{ "adc_vref", 				VARTP_UINT16, 				{.valuedef = {0, 5000, 2048} }, 						offsetof( Config, groupConvert)	+ offsetof(CfgConvert, Vref) },
 	{ "adc_vbatt_divider", 		VARTP_UINT16, 				{.valuedef = {0, 65535, 11000} }, 						offsetof( Config, groupConvert)	+ offsetof(CfgConvert, VbatDivider) },
 	{ "adc_vbatt_corr", 		VARTP_UINT16, 				{.valuedef = {0, 65535, 9918} }, 						offsetof( Config, groupConvert)	+ offsetof(CfgConvert, VbatCorr) },
-	{ "adc_icoeff", 			VARTP_UINT16, 				{.valuedef = {0, 65535, 3670} }, 						offsetof( Config, groupConvert)	+ offsetof(CfgConvert, VIcoeff) },
+	{ "adc_icoeff", 			VARTP_UINT16, 				{.valuedef = {0, 65535, 7330} }, 						offsetof( Config, groupConvert)	+ offsetof(CfgConvert, VIcoeff) },
 	{ "adc_raw_zero", 			VARTP_UINT16, 				{.valuedef = {0, 4096, 2048} }, 						offsetof( Config, groupConvert)	+ offsetof(CfgConvert, RawIzero) },
 
 	{ "stgauge_l", 				VARTP_UINT16, 				{.valuedef = {0, 65535, 3500} }, 						offsetof( Config, groupConvert)	+ offsetof(CfgConvert, LeverArmLength) },
