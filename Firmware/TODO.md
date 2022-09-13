@@ -27,6 +27,5 @@
 * adc_icoeff 	(ACS709)	+- 75A [0.028V/A 5V] 	-- 178.57
 * adc_icoeff	(ACHS-7125)	+- 50A [0.04V/A 5V] 	-- 125
 * adc_icoeff	ACHS-7124)	+- 40A [0.05V/A 5V] 	-- 100
-* adc_icoeff	(ACS711EX)	+- 31A [0.045V/A 3.3V] 	-- 73.3
+* adc_icoeff	(ACS711EX)	+- 15.5A [0.09V/A 3.3V] 	-- 36.7
 
-36.70 ?
