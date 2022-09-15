@@ -109,12 +109,17 @@ void Data::PrintOnScreen( Display* plcd)
 //	plcd->WriteString( sbuff, font5x7, White);
 
 
+	// ESC Telem
 	this->grpEscTelem.mux.lock();
 //		if ( this->grpEscTelem.temp != 0xff )
 	{
 //		chsnprintf( sbuff, BUFF_SIZE, "t:%3dC", this->grpEscTelem.temp );
 //		plcd->SetCursor(0, offset+32 );
 //		plcd->WriteString( sbuff, font5x7, White);
+
+		chsnprintf( sbuff, BUFF_SIZE, "t:%5d c", this->grpEscTelem.temp );
+		plcd->SetCursor(64, offset+16 );
+		plcd->WriteString( sbuff, font5x7, White);
 
 		chsnprintf( sbuff, BUFF_SIZE, "v:%3d.%02dV", this->grpEscTelem.volt/100, this->grpEscTelem.volt%100 );
 		plcd->SetCursor(64, offset+24 );

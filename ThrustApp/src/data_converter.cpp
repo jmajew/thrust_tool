@@ -58,6 +58,7 @@ void DataConverter::convert( RawData& data ) const
 	data[CH_EXT_TORQUE_ID] = ( data[CH_STG_TORQUE_ID] - mtabOffsetStG[1] ) / mtabCoeffStG[1];	// torque: force [G]
 
 	data[CH_EXT_TORQUE_ID] *= mLengthTq / 10.;	// torque [G * cm]
+	data[CH_EXT_TORQUE_ID] = std::fabs(data[CH_EXT_TORQUE_ID]);
 
 	if ( meRpmSrc == ERpmSource::IrSensor )
 	{

@@ -14,7 +14,7 @@
 // # define SSD1306_INVERSE_COLOR
 
 
-//#define SSD1306_USE_SH1106
+#define SSD1306_USE_SH1106
 
 
 #define SSD1306_I2C_ADDR		0x3C

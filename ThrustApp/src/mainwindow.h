@@ -61,6 +61,8 @@ private:
     void onDeviceReset();
 	void onProcess( const MeasurementData* data);
 
+    void mouseReleaseEvent(QMouseEvent* event);
+
     void newFile();
     void open();
     void save();

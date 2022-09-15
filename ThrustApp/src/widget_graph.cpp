@@ -635,7 +635,8 @@ void GraphWidget::mousePressEvent( QMouseEvent *event)
 
 void GraphWidget::mouseReleaseEvent( QMouseEvent *event)
 {
-	if ( mmouseMode == EMouseMode::ZoomWindow )
+
+    if ( mmouseMode == EMouseMode::ZoomWindow )
     {
         mrecZoomWin.setBottomRight( event->pos() );
         mrecZoomWin = mrecZoomWin.normalized();
@@ -667,6 +668,10 @@ void GraphWidget::mouseReleaseEvent( QMouseEvent *event)
         
         mmouseMode = EMouseMode::None;
         this->updateFull();
+    }
+    else
+    {
+        event->ignore();
     }
 
 }

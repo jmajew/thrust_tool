@@ -125,8 +125,8 @@ void FormCfgConvert::initValues( const Config& cfg)
 	this->dspin_ThrustCoef->setValue( (double)cfg.groupConvert.tabStGScale[0] / 1000. );
 	this->dspin_TorqueCoef->setValue( (double)cfg.groupConvert.tabStGScale[1] / 1000. );
 
-	this->dspin_ThrustOff->setValue( (double)cfg.groupConvert.tabStGZero[0] / 1000. );
-	this->dspin_TorqueOff->setValue( (double)cfg.groupConvert.tabStGZero[1] / 1000. );
+	this->dspin_ThrustOff->setValue( (double)cfg.groupConvert.tabStGZero[0] );
+	this->dspin_TorqueOff->setValue( (double)cfg.groupConvert.tabStGZero[1] );
 }
 
 void FormCfgConvert::fetchValues( Config& cfg)
@@ -143,9 +143,10 @@ void FormCfgConvert::fetchValues( Config& cfg)
 	cfg.groupConvert.tabStGScale[0] = (int) (this->dspin_ThrustCoef->value() * 1000. );
 	cfg.groupConvert.tabStGScale[1] = (int) (this->dspin_TorqueCoef->value() * 1000. );
 
-	cfg.groupConvert.tabStGZero[0] = (int) ( this->dspin_ThrustOff->value() * 1000. );
-	cfg.groupConvert.tabStGZero[1] = (int) ( this->dspin_TorqueOff->value() * 1000. );
+	cfg.groupConvert.tabStGZero[0] = (int) ( this->dspin_ThrustOff->value() );
+	cfg.groupConvert.tabStGZero[1] = (int) ( this->dspin_TorqueOff->value() );
 }
+
 
 bool FormCfgConvert::compareValues( const Config& cfg)
 {
@@ -171,9 +172,9 @@ bool FormCfgConvert::compareValues( const Config& cfg)
     else if (cfg.groupConvert.tabStGScale[1] != (int) (this->dspin_TorqueCoef->value() * 1000.) )
         return false;
 
-    else if (cfg.groupConvert.tabStGZero[0] != (int) ( this->dspin_ThrustOff->value() * 1000.) )
+    else if (cfg.groupConvert.tabStGZero[0] != (int) ( this->dspin_ThrustOff->value()) )
         return false;
-    else if (cfg.groupConvert.tabStGZero[1] != (int)(this->dspin_TorqueOff->value() * 1000.) )
+    else if (cfg.groupConvert.tabStGZero[1] != (int)(this->dspin_TorqueOff->value()) )
         return false;
     else
         return true;

@@ -278,6 +278,29 @@ void MainWindow::onProcess( const MeasurementData* data)
     this->mControl->mFormProcess->pushButton_Process->setEnabled(true);
 }
 
+void MainWindow::mouseReleaseEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::MiddleButton)
+    {
+
+        if ( this->isArmed() )
+        {
+            this->stopMotor();
+            this->stopMeasurement();
+            //this->arm(false);
+
+            //mAutoControl.onStop();
+
+            //this->stopMotor();
+            //this->stopMeasurement();
+
+            //emit stopped();
+            QMessageBox::information(this, "info", "Emergency Stop", QMessageBox::Yes);
+        }
+    }
+}
+
+
 void MainWindow::newFile()
 {
     QMessageBox::StandardButton reply;
