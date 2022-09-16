@@ -164,8 +164,17 @@ QDataStream& operator>>(QDataStream& in, DataChannel& ch)
 	in >> n;
 
 	ch.mtabData.resize(n);
-	for ( size_t i=0; i<ch.mtabData.size(); ++i)
+	for (size_t i = 0; i < ch.mtabData.size(); ++i)
+	{
+		//if (ch.getId() == CH_EXT_TORQUE_ID)
+		//{
+		//	in >> ch.mtabData[i];
+		//	ch.mtabData[i] = std::fabs(ch.mtabData[i]);
+		//}
+		//else
 		in >> ch.mtabData[i];
+	}
+
 
 	return in;
 }
