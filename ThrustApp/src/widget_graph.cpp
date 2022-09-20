@@ -631,6 +631,10 @@ void GraphWidget::mousePressEvent( QMouseEvent *event)
 
         mpntPanStart = event->pos();
     }
+    else
+    {
+        event->ignore();
+    }
 }
 
 void GraphWidget::mouseReleaseEvent( QMouseEvent *event)
