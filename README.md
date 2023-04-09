@@ -4,7 +4,7 @@ The ThrustTool is a DIY tool for measurements of an electric motor with propelle
 It allows to measure thrust, torque, rotation speed, battery voltage and current.
 
 The project is by no means finished (especially firmware thrust++ and ThrustApp). However in current stage it works quite well allowing to obtain the results
-(e.g., see auto generated report (in latex) [t-motor f1507 with t3140 propeller](ThrustApp/data/f1507_t3140.pdf)).
+(e.g., see auto generated report (in latex) [T-Motor F1507 with t3140 propeller](ThrustApp/data/tmotor-f1507/f1507_t3140_4s.pdf)).
 
 ### The project includes:
 
