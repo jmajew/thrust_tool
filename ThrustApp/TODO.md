@@ -20,9 +20,9 @@ thrust calibration data 17.08.2021 rev.8e071b3
  - current coefficient (30A) = 36.700
 
 ### settings on 09.04.2023 rev.e514535
- - thrust coefficient (2kG) = 789.475
+ - thrust coefficient (3kG) = 789.475
  - thrust offset = 70163
- - torque coefficient (1kG) = 1034.646
+ - torque coefficient (2kG) = 1034.646
  - torque offset = 57818
  - torque length = 35 mm
  - vbat correction = 0.9918
