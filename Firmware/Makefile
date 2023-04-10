@@ -147,6 +147,7 @@ REVISION = $(shell git rev-parse --short HEAD)
 #REVISION = $(bash -c "git rev-parse --short HEAD")
 #REVISION = $(@git rev-parse --short HEAD)
 
+$(info    REVISION is $(REVISION))
 
 
 # rwildcard definition
