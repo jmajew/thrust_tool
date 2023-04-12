@@ -15,6 +15,7 @@
 ### hardware v2
 * low-pass filter for ADC
   
+## MEMO  
 ### sensor settings
   
 * stgauge_scale_thrust	2kG -- 1054.501 1/G
