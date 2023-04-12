@@ -435,7 +435,13 @@ void MainWindow::about()
 {
     QMessageBox msgBox;
     msgBox.setText( tr("The <b>ThrustApp</b> is used for managing the thrust measurement tool.\n") );
-    msgBox.setInformativeText(mDoc.cHeader().strBoardInfo() + "\n"+ mDoc.cHeader().strSoftInfo() + "\n"+ mDoc.cHeader().strBuildInfo());
+    //msgBox.detailedText( tr(GIT_COMMIT_ID) );
+    QString str = mDoc.cHeader().strBoardInfo() + "\n" + mDoc.cHeader().strSoftInfo() + "\n" + mDoc.cHeader().strBuildInfo();
+    msgBox.setInformativeText( str);
+    msgBox.setInformativeText(
+        "ThrustApp:\n\tCommit SHA\t" + QString(GIT_COMMIT_ID_SHORT) + "\n\tCommit date\t" + QString(GIT_COMMIT_DATE) + "\n"
+        + "Tool Firmware:\n\t" + mDoc.cHeader().strBoardInfo() + "\n\t" + mDoc.cHeader().strSoftInfo() + "\n\t" + mDoc.cHeader().strBuildInfo()
+    );
     msgBox.setStandardButtons(QMessageBox::Ok);
     msgBox.setDefaultButton(QMessageBox::Ok);
     int ret = msgBox.exec();

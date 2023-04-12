@@ -50,7 +50,7 @@ IF ( GIT_FOUND )
 ENDIF ( GIT_FOUND )
 
 add_definitions("-DGIT_COMMIT_ID=\"${GIT_COMMIT_ID}\"")
-add_definitions("-GIT_COMMIT_ID_SHORT=\"${GIT_COMMIT_ID_SHORT}\"")
+add_definitions("-DGIT_COMMIT_ID_SHORT=\"${GIT_COMMIT_ID_SHORT}\"")
 add_definitions("-DGIT_COMMIT_DATE=\"${GIT_COMMIT_DATE}\"")
 add_definitions("-DGIT_COMMIT_AUTHOR=\"${GIT_COMMIT_AUTHOR}\"")
 add_definitions("-DGIT_COMMIT_SUBJECT=\"${GIT_COMMIT_SUBJECT}\"")
