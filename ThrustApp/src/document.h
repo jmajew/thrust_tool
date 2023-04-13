@@ -42,6 +42,11 @@ public:
 	void	setSoftInfo( const QString& str)	{ mSoftInfo = str; }
 	void	setBuildInfo( const QString& str)	{ mBuildInfo = str; }
 
+	void	setThToolCommitId(const QString& str)	{ mThTool_commitId = str; }
+	void	setThToolBuildDate(const QString& str)	{ mThTool_buildDate = str; }
+
+	//const QString& strThTool_uid() const			{ return QString(GIT_COMMIT_ID_SHORT); }
+	//const QString& strThTool_buildDate() const	{ return QString(GIT_COMMIT_DATE); }
 
 
 	const QString&	strApiVer() const			{ return mApiVersion; }
@@ -49,8 +54,13 @@ public:
 	const QString&	strSoftInfo() const			{ return mSoftInfo; }
 	const QString&	strBuildInfo() const		{ return mBuildInfo; }
 
+	const QString& strThToolCommitId() const	{ return mThTool_commitId; }
+	const QString& strThToolBuildDate() const	{ return mThTool_buildDate; }
+
 private:
-	//boardinfo
+	QString			mThTool_commitId;
+	QString			mThTool_buildDate;
+	//board info
 	QString			mApiVersion;
 	QString			mBoardInfo;
 	QString			mSoftInfo;

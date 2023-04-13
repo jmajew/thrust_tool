@@ -42,6 +42,9 @@ QDataStream& operator>>( QDataStream& in, DocStyle& head)
 
 QDataStream& operator<<( QDataStream& out, const DocHeader& head)
 {
+	//out << head.mThTool_commitId;
+	//out << head.mThTool_buildDate;
+
 	out << head.mApiVersion;
 	out << head.mBoardInfo;
 	out << head.mSoftInfo;
@@ -55,6 +58,10 @@ QDataStream& operator>>( QDataStream& in, DocHeader& head)
 	//QString str;
 	//in >> str;	
 	//head.setApiVer(THSP_PROTOCOL_VERSION, API_VERSION_MAJOR, API_VERSION_MINOR);
+
+	//in >> head.mThTool_commitId;
+	//in >> head.mThTool_buildDate;
+
 	in >> head.mApiVersion;
 	in >> head.mBoardInfo;
 	in >> head.mSoftInfo;
@@ -78,6 +85,9 @@ Document::Document( QObject *parent) : QObject(parent), mConverter(this), mpMsDa
     mTmplName = settings.value(key_root + "TemplateName").toString();
 	//if ( mTmplName == "" )
 	//mTmplName = "tmpl_2.tex";
+
+	this->mHeader.setThToolBuildDate(GIT_COMMIT_DATE);
+	this->mHeader.setThToolCommitId(GIT_COMMIT_ID_SHORT);
 }
 
 Document::~Document()
