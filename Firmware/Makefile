@@ -93,7 +93,7 @@ PROJECT = thrust++
 MCU  = cortex-m4
 
 # Imported source files and paths.
-CHIBIOS  := ../../ChibiOS.git
+CHIBIOS  := ../../lib/ChibiOS.git
 
 SRCDIR   := ./src
 AUTOBUILD_ROOT   := $(SRCDIR)
