@@ -172,6 +172,13 @@ QDataStream& operator>>(QDataStream& in, DataChannel& ch)
 		//	ch.mtabData[i] = std::fabs(ch.mtabData[i]);
 		//}
 		//else
+		
+		//if (ch.getId() == CH_EXT_BATT_VOLT_ID || ch.getId() == CH_EXT_POWER_IN_ID)
+		//{
+		//	in >> ch.mtabData[i];
+		//	ch.mtabData[i] = ch.mtabData[i] / 0.9918 * 1.0124;
+		//}
+		//else
 		in >> ch.mtabData[i];
 	}
 
